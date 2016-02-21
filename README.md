@@ -1,14 +1,14 @@
 # Take the gold
 
-TODO: This is an owm project based on zork.
+This is an owm project based on zork.
 
 ## Installation
 
-TODO: Describe the installation process
+Describe the installation process
 
 ## Usage
 
-TODO: Write usage instructions
+Write usage instructions
 
 ## Contributing
 
@@ -20,12 +20,12 @@ TODO: Write usage instructions
 
 ## History
 
-TODO: Write history
+Write history
 
 ## Credits
 
-TODO: Write credits
+Write credits
 
 ## License
 
-TODO: Write license
+Write license
