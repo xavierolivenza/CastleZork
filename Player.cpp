@@ -52,3 +52,4 @@ int Player::check_secondcommand(char* secondcommand){
 		return ERROR;
 	}
 }
+
