@@ -1,16 +1,13 @@
-class CurrentRoom{
-public:
-	char name[20];
-	char description[250];
-	char north[250];
-	char east[250];
-	char south[250];
-	char west[250];
+#ifndef __Player__
+#define __Player__
 
-	void move();
+class Player{
+public:
+	char* command_split(char*);
+	int check_firstcommand(char*);
+	int check_secondcommand(char*);
 };
 
-int check_firstcommand(char*);
-int check_secondcommand(char*);
-
-enum commandset { LOOK, GO, OPEN, CLOSE, QUIT, HELP, NORTH, EAST, SOUTH, WEST, ERROR };
+enum commandset { LOOK, GO, OPEN, CLOSE, QUIT, HELP, ERROR };
+enum directions { NORTH, EAST, SOUTH, WEST};
+#endif //__Player__

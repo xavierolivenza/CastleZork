@@ -1,17 +1,13 @@
-class Rooms{
+#ifndef __Room__
+#define __Room__
+
+#define TEXTLENGTH 100
+
+class Room{
 public:
 	char name[20];
-	char description[250];
-	char north[250];
-	int roomchangenorth;
-	char east[250];
-	int roomchangeeast;
-	char south[250];
-	int roomchangesouth;
-	char west[250];
-	int roomchangewest;
-
-	void create_rooms();
+	char description[TEXTLENGTH];
 };
 
-enum rooms{ TOWER1, TOWER2, TOWER3, TOWER4, NORTHCORRIDOR, EASTCORRIDOR, SOUTHCORRIDOR, WESTCORRIDOR, THRONEROOM };
+enum rooms{TOWER1, TOWER2, TOWER3, TOWER4, NORTHCORRIDOR, EASTCORRIDOR, SOUTHCORRIDOR, WESTCORRIDOR, THRONEROOM};
+#endif //__Room__
