@@ -151,3 +151,122 @@ void World::CreateWorld(){
 	exits[THRONEROOMdir4].destination = &castlerooms[WESTCORRIDOR];
 	// ---------------------------------------------------------------------------------------------------------------
 }
+
+void World::executecommand1word(int command1, int& actual_position){
+	int exitnum = 0, roomnum = 0;
+
+	player->current_room = &castlerooms[actual_position];
+
+	if (command1 == NORTH){
+		for (exitnum = 0; exitnum < NUMEXITS; exitnum++){
+			if (exitnum % 4 == 0){//North exits are each 4 exits, starting from 0, North exits = 0, 4, 8, 12, 16...
+				if (exits[exitnum].origin == player->current_room){
+					for (roomnum = 0; roomnum < NUMROOMS; roomnum++){
+						if (exits[exitnum].destination == &castlerooms[roomnum]){
+							player->current_room = exits[exitnum].destination;
+							printf("Now you are in %s", player->current_room);
+							actual_position = roomnum;
+						}
+					}
+				}
+			}
+		}
+	}
+	else if (command1 == EAST){
+		
+	}
+	else if (command1 == SOUTH){
+		
+	}
+	else if (command1 == WEST){
+		
+	}
+	else if (command1 == LOOK){
+		printf("%s,%i", castlerooms[actual_position].description, actual_position);
+	}
+	else if (command1 == HELP){
+		printf("In this game you can move using:\nn/s/e/w\nnorth/east/south/west\ngo north/go east/go south/go west\nalso you can use the commands:\nlook->to see the description of the room where you are\nlook+north/east/south/west->to see the description of the path\nopen/close+north/east/south/west->to open/close door\nquit->to quit the game\n");
+	}
+	else{
+		printf("That's not a valid command.\n");
+	}
+}
+
+void World::executecommand2words(int command1, int command2, int& actual_position){
+	// ---------------------------------------------------------------------------------------------------------------
+	if (command1 == LOOK){
+		if ((command2 == NORTH)){
+		
+		}
+		else if ((command2 == EAST)){
+
+		}
+		else if ((command2 == SOUTH)){
+
+		}
+		else if ((command2 == WEST)){
+
+		}
+		else{
+			printf("That's not a valid command.\n");
+		}
+	}
+	// ---------------------------------------------------------------------------------------------------------------
+	else if (command1 == GO){
+		if ((command2 == NORTH)){
+
+		}
+		else if ((command2 == EAST)){
+
+		}
+		else if ((command2 == SOUTH)){
+
+		}
+		else if ((command2 == WEST)){
+
+		}
+		else{
+			printf("That's not a valid command.\n");
+		}
+	}
+	// ---------------------------------------------------------------------------------------------------------------
+	else if (command1 == OPEN){
+		if ((command2 == NORTH)){
+
+		}
+		else if ((command2 == EAST)){
+
+		}
+		else if ((command2 == SOUTH)){
+
+		}
+		else if ((command2 == WEST)){
+
+		}
+		else{
+			printf("That's not a valid command.\n");
+		}
+	}
+	// ---------------------------------------------------------------------------------------------------------------
+	else if (command1 == CLOSE){
+		if ((command2 == NORTH)){
+
+		}
+		else if ((command2 == EAST)){
+
+		}
+		else if ((command2 == SOUTH)){
+
+		}
+		else if ((command2 == WEST)){
+
+		}
+		else{
+			printf("That's not a valid command.\n");
+		}
+	}
+	// ---------------------------------------------------------------------------------------------------------------
+	else{
+		printf("That's not a valid command.\n");
+	}
+}

@@ -2,6 +2,7 @@
 #define __Exits__
 
 #define TEXTLENGTH 100
+#include "Room.h"
 
 class Exit{
 public:

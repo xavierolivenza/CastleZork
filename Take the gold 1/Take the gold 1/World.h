@@ -12,6 +12,7 @@
 #define NUMEXITS 36
 
 class World{
+public:
 	Room* castlerooms = nullptr;
 	Exit* exits = nullptr;
 	Player* player = nullptr;
@@ -20,5 +21,7 @@ public:
 	~World();
 public:
 	void CreateWorld();
+	void executecommand1word(int, int&);
+	void executecommand2words(int, int, int&);
 };
 #endif //__World__
