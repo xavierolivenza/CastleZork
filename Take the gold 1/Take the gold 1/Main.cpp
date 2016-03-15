@@ -8,12 +8,12 @@ int main(){
 	int command_words = 0, i = 0;
 	int actual_position = 0;
 
-	World createworld;
-	World commandexecution;
+	World world;
 	Player commandinput;
-	createworld.CreateWorld();
+	world.CreateWorld();
 
 	do{
+		printf("You are in %s.\n%s\n", world.player->current_room->name, world.player->current_room->description);
 		printf("What do you want to do?\n");
 		gets_s(full_firstcommand);
 
@@ -27,11 +27,11 @@ int main(){
 		command1 = commandinput.check_firstcommand(full_firstcommand);
 
 		if ((command_words + 1) == 1){//Execute commands with 1 word
-			commandexecution.executecommand1word(command1, actual_position);
+			world.executecommand1word(command1, actual_position);
 		}
 		else{//Execute commands with 2 words
 			command2 = commandinput.check_secondcommand(secondcommand);
-			commandexecution.executecommand2words(command1, command2, actual_position);
+			world.executecommand2words(command1, command2, actual_position);
 		}
 	} while (command1 != 4);
 	system("pause");

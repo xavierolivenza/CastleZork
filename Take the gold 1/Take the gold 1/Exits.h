@@ -4,11 +4,21 @@
 #define TEXTLENGTH 100
 #include "Room.h"
 
+enum directions{ north, south, east, west};
+
 class Exit{
 public:
-	char description[TEXTLENGTH];
 	Room *origin;
 	Room *destination;
+	directions direction;
+public:
+	Exit();
+	~Exit();
+public:
+	char name[25];
+	char description[TEXTLENGTH];
+	bool closed = false;
+	bool door = false;
 };
 
 enum roomsdirs{ 

@@ -7,11 +7,13 @@ class Player{
 public:
 	Room* current_room = nullptr;
 public:
+	Player();
+	~Player();
+public:
 	char* command_split(char*);
 	int check_firstcommand(char*);
 	int check_secondcommand(char*);
 };
-
 enum rooms{ TOWER1, TOWER2, TOWER3, TOWER4, NORTHCORRIDOR, EASTCORRIDOR, SOUTHCORRIDOR, WESTCORRIDOR, THRONEROOM};
 enum commandset { LOOK, GO, OPEN, CLOSE, QUIT, HELP, NORTH, EAST, SOUTH, WEST};
 #endif //__Player__

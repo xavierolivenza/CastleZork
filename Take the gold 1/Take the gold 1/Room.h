@@ -5,7 +5,10 @@
 
 class Room{
 public:
-	char name[20];
+	Room();
+	~Room();
+public:
+	char name[25];
 	char description[TEXTLENGTH];
 };
 #endif //__Room__

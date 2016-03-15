@@ -1,7 +1,12 @@
 #include <stdio.h>
 #include <string.h>
-#include "Player.h"
 #include "World.h"
+
+Player::Player(){
+}
+
+Player::~Player(){
+}
 
 char* Player::command_split(char* fullcommand){
 	char *context, *firstcommand, *secondcommand;//Strtok_s variable, need it to save the state of the string he analyzes. Doesn't needed with strtok.
@@ -25,6 +30,9 @@ int Player::check_firstcommand(char* firstcommand){
 		return CLOSE;
 	}
 	else if (strcmp(firstcommand, "quit") == 0){
+		return QUIT;
+	}
+	else if (strcmp(firstcommand, "q") == 0){
 		return QUIT;
 	}
 	else if (strcmp(firstcommand, "help") == 0){
