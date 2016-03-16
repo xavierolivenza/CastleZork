@@ -26,13 +26,15 @@ Also you can use the commands:
 
 look->to see the description of the room where you are
 
-look+north/east/south/west->to see the description of the path
+look+north/n/east/e/south/s/west/w->to see the description of the path
 
-open/close+north/east/south/west->to open/close doors
+open/close+north/n/east/e/south/s/west/w->to open/close doors
 
 help->to print the help menu with the commands.
 
 quit->to quit the game
+
+If the player tries to move in one direction and it prints again the room information where he is, means that there is a wall, this can "fix" with an if where you look if the source and destination of the exit is equal, prints "there is a wall", but I have left it to create confusion, if the player moves in one direction and information room is repeated, the player will wonder why it is happening, and if he makes a look + direction, he will know what there is there.
 
 ## Changelog
 
