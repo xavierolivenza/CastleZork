@@ -4,7 +4,6 @@
 
 Player::Player(){
 }
-
 Player::~Player(){
 }
 
@@ -43,44 +42,32 @@ int Player::check_firstcommand(char* firstcommand)const{
 	}
 	// ---------------------------------------------------------------------------------------------------------------
 	//Detection commands with 1 word
-	else if (strcmp(firstcommand, "north")== 0){
+	else if ((strcmp(firstcommand, "north") == 0) || (strcmp(firstcommand, "n") == 0)){
 		return NORTH;
 	}
-	else if ((strcmp(firstcommand, "n")) == 0){
-		return NORTH;
-	}
-	else if (strcmp(firstcommand, "east") == 0){
+	else if ((strcmp(firstcommand, "east") == 0) || (strcmp(firstcommand, "e") == 0)){
 		return EAST;
 	}
-	else if (strcmp(firstcommand, "e") == 0){
-		return EAST;
-	}
-	else if (strcmp(firstcommand, "south") == 0){
+	else if ((strcmp(firstcommand, "south") == 0) || (strcmp(firstcommand, "s") == 0)){
 		return SOUTH;
 	}
-	else if (strcmp(firstcommand, "s") == 0){
-		return SOUTH;
-	}
-	else if (strcmp(firstcommand, "west") == 0){
-		return WEST;
-	}
-	else if (strcmp(firstcommand, "w") == 0){
+	else if ((strcmp(firstcommand, "west") == 0) || (strcmp(firstcommand, "w") == 0)){
 		return WEST;
 	}
 	// ---------------------------------------------------------------------------------------------------------------
 }
 
 int Player::check_secondcommand(char* secondcommand)const{
-	if (strcmp(secondcommand, "north") == 0){
+	if ((strcmp(secondcommand, "north") == 0) || (strcmp(secondcommand, "n") == 0)){
 		return NORTH;
 	}
-	else if (strcmp(secondcommand, "east") == 0){
+	else if ((strcmp(secondcommand, "east") == 0) || (strcmp(secondcommand, "e") == 0)){
 		return EAST;
 	}
-	else if (strcmp(secondcommand, "south") == 0){
+	else if ((strcmp(secondcommand, "south") == 0) || (strcmp(secondcommand, "s") == 0)){
 		return SOUTH;
 	}
-	else if (strcmp(secondcommand, "west") == 0){
+	else if ((strcmp(secondcommand, "west") == 0) || (strcmp(secondcommand, "w") == 0)){
 		return WEST;
 	}
 }

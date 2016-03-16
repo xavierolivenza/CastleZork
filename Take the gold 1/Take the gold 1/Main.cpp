@@ -8,12 +8,11 @@ int main(){
 	int command1 = 0, command2 = 0;
 	int command_words = 0, i = 0;
 	int actual_position = 0;
-	int j = 0;
 
 	World world;
 	Player commandinput;
 	world.CreateWorld();
-	printf("Welcome to Take the gold\nThis game is based on Zork for a class project.\nXavier Olivenza\nCITM Terrassa 2015-2016\n//------------------------------------------------------------//\n\nYou can move using:\nn/s/e/w\nnorth/east/south/west\ngo north/go east/go south/go west\nAlso you can use the commands:\nlook->to see the description of the room where you are\nlook+north/east/south/west->to see the description of the path\nopen/close+north/east/south/west->to open/close door\nquit->to quit the game\nLet's start!\n\n");
+	printf("Welcome to Take the gold\nThis game is based on Zork for a class project.\nXavier Olivenza\nCITM Terrassa 2015-2016\n\n//------------------------------------------------------------------------//\n// Lore:                                                                  //\n// You are a thief who must steal the treasure of the king in his castle. //\n//------------------------------------------------------------------------//\n\nYou can move using:\nn/s/e/w\nnorth/east/south/west\ngo north/go east/go south/go west\nAlso you can use the commands:\nlook->to see the description of the room where you are\nlook+north/east/south/west->to see the description of the path\nopen/close+north/east/south/west->to open/close door\nquit->to quit the game\nLet's start!\n\n");
 
 	do{
 		printf("//------------------------------------------------------------//\n");
@@ -27,7 +26,7 @@ int main(){
 			if (full_firstcommand[i] == ' '){
 				command_words++;
 			}
-			full_firstcommand[i] = tolower(full_firstcommand[i]);
+			full_firstcommand[i] = tolower(full_firstcommand[i]);//Transform all letters to lower case
 		}
 
 		char* secondcommand = commandinput.command_split(full_firstcommand);
@@ -41,7 +40,7 @@ int main(){
 			world.executecommand2words(command1, command2, actual_position);
 		}
 
-	} while (command1 != 4);
+	} while (command1 != 4);//Cheks if command is 'quit'
 	system("pause");
 	return 0;
 }
