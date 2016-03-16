@@ -7,6 +7,9 @@ This game is based on Zork for a class project in the degree in video game desig
 
 Download the release zip, unzip it and execute the .exe file.
 
+## Lore
+You are a thief who must steal the treasure of the king in his castle.
+
 ## Instructions, how to play
 
 You can move using:
@@ -29,9 +32,9 @@ help->to print the help menu with the commands.
 
 quit->to quit the game
 
-## History
+## Changelog
 
-17-03-2016 -> Take the gold first release with all rooms and movement, look, open, close, help and quit commands.
+16-03-2016 -> Take the gold first release with all rooms and movement, look, open, close, help and quit commands.
 
 ## Credits
 
