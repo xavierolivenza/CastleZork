@@ -1,11 +1,11 @@
 # Take the gold
 
 Welcome to Take the gold
-This game is based on Zork for a class project
+This game is based on Zork for a class project in the degree in video game design and development of CITM Terrassa, Catalonia, Spain.
 
 ## Installation
 
-Describe the installation process
+Download the release zip, unzip it and execute the .exe file.
 
 ## Instructions, how to play
 
@@ -26,6 +26,7 @@ quit->to quit the game
 
 ## Credits
 
-Xavier Olivenza Busquets
+Xavier Olivenza Busquets, first year student in the degree in video game design and development of CITM Terrassa, Catalonia, Spain.
+My github project web with links to the wiki with the GDD, to the release and to the github page: http://xavierolivenza.github.io/CastleZork/
 My github project page: https://github.com/xavierolivenza/CastleZork
 CITM Terrassa 2015-2016
