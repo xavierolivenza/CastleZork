@@ -16,33 +16,6 @@ char* Player::command_split(char* fullcommand)const{
 	return secondcommand;
 }
 
-/*
-// Note: This function returns a pointer to a substring of the original string.
-// If the given string was allocated dynamically, the caller must not overwrite
-// that pointer with the returned value, since the original pointer must be
-// deallocated using the same allocator with which it was allocated.  The return
-// value must NOT be deallocated using free() etc.
-char *trimwhitespace(char *str)
-{
-char *end;
-
-// Trim leading space
-while(isspace(*str)) str++;
-
-if(*str == 0)  // All spaces?
-return str;
-
-// Trim trailing space
-end = str + strlen(str) - 1;
-while(end > str && isspace(*end)) end--;
-
-// Write new null terminator
-*(end+1) = 0;
-
-return str;
-}
-*/
-
 int Player::check_firstcommand(char* firstcommand)const{
 	if (strcmp(firstcommand, "look") == 0){
 		return LOOK;
@@ -63,6 +36,9 @@ int Player::check_firstcommand(char* firstcommand)const{
 		return QUIT;
 	}
 	else if (strcmp(firstcommand, "help") == 0){
+		return HELP;
+	}
+	else if (strcmp(firstcommand, "h") == 0){
 		return HELP;
 	}
 	// ---------------------------------------------------------------------------------------------------------------

@@ -13,9 +13,10 @@ int main(){
 	World world;
 	Player commandinput;
 	world.CreateWorld();
-	printf("Welcome to Take the gold\nThis game is based on Zork for a class project.\nCITM Terrassa 2015-2016\nYou can move using:\nn/s/e/w\nnorth/east/south/west\ngo north/go east/go south/go west\nalso you can use the commands:\nlook->to see the description of the room where you are\nlook+north/east/south/west->to see the description of the path\nopen/close+north/east/south/west->to open/close door\nquit->to quit the game\nLet's start!\n\n");
+	printf("Welcome to Take the gold\nThis game is based on Zork for a class project.\nXavier Olivenza\nCITM Terrassa 2015-2016\n//------------------------------------------------------------//\n\nYou can move using:\nn/s/e/w\nnorth/east/south/west\ngo north/go east/go south/go west\nAlso you can use the commands:\nlook->to see the description of the room where you are\nlook+north/east/south/west->to see the description of the path\nopen/close+north/east/south/west->to open/close door\nquit->to quit the game\nLet's start!\n\n");
 
 	do{
+		printf("//------------------------------------------------------------//\n");
 		printf("You are in %s.\n%s\n", world.player->current_room->name, world.player->current_room->description);
 		printf("What do you want to do?\n");
 		gets_s(full_firstcommand);

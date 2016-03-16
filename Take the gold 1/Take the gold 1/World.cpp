@@ -210,7 +210,7 @@ void World::executecommand1word(int command1, int& actual_position){
 							else{
 								actual_position = roomnum;
 								player->current_room = exits[exitnum].destination;
-								printf("Now you are in %s\n\n", player->current_room);
+								printf("Now you are in %s\n", player->current_room);
 								return;
 							}
 						}
@@ -234,7 +234,7 @@ void World::executecommand1word(int command1, int& actual_position){
 							else{
 								actual_position = roomnum;
 								player->current_room = exits[exitnum].destination;
-								printf("Now you are in %s\n\n", player->current_room);
+								printf("Now you are in %s\n", player->current_room);
 								return;
 							}
 						}
@@ -257,7 +257,7 @@ void World::executecommand1word(int command1, int& actual_position){
 							else{
 								actual_position = roomnum;
 								player->current_room = exits[exitnum].destination;
-								printf("Now you are in %s\n\n", player->current_room);
+								printf("Now you are in %s\n", player->current_room);
 								return;
 							}
 						}
@@ -281,7 +281,7 @@ void World::executecommand1word(int command1, int& actual_position){
 							else{
 								actual_position = roomnum;
 								player->current_room = exits[exitnum].destination;
-								printf("Now you are in %s\n\n", player->current_room);
+								printf("Now you are in %s\n", player->current_room);
 								return;
 							}
 						}
@@ -298,7 +298,7 @@ void World::executecommand1word(int command1, int& actual_position){
 
 	}
 	else if (command1 == HELP){
-		printf("In this game you can move using:\nn/s/e/w\nnorth/east/south/west\ngo north/go east/go south/go west\nalso you can use the commands:\nlook->to see the description of the room where you are\nlook+north/east/south/west->to see the description of the path\nopen/close+north/east/south/west->to open/close door\nquit->to quit the game\n\n");
+		printf("In this game you can move using:\nn/s/e/w\nnorth/east/south/west\ngo north/go east/go south/go west\nAlso you can use the commands:\nlook->to see the description of the room where you are\nlook+north/east/south/west->to see the description of the path\nopen/close+north/east/south/west->to open/close door\nhelp/h->to see this page\nquit/q->to quit the game\n\n");
 	}
 	else{
 		printf("That's not a valid command.\n");
@@ -314,7 +314,7 @@ void World::executecommand2words(int command1, int command2, int& actual_positio
 			for (exitnum = 0; exitnum < NUMEXITS; exitnum++){
 				if (exitnum % 4 == 0){//North exits are each 4 exits, starting from 0, North exits = 0, 4, 8, 12, 16...
 					if (exits[exitnum].origin == player->current_room){
-							printf("%s\n\n", exits[exitnum].description);
+							printf("%s\n", exits[exitnum].description);
 							return;
 					}
 				}
@@ -324,7 +324,7 @@ void World::executecommand2words(int command1, int command2, int& actual_positio
 			for (exitnum = 0; exitnum < NUMEXITS; exitnum++){
 				if (exitnum % 4 == 1){//East exits are each 4 exits, starting from 1, East exits = 1, 5, 9, 13...
 					if (exits[exitnum].origin == player->current_room){
-						printf("%s\n\n", exits[exitnum].description);
+						printf("%s\n", exits[exitnum].description);
 						return;
 					}
 				}
@@ -334,7 +334,7 @@ void World::executecommand2words(int command1, int command2, int& actual_positio
 			for (exitnum = 0; exitnum < NUMEXITS; exitnum++){
 				if (exitnum % 4 == 2){//South exits are each 4 exits, starting from 2, South exits = 2, 6, 10, 14, 18...
 					if (exits[exitnum].origin == player->current_room){
-						printf("%s\n\n", exits[exitnum].description);
+						printf("%s\n", exits[exitnum].description);
 						return;
 					}
 				}
@@ -344,7 +344,7 @@ void World::executecommand2words(int command1, int command2, int& actual_positio
 			for (exitnum = 0; exitnum < NUMEXITS; exitnum++){
 				if (exitnum % 4 == 3){//West exits are each 4 exits, starting from 0, West exits = 3, 7, 11, 15, 19...
 					if (exits[exitnum].origin == player->current_room){
-						printf("%s\n\n", exits[exitnum].description);
+						printf("%s\n", exits[exitnum].description);
 						return;
 					}
 				}
@@ -369,7 +369,7 @@ void World::executecommand2words(int command1, int command2, int& actual_positio
 								else{
 									actual_position = roomnum;
 									player->current_room = exits[exitnum].destination;
-									printf("Now you are in %s\n\n", player->current_room);
+									printf("Now you are in %s\n", player->current_room);
 									return;
 								}
 							}
@@ -393,7 +393,7 @@ void World::executecommand2words(int command1, int command2, int& actual_positio
 								else{
 									actual_position = roomnum;
 									player->current_room = exits[exitnum].destination;
-									printf("Now you are in %s\n\n", player->current_room);
+									printf("Now you are in %s\n", player->current_room);
 									return;
 								}
 							}
@@ -416,7 +416,7 @@ void World::executecommand2words(int command1, int command2, int& actual_positio
 								else{
 									actual_position = roomnum;
 									player->current_room = exits[exitnum].destination;
-									printf("Now you are in %s\n\n", player->current_room);
+									printf("Now you are in %s\n", player->current_room);
 									return;
 								}
 							}
@@ -440,7 +440,7 @@ void World::executecommand2words(int command1, int command2, int& actual_positio
 								else{
 									actual_position = roomnum;
 									player->current_room = exits[exitnum].destination;
-									printf("Now you are in %s\n\n", player->current_room);
+									printf("Now you are in %s\n", player->current_room);
 									return;
 								}
 							}
