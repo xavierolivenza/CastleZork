@@ -20,7 +20,7 @@ public:
 	World();
 	~World();
 public:
-	void CreateWorld();
+	void CreateWorld() const;
 	void executecommand1word(int, int&);
 	void executecommand2words(int, int, int&);
 };

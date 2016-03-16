@@ -8,7 +8,7 @@ Player::Player(){
 Player::~Player(){
 }
 
-char* Player::command_split(char* fullcommand){
+char* Player::command_split(char* fullcommand)const{
 	char *context, *firstcommand, *secondcommand;//Strtok_s variable, need it to save the state of the string he analyzes. Doesn't needed with strtok.
 	firstcommand = strtok_s(fullcommand, " ", &context);
 	secondcommand = strtok_s(NULL, " ", &context);
@@ -16,7 +16,34 @@ char* Player::command_split(char* fullcommand){
 	return secondcommand;
 }
 
-int Player::check_firstcommand(char* firstcommand){
+/*
+// Note: This function returns a pointer to a substring of the original string.
+// If the given string was allocated dynamically, the caller must not overwrite
+// that pointer with the returned value, since the original pointer must be
+// deallocated using the same allocator with which it was allocated.  The return
+// value must NOT be deallocated using free() etc.
+char *trimwhitespace(char *str)
+{
+char *end;
+
+// Trim leading space
+while(isspace(*str)) str++;
+
+if(*str == 0)  // All spaces?
+return str;
+
+// Trim trailing space
+end = str + strlen(str) - 1;
+while(end > str && isspace(*end)) end--;
+
+// Write new null terminator
+*(end+1) = 0;
+
+return str;
+}
+*/
+
+int Player::check_firstcommand(char* firstcommand)const{
 	if (strcmp(firstcommand, "look") == 0){
 		return LOOK;
 	}
@@ -67,7 +94,7 @@ int Player::check_firstcommand(char* firstcommand){
 	// ---------------------------------------------------------------------------------------------------------------
 }
 
-int Player::check_secondcommand(char* secondcommand){
+int Player::check_secondcommand(char* secondcommand)const{
 	if (strcmp(secondcommand, "north") == 0){
 		return NORTH;
 	}
