@@ -21,7 +21,7 @@ public:
 	~World();
 public:
 	void CreateWorld() const;
-	void executecommand1word(int, int&);
-	void executecommand2words(int, int, int&);
+	void executecommand1word(const int, int&)const;
+	void executecommand2words(const int, const int, int&)const;
 };
 #endif //__World__

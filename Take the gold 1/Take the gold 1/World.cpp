@@ -193,7 +193,7 @@ void World::CreateWorld() const{
 	// ---------------------------------------------------------------------------------------------------------------
 }
 
-void World::executecommand1word(int command1, int& actual_position){
+void World::executecommand1word(const int command1, int& actual_position)const{
 	int exitnum = 0, roomnum = 0;
 	player->current_room = &castlerooms[actual_position];
 	if (command1 == NORTH){
@@ -303,7 +303,7 @@ void World::executecommand1word(int command1, int& actual_position){
 	}
 }
 
-void World::executecommand2words(int command1, int command2, int& actual_position){
+void World::executecommand2words(const int command1, const int command2, int& actual_position)const{
 	int exitnum = 0, roomnum = 0;
 	int exitnumdoors = 0, roomnumdoors = 0;
 	player->current_room = &castlerooms[actual_position];
@@ -362,7 +362,7 @@ void World::executecommand2words(int command1, int command2, int& actual_positio
 						for (roomnum = 0; roomnum < NUMROOMS; roomnum++){//Check rooms to get the room num for actual_position
 							if (exits[exitnum].destination == &castlerooms[roomnum]){
 								if (exits[exitnum].door == true && exits[exitnum].close == true){
-									printf("\nLocked door.\n");
+									printf("Locked door.\n");
 									return;
 								}
 								else{
@@ -386,7 +386,7 @@ void World::executecommand2words(int command1, int command2, int& actual_positio
 						for (roomnum = 0; roomnum < NUMROOMS; roomnum++){//Check rooms to get the room num for actual_position
 							if (exits[exitnum].destination == &castlerooms[roomnum]){
 								if (exits[exitnum].door == true && exits[exitnum].close == true){
-									printf("\nLocked door.\n");
+									printf("Locked door.\n");
 									return;
 								}
 								else{
@@ -409,7 +409,7 @@ void World::executecommand2words(int command1, int command2, int& actual_positio
 						for (roomnum = 0; roomnum < NUMROOMS; roomnum++){//Check rooms to get the room num for actual_position
 							if (exits[exitnum].destination == &castlerooms[roomnum]){
 								if (exits[exitnum].door == true && exits[exitnum].close == true){
-									printf("\nLocked door.\n");
+									printf("Locked door.\n");
 									return;
 								}
 								else{
@@ -432,7 +432,7 @@ void World::executecommand2words(int command1, int command2, int& actual_positio
 						for (roomnum = 0; roomnum < NUMROOMS; roomnum++){//Check rooms to get the room num for actual_position
 							if (exits[exitnum].destination == &castlerooms[roomnum]){
 								if (exits[exitnum].door == true && exits[exitnum].close == true){
-									printf("\nLocked door.\n");
+									printf("Locked door.\n");
 									return;
 								}
 								else{

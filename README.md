@@ -18,6 +18,8 @@ n/s/e/w
 
 north/east/south/west
 
+go n/go e/go s/go w
+
 go north/go east/go south/go west
 
 Also you can use the commands:

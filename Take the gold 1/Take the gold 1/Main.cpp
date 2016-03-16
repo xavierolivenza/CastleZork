@@ -12,7 +12,7 @@ int main(){
 	World world;
 	Player commandinput;
 	world.CreateWorld();
-	printf("Welcome to Take the gold\nThis game is based on Zork for a class project.\nXavier Olivenza\nCITM Terrassa 2015-2016\n\n//------------------------------------------------------------------------//\n// Lore:                                                                  //\n// You are a thief who must steal the treasure of the king in his castle. //\n//------------------------------------------------------------------------//\n\nYou can move using:\nn/s/e/w\nnorth/east/south/west\ngo north/go east/go south/go west\nAlso you can use the commands:\nlook->to see the description of the room where you are\nlook+north/east/south/west->to see the description of the path\nopen/close+north/east/south/west->to open/close door\nquit->to quit the game\nLet's start!\n\n");
+	printf("Welcome to Take the gold\nThis game is based on Zork for a class project.\nXavier Olivenza\nCITM Terrassa 2015-2016\n\n//------------------------------------------------------------------------//\n// Lore:                                                                  //\n// You are a thief who must steal the treasure of the king in his castle. //\n//------------------------------------------------------------------------//\n\nYou can move using:\nn/s/e/w\nnorth/east/south/west\ngo n/go e/go s/go w\ngo north/go east/go south/go west\nAlso you can use the commands:\nlook->to see the description of the room where you are\nlook+north/east/south/west->to see the description of the path\nopen/close+north/east/south/west->to open/close door\nquit->to quit the game\nLet's start!\n\n");
 
 	do{
 		printf("//------------------------------------------------------------//\n");
