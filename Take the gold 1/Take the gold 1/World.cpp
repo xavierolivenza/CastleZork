@@ -196,7 +196,6 @@ void World::CreateWorld() const{
 void World::executecommand1word(int command1, int& actual_position){
 	int exitnum = 0, roomnum = 0;
 	player->current_room = &castlerooms[actual_position];
-
 	if (command1 == NORTH){
 		for (exitnum = 0; exitnum < NUMEXITS; exitnum++){
 			if (exitnum % 4 == 0){//North exits are each 4 exits, starting from 0, North exits = 0, 4, 8, 12, 16...
@@ -204,7 +203,7 @@ void World::executecommand1word(int command1, int& actual_position){
 					for (roomnum = 0; roomnum < NUMROOMS; roomnum++){
 						if (exits[exitnum].destination == &castlerooms[roomnum]){
 							if (exits[exitnum].door == true && exits[exitnum].close == true){
-								printf("\nLocked door.\n");
+								printf("Locked door.\n");
 								return;
 							}
 							else{
@@ -219,7 +218,7 @@ void World::executecommand1word(int command1, int& actual_position){
 			}
 
 		}
-		printf("\nThere is a wall.\n");
+		printf("There is a wall.\n");
 	}
 	else if (command1 == EAST){
 		for (exitnum = 0; exitnum < NUMEXITS; exitnum++){
@@ -228,7 +227,7 @@ void World::executecommand1word(int command1, int& actual_position){
 					for (roomnum = 0; roomnum < NUMROOMS; roomnum++){
 						if (exits[exitnum].destination == &castlerooms[roomnum]){
 							if (exits[exitnum].door == true && exits[exitnum].close == true){
-								printf("\nLocked door.\n");
+								printf("Locked door.\n");
 								return;
 							}
 							else{
@@ -242,7 +241,7 @@ void World::executecommand1word(int command1, int& actual_position){
 				}
 			}
 		}
-		printf("\nThere is a wall.\n");
+		printf("There is a wall.\n");
 	}
 	else if (command1 == SOUTH){
 		for (exitnum = 0; exitnum < NUMEXITS; exitnum++){
@@ -251,7 +250,7 @@ void World::executecommand1word(int command1, int& actual_position){
 					for (roomnum = 0; roomnum < NUMROOMS; roomnum++){
 						if (exits[exitnum].destination == &castlerooms[roomnum]){
 							if (exits[exitnum].door == true && exits[exitnum].close == true){
-								printf("\nLocked door.\n");
+								printf("Locked door.\n");
 								return;
 							}
 							else{
@@ -265,7 +264,7 @@ void World::executecommand1word(int command1, int& actual_position){
 				}
 			}
 		}
-		printf("\nThere is a wall.\n");
+		printf("There is a wall.\n");
 	}
 	else if (command1 == WEST){
 		for (exitnum = 0; exitnum < NUMEXITS; exitnum++){
@@ -275,7 +274,7 @@ void World::executecommand1word(int command1, int& actual_position){
 					for (roomnum = 0; roomnum < NUMROOMS; roomnum++){
 						if (exits[exitnum].destination == &castlerooms[roomnum]){
 							if (exits[exitnum].door == true && exits[exitnum].close == true){
-								printf("\nLocked door.\n");
+								printf("Locked door.\n");
 								return;
 							}
 							else{
@@ -289,7 +288,7 @@ void World::executecommand1word(int command1, int& actual_position){
 				}
 			}
 		}
-		printf("\nThere is a wall.\n");
+		printf("There is a wall.\n");
 	}
 	else if (command1 == LOOK){
 		printf("%s\n\n", castlerooms[actual_position].description, actual_position);
@@ -307,6 +306,7 @@ void World::executecommand1word(int command1, int& actual_position){
 
 void World::executecommand2words(int command1, int command2, int& actual_position){
 	int exitnum = 0, roomnum = 0;
+	int exitnumdoors = 0, roomnumdoors = 0;
 	player->current_room = &castlerooms[actual_position];
 	// ---------------------------------------------------------------------------------------------------------------
 	if (command1 == LOOK){
@@ -378,7 +378,7 @@ void World::executecommand2words(int command1, int command2, int& actual_positio
 				}
 
 			}
-			printf("\nThere is a wall.\n");
+			printf("There is a wall.\n");
 		}
 		else if ((command2 == EAST)){
 			for (exitnum = 0; exitnum < NUMEXITS; exitnum++){
@@ -401,7 +401,7 @@ void World::executecommand2words(int command1, int command2, int& actual_positio
 					}
 				}
 			}
-			printf("\nThere is a wall.\n");
+			printf("There is a wall.\n");
 		}
 		else if ((command2 == SOUTH)){
 			for (exitnum = 0; exitnum < NUMEXITS; exitnum++){
@@ -424,7 +424,7 @@ void World::executecommand2words(int command1, int command2, int& actual_positio
 					}
 				}
 			}
-			printf("\nThere is a wall.\n");
+			printf("There is a wall.\n");
 		}
 		else if ((command2 == WEST)){
 			for (exitnum = 0; exitnum < NUMEXITS; exitnum++){
@@ -448,7 +448,7 @@ void World::executecommand2words(int command1, int command2, int& actual_positio
 					}
 				}
 			}
-			printf("\nThere is a wall.\n");
+			printf("There is a wall.\n");
 		}
 		else{
 			printf("That's not a valid command.\n");
@@ -458,12 +458,20 @@ void World::executecommand2words(int command1, int command2, int& actual_positio
 	else if (command1 == OPEN){
 		if ((command2 == NORTH)){
 			for (exitnum = 0; exitnum < NUMEXITS; exitnum++){
-				if (0 == strcmp(exits[exitnum].origin->name, player->current_room->name)){
+				if (strcmp(exits[exitnum].origin->name, player->current_room->name) == 0){
 					if (exitnum % 4 == 0){//North exits are each 4 exits, starting from 0, North exits = 0, 4, 8, 12, 16...
 						if (exits[exitnum].door == true){//check if there's a door
 							if (exits[exitnum].close == true){
-								exits[exitnum].close = false;
-								printf("The door is opened.\n");
+								exits[exitnum].close = false;//open the door of the current room
+								for (exitnumdoors = 0; exitnumdoors < NUMEXITS; exitnumdoors++){
+									if (exitnumdoors % 4 == 2){//South exits are each 4 exits, starting from 2, South exits = 2, 6, 10, 14, 18...
+										if (exits[exitnumdoors].destination->name == exits[exitnum].origin->name){
+											exits[exitnumdoors].close = false;
+											printf("The door is opened.\n");
+											return;
+										}
+									}
+								}
 							}
 							else{
 								printf("The door was already opened.\n");
@@ -480,12 +488,20 @@ void World::executecommand2words(int command1, int command2, int& actual_positio
 		}
 		else if ((command2 == EAST)){
 			for (exitnum = 0; exitnum < NUMEXITS; exitnum++){
-				if (0 == strcmp(exits[exitnum].origin->name, player->current_room->name)){
+				if (strcmp(exits[exitnum].origin->name, player->current_room->name) == 0){
 					if (exitnum % 4 == 1){//East exits are each 4 exits, starting from 1, East exits = 1, 5, 9, 13...
 						if (exits[exitnum].door == true){//check if there's a door
 							if (exits[exitnum].close == true){
-								exits[exitnum].close = false;
-								printf("The door is opened.\n");
+								exits[exitnum].close = false;//open the door of the current room
+								for (exitnumdoors = 0; exitnumdoors < NUMEXITS; exitnumdoors++){
+									if (exitnumdoors % 4 == 3){//West exits are each 4 exits, starting from 0, West exits = 3, 7, 11, 15, 19...
+										if (exits[exitnumdoors].destination->name == exits[exitnum].origin->name){
+											exits[exitnumdoors].close = false;
+											printf("The door is opened.\n");
+											return;
+										}
+									}
+								}
 							}
 							else{
 								printf("The door was already opened.\n");
@@ -502,12 +518,20 @@ void World::executecommand2words(int command1, int command2, int& actual_positio
 		}
 		else if ((command2 == SOUTH)){
 			for (exitnum = 0; exitnum < NUMEXITS; exitnum++){
-				if (0 == strcmp(exits[exitnum].origin->name, player->current_room->name)){
+				if (strcmp(exits[exitnum].origin->name, player->current_room->name) == 0){
 					if (exitnum % 4 == 2){//South exits are each 4 exits, starting from 2, South exits = 2, 6, 10, 14, 18...
 						if (exits[exitnum].door == true){//check if there's a door
 							if (exits[exitnum].close == true){
-								exits[exitnum].close = false;
-								printf("The door is opened.\n");
+								exits[exitnum].close = false;//open the door of the current room
+								for (exitnumdoors = 0; exitnumdoors < NUMEXITS; exitnumdoors++){
+									if (exitnumdoors % 4 == 0){//North exits are each 4 exits, starting from 0, North exits = 0, 4, 8, 12, 16...
+										if (exits[exitnumdoors].destination->name == exits[exitnum].origin->name){
+											exits[exitnumdoors].close = false;
+											printf("The door is opened.\n");
+											return;
+										}
+									}
+								}
 							}
 							else{
 								printf("The door was already opened.\n");
@@ -524,12 +548,20 @@ void World::executecommand2words(int command1, int command2, int& actual_positio
 		}
 		else if ((command2 == WEST)){
 			for (exitnum = 0; exitnum < NUMEXITS; exitnum++){
-				if (0 == strcmp(exits[exitnum].origin->name, player->current_room->name)){
-					if (exitnum % 4 == 3){//North exits are each 4 exits, starting from 0, North exits = 3, 7, 11, 15, 19...
+				if (strcmp(exits[exitnum].origin->name, player->current_room->name) == 0){
+					if (exitnum % 4 == 3){//West exits are each 4 exits, starting from 0, West exits = 3, 7, 11, 15, 19...
 						if (exits[exitnum].door == true){//check if there's a door
 							if (exits[exitnum].close == true){
-								exits[exitnum].close = false;
-								printf("The door is opened.\n");
+								exits[exitnum].close = false;//open the door of the current room
+								for (exitnumdoors = 0; exitnumdoors < NUMEXITS; exitnumdoors++){
+									if (exitnumdoors % 4 == 1){//East exits are each 4 exits, starting from 1, East exits = 1, 5, 9, 13...
+										if (exits[exitnumdoors].destination->name == exits[exitnum].origin->name){
+											exits[exitnumdoors].close = false;
+											printf("The door is opened.\n");
+											return;
+										}
+									}
+								}
 							}
 							else{
 								printf("The door was already opened.\n");
@@ -552,12 +584,20 @@ void World::executecommand2words(int command1, int command2, int& actual_positio
 	else if (command1 == CLOSE){
 		if ((command2 == NORTH)){
 			for (exitnum = 0; exitnum < NUMEXITS; exitnum++){
-				if (0 == strcmp(exits[exitnum].origin->name, player->current_room->name)){
+				if (strcmp(exits[exitnum].origin->name, player->current_room->name) == 0){
 					if (exitnum % 4 == 0){//North exits are each 4 exits, starting from 0, North exits = 0, 4, 8, 12, 16...
 						if (exits[exitnum].door == true){//check if there's a door
 							if (exits[exitnum].close == false){
-								exits[exitnum].close = true;
-								printf("The door is closed.\n");
+								exits[exitnum].close = true;//open the door of the current room
+								for (exitnumdoors = 0; exitnumdoors < NUMEXITS; exitnumdoors++){
+									if (exitnumdoors % 4 == 2){//South exits are each 4 exits, starting from 2, South exits = 2, 6, 10, 14, 18...
+										if (exits[exitnumdoors].destination->name == exits[exitnum].origin->name){
+											exits[exitnumdoors].close = true;
+											printf("The door is closed.\n");
+											return;
+										}
+									}
+								}
 							}
 							else{
 								printf("The door was already closed.\n");
@@ -574,12 +614,20 @@ void World::executecommand2words(int command1, int command2, int& actual_positio
 		}
 		else if ((command2 == EAST)){
 			for (exitnum = 0; exitnum < NUMEXITS; exitnum++){
-				if (0 == strcmp(exits[exitnum].origin->name, player->current_room->name)){
+				if (strcmp(exits[exitnum].origin->name, player->current_room->name) == 0){
 					if (exitnum % 4 == 1){//East exits are each 4 exits, starting from 1, East exits = 1, 5, 9, 13...
 						if (exits[exitnum].door == true){//check if there's a door
 							if (exits[exitnum].close == false){
-								exits[exitnum].close = true;
-								printf("The door is closed.\n");
+								exits[exitnum].close = true;//open the door of the current room
+								for (exitnumdoors = 0; exitnumdoors < NUMEXITS; exitnumdoors++){
+									if (exitnumdoors % 4 == 3){//West exits are each 4 exits, starting from 0, West exits = 3, 7, 11, 15, 19...
+										if (exits[exitnumdoors].destination->name == exits[exitnum].origin->name){
+											exits[exitnumdoors].close = true;
+											printf("The door is closed.\n");
+											return;
+										}
+									}
+								}
 							}
 							else{
 								printf("The door was already closed.\n");
@@ -596,12 +644,20 @@ void World::executecommand2words(int command1, int command2, int& actual_positio
 		}
 		else if ((command2 == SOUTH)){
 			for (exitnum = 0; exitnum < NUMEXITS; exitnum++){
-				if (0 == strcmp(exits[exitnum].origin->name, player->current_room->name)){
+				if (strcmp(exits[exitnum].origin->name, player->current_room->name) == 0){
 					if (exitnum % 4 == 2){//South exits are each 4 exits, starting from 2, South exits = 2, 6, 10, 14, 18...
 						if (exits[exitnum].door == true){//check if there's a door
 							if (exits[exitnum].close == false){
-								exits[exitnum].close = true;
-								printf("The door is closed.\n");
+								exits[exitnum].close = true;//open the door of the current room
+								for (exitnumdoors = 0; exitnumdoors < NUMEXITS; exitnumdoors++){
+									if (exitnumdoors % 4 == 0){//North exits are each 4 exits, starting from 0, North exits = 0, 4, 8, 12, 16...
+										if (exits[exitnumdoors].destination->name == exits[exitnum].origin->name){
+											exits[exitnumdoors].close = true;
+											printf("The door is closed.\n");
+											return;
+										}
+									}
+								}
 							}
 							else{
 								printf("The door was already closed.\n");
@@ -618,12 +674,20 @@ void World::executecommand2words(int command1, int command2, int& actual_positio
 		}
 		else if ((command2 == WEST)){
 			for (exitnum = 0; exitnum < NUMEXITS; exitnum++){
-				if (0 == strcmp(exits[exitnum].origin->name, player->current_room->name)){
-					if (exitnum % 4 == 3){//North exits are each 4 exits, starting from 0, North exits = 3, 7, 11, 15, 19...
+				if (strcmp(exits[exitnum].origin->name, player->current_room->name) == 0){
+					if (exitnum % 4 == 3){//West exits are each 4 exits, starting from 0, West exits = 3, 7, 11, 15, 19...
 						if (exits[exitnum].door == true){//check if there's a door
 							if (exits[exitnum].close == false){
-								exits[exitnum].close = true;
-								printf("The door is closed.\n");
+								exits[exitnum].close = true;//open the door of the current room
+								for (exitnumdoors = 0; exitnumdoors < NUMEXITS; exitnumdoors++){
+									if (exitnumdoors % 4 == 1){//East exits are each 4 exits, starting from 1, East exits = 1, 5, 9, 13...
+										if (exits[exitnumdoors].destination->name == exits[exitnum].origin->name){
+											exits[exitnumdoors].close = true;
+											printf("The door is closed.\n");
+											return;
+										}
+									}
+								}
 							}
 							else{
 								printf("The door was already closed.\n");
@@ -637,9 +701,6 @@ void World::executecommand2words(int command1, int command2, int& actual_positio
 					}
 				}
 			}
-		}
-		else{
-			printf("That's not a valid command.\n");
 		}
 	}
 	// ---------------------------------------------------------------------------------------------------------------
