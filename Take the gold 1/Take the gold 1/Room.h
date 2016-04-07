@@ -1,15 +1,12 @@
 #ifndef __Room__
 #define __Room__
 
-#define TEXTLENGTH 100
+#include "Entity.h"
 
-class Room{
+class Room : public Entity{
 public:
 	Room();
 	~Room();
-public:
-	char name[25];
-	char description[TEXTLENGTH];
 };
 
 #endif //__Room__

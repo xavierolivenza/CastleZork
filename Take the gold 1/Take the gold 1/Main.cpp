@@ -4,31 +4,45 @@
 #include "World.h"
 
 int main(){
-	char full_firstcommand[20];
-	int command1 = 0, command2 = 0;
+	String fullcommand("\0"), firstcommand("\0"), secondcommand("\0"), thirdcommand("\0"), fouthcommand("\0");
+	char command[30];
+	int command1 = 0, command2 = 0, command3 = 0, command4 = 0;
 	int command_words = 0, i = 0;
 	int actual_position = 0;
 
 	World world;
 	Player commandinput;
+
 	world.CreateWorld();
 	printf("Welcome to Take the gold\nThis game is based on Zork for a class project.\nXavier Olivenza\nCITM Terrassa 2015-2016\n\n//------------------------------------------------------------------------//\n// Lore:                                                                  //\n// You are a thief who must steal the treasure of the king in his castle. //\n//------------------------------------------------------------------------//\n\nYou can move using:\nn/s/e/w\nnorth/east/south/west\ngo n/go e/go s/go w\ngo north/go east/go south/go west\nAlso you can use the commands:\nlook->to see the description of the room where you are\nlook+north/east/south/west->to see the description of the path\nopen/close+north/east/south/west->to open/close door\nquit->to quit the game\nLet's start!\n\n");
 
 	do{
 		printf("//------------------------------------------------------------//\n");
-		printf("You are in %s.\n%s\n", world.player->current_room->name, world.player->current_room->description);
+		
+		printf("You are in %s.\n%s\n", world.player->current_room->name.c_str(), world.player->current_room->description.c_str());
 		printf("What do you want to do?\n");
-		gets_s(full_firstcommand);
-
+		gets_s(command);
+		fullcommand = command;
+		
 		command_words = 0;
 
+		fullcommand.tokenize(firstcommand, secondcommand, thirdcommand, fouthcommand);
+		
+		printf("Inside main.\n");
+		printf("firstcommand: '%s'\n", firstcommand.c_str());
+		printf("secondcommand: '%s'\n", secondcommand.c_str());
+		printf("thirdcommand: '%s'\n", thirdcommand.c_str());
+		printf("fouthcommand: '%s'\n", fouthcommand.c_str());
+
+		/*
 		for (i = 0; i <= (strlen(full_firstcommand)); i++){//Detects if the command has 1 or more words
 			if (full_firstcommand[i] == ' '){
 				command_words++;
 			}
 			full_firstcommand[i] = tolower(full_firstcommand[i]);//Transform all letters to lower case
 		}
-
+		*/
+		/*
 		char* secondcommand = commandinput.command_split(full_firstcommand);
 		command1 = commandinput.check_firstcommand(full_firstcommand);
 
@@ -39,7 +53,7 @@ int main(){
 			command2 = commandinput.check_secondcommand(secondcommand);
 			world.executecommand2words(command1, command2, actual_position);
 		}
-
+		*/
 	} while (command1 != 4);//Cheks if command is 'quit'
 	system("pause");
 	return 0;

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+
 #include "World.h"
 
 Player::Player(){
@@ -7,67 +8,59 @@ Player::Player(){
 Player::~Player(){
 }
 
-char* Player::command_split(char* fullcommand)const{
-	char *context, *firstcommand, *secondcommand;//Strtok_s variable, need it to save the state of the string he analyzes. Doesn't needed with strtok.
-	firstcommand = strtok_s(fullcommand, " ", &context);
-	secondcommand = strtok_s(NULL, " ", &context);
-	// --------------------------------------------------------------------------------------------------------------
-	return secondcommand;
-}
-
 int Player::check_firstcommand(char* firstcommand)const{
-	if (strcmp(firstcommand, "look") == 0){
+	if (firstcommand == "look"){
 		return LOOK;
 	}
-	else if (strcmp(firstcommand, "go") == 0){
+	else if (firstcommand == "go"){
 		return GO;
 	}
-	else if (strcmp(firstcommand, "open") == 0){
+	else if (firstcommand == "open"){
 		return OPEN;
 	}
-	else if (strcmp(firstcommand, "close") == 0){
+	else if (firstcommand == "close"){
 		return CLOSE;
 	}
-	else if (strcmp(firstcommand, "quit") == 0){
+	else if (firstcommand == "quit"){
 		return QUIT;
 	}
-	else if (strcmp(firstcommand, "q") == 0){
+	else if (firstcommand == "q"){
 		return QUIT;
 	}
-	else if (strcmp(firstcommand, "help") == 0){
+	else if (firstcommand == "help"){
 		return HELP;
 	}
-	else if (strcmp(firstcommand, "h") == 0){
+	else if (firstcommand == "h"){
 		return HELP;
 	}
 	// ---------------------------------------------------------------------------------------------------------------
 	//Detection commands with 1 word
-	else if ((strcmp(firstcommand, "north") == 0) || (strcmp(firstcommand, "n") == 0)){
+	else if ((firstcommand == "north") || (firstcommand == "n")){
 		return NORTH;
 	}
-	else if ((strcmp(firstcommand, "east") == 0) || (strcmp(firstcommand, "e") == 0)){
+	else if ((firstcommand == "east") || (firstcommand == "e")){
 		return EAST;
 	}
-	else if ((strcmp(firstcommand, "south") == 0) || (strcmp(firstcommand, "s") == 0)){
+	else if ((firstcommand == "south") || (firstcommand == "s")){
 		return SOUTH;
 	}
-	else if ((strcmp(firstcommand, "west") == 0) || (strcmp(firstcommand, "w") == 0)){
+	else if ((firstcommand == "west") || (firstcommand == "w")){
 		return WEST;
 	}
 	// ---------------------------------------------------------------------------------------------------------------
 }
 
 int Player::check_secondcommand(char* secondcommand)const{
-	if ((strcmp(secondcommand, "north") == 0) || (strcmp(secondcommand, "n") == 0)){
+	if ((secondcommand == "north") || (secondcommand == "n")){
 		return NORTH;
 	}
-	else if ((strcmp(secondcommand, "east") == 0) || (strcmp(secondcommand, "e") == 0)){
+	else if ((secondcommand == "east") || (secondcommand == "e")){
 		return EAST;
 	}
-	else if ((strcmp(secondcommand, "south") == 0) || (strcmp(secondcommand, "s") == 0)){
+	else if ((secondcommand == "south") || (secondcommand == "s")){
 		return SOUTH;
 	}
-	else if ((strcmp(secondcommand, "west") == 0) || (strcmp(secondcommand, "w") == 0)){
+	else if ((secondcommand == "west") || (secondcommand == "w")){
 		return WEST;
 	}
 }
