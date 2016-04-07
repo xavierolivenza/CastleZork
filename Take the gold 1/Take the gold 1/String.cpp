@@ -5,23 +5,22 @@
 #include <string.h>
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 
 String::String(){
-	capacity = 2;
+	capacity = 1;
 	buffer = new char[capacity];
-	strcpy_s(buffer, capacity, " ");
+	strcpy_s(buffer, capacity, "\0");
 }
 
 String::String(const char* str){
-	unsigned int leng = strlen(str) + 1;
-	capacity = leng;
+	capacity = strlen(str) + 1;
 	buffer = new char[capacity];
 	strcpy_s(buffer, capacity, str);
 }
 
 String::String(const String& str){
-	unsigned int leng = str.length() + 1;
-	capacity = leng;
+	capacity = str.length() + 1;
 	buffer = new char[capacity];
 	strcpy_s(buffer, capacity, str.buffer);
 }
@@ -51,7 +50,7 @@ void String::clean(){
 }
 
 String String::operator + (const String& str){
-	String temp(" ");
+	String temp;
 	unsigned int leng1 = strlen(buffer);
 	unsigned int leng2 = strlen(str.buffer);
 
@@ -85,6 +84,22 @@ void String::operator = (const char* str){
 }
 
 void String::operator += (const String& str){
+	char* temp = nullptr;
+	temp = new char[capacity];
+	strcpy_s(temp, capacity, buffer);
+
+	if (capacity < length() + str.length() + 1)
+	{
+		capacity = str.length() + length() + 1;
+		delete[] buffer;
+		buffer = new char[capacity];
+	}
+
+	strcpy_s(buffer, capacity, temp);
+	strcat_s(buffer, capacity, str.buffer);
+	delete[] temp;
+
+	/*
 	unsigned int leng1 = strlen(buffer);
 	unsigned int leng2 = strlen(str.buffer);
 
@@ -102,10 +117,11 @@ void String::operator += (const String& str){
 	else{
 		strcat_s(buffer, strlen(buffer), str.buffer);
 	}
+	*/
 }
 
 bool String::operator == (const String& str) const{
-	return !(strcmp(str.buffer, buffer)); //! Not, return 0(false) if equal, not converts to 1(true).
+	return !(strcmp(buffer, str.buffer)); //! Not, return 0(false) if equal, not converts to 1(true).
 }
 
 bool String::operator == (const char* str) const{
@@ -117,40 +133,48 @@ bool String::operator == (const char* str) const{
 	}
 }
 
-void String::tokenize(String& firstcommand, String& secondcommand, String& thirdcommand, String& fouthcommand){
+void String::shrinktofit(){
+	char *temp;
+	temp = new char[length() + 1];
+	strcpy_s(temp, length() + 1, buffer);
+	capacity = length() + 1;
+	delete[]buffer;
+	buffer = new char[capacity];
+	strcpy_s(buffer, capacity, temp);
+}
+
+void String::tokenize(String& firstcommand, String& secondcommand, String& thirdcommand, String& fourthcommand){
 	String buffercopy;
 	unsigned int leng = length() + 1;
 	char *context;//Strtok_s variable, need it to save the state of the string he analyzes. Doesn't needed with strtok.
 	buffercopy.buffer = new char[capacity];
 	buffercopy = buffer;
 
-	char *check;
-	firstcommand = strtok_s(buffer, " ", &context);
-	check = context;
-	if (strtok_s(NULL, " ", &check) != NULL){
+	firstcommand = strtok_s(buffercopy.buffer, " ,.-", &context);
+	if (*context != NULL){
 		secondcommand = strtok_s(NULL, " ", &context);
-		check = context;
-		if (strtok_s(NULL, " ", &check) != NULL){
+		if (*context != NULL){
 			thirdcommand = strtok_s(NULL, " ", &context);
-			check = context;
-			if (strtok_s(NULL, " ", &check) != NULL){
-				fouthcommand = strtok_s(NULL, " ", &context);
+			if (*context != NULL){
+				fourthcommand = strtok_s(NULL, " ,.-", &context);
 			}
 			else{
-				fouthcommand.clean();
+				fourthcommand.clean();
 			}
 		}
 		else{
 			thirdcommand.clean();
+			fourthcommand.clean();
 		}
 	}
 	else{
 		secondcommand.clean();
+		thirdcommand.clean();
+		fourthcommand.clean();
+		
 	}
-
-	printf("Dins string.\n");
-	printf("firstcommand: '%s'\n", firstcommand.c_str());
-	printf("secondcommand: '%s'\n", secondcommand.c_str());
-	printf("thirdcommand: '%s'\n", thirdcommand.c_str());
-	printf("fouthcommand: '%s'\n", fouthcommand.c_str());
+	firstcommand.shrinktofit();
+	secondcommand.shrinktofit();
+	thirdcommand.shrinktofit();
+	fourthcommand.shrinktofit();
 }

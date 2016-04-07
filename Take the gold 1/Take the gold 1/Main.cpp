@@ -1,11 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <ctype.h>
 #include "World.h"
 
 int main(){
-	String fullcommand("\0"), firstcommand("\0"), secondcommand("\0"), thirdcommand("\0"), fouthcommand("\0");
-	char command[30];
+	String fullcommand("\0"), firstcommand("\0"), secondcommand("\0"), thirdcommand("\0"), fourthcommand("\0");
+	char command[50];
 	int command1 = 0, command2 = 0, command3 = 0, command4 = 0;
 	int command_words = 0, i = 0;
 	int actual_position = 0;
@@ -21,19 +20,35 @@ int main(){
 		
 		printf("You are in %s.\n%s\n", world.player->current_room->name.c_str(), world.player->current_room->description.c_str());
 		printf("What do you want to do?\n");
-		gets_s(command);
+		gets_s(command);//If you enters a space -> runtime error.
 		fullcommand = command;
+
+		fullcommand.tokenize(firstcommand, secondcommand, thirdcommand, fourthcommand);
 		
 		command_words = 0;
 
-		fullcommand.tokenize(firstcommand, secondcommand, thirdcommand, fouthcommand);
-		
+		if (firstcommand.c_capacity() != 1){
+			command_words++;
+			if (secondcommand.c_capacity() != 1){
+				command_words++;
+				if (thirdcommand.c_capacity() != 1){
+					command_words++;
+					if (fourthcommand.c_capacity() != 1){
+						command_words++;
+					}
+				}
+			}
+		}
+		/*
+		//TEST Prints
+		printf("Capacity: %i, %i, %i, %i\n", firstcommand.c_capacity(), secondcommand.c_capacity(), thirdcommand.c_capacity(), fourthcommand.c_capacity());
 		printf("Inside main.\n");
 		printf("firstcommand: '%s'\n", firstcommand.c_str());
 		printf("secondcommand: '%s'\n", secondcommand.c_str());
 		printf("thirdcommand: '%s'\n", thirdcommand.c_str());
-		printf("fouthcommand: '%s'\n", fouthcommand.c_str());
-
+		printf("fouthcommand: '%s'\n", fourthcommand.c_str());
+		printf("words = %i\n", command_words);
+		*/
 		/*
 		for (i = 0; i <= (strlen(full_firstcommand)); i++){//Detects if the command has 1 or more words
 			if (full_firstcommand[i] == ' '){
