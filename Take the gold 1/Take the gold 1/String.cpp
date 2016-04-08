@@ -1,11 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 #include "World.h"
-#include <stdio.h>
-#include <string.h>
-#include <stdio.h>
-#include <string.h>
 #include <ctype.h>
+#include "string.h"
 
 String::String(){
 	capacity = 1;
@@ -121,12 +118,12 @@ void String::operator += (const String& str){
 }
 
 bool String::operator == (const String& str) const{
-	return !(strcmp(buffer, str.buffer)); //! Not, return 0(false) if equal, not converts to 1(true).
+	return !(_stricmp(buffer, str.buffer)); //! Not, return 0(false) if equal, not converts to 1(true).
 }
 
 bool String::operator == (const char* str) const{
 	if (str != nullptr){
-		return !(strcmp(buffer, str)); //! Not, return 0(false) if equal, not converts to 1(true).
+		return !(_stricmp(buffer, str)); //! Not, return 0(false) if equal, not converts to 1(true).
 	}
 	else{
 		return false;
@@ -143,8 +140,9 @@ void String::shrinktofit(){
 	strcpy_s(buffer, capacity, temp);
 }
 
-void String::tokenize(String& firstcommand, String& secondcommand, String& thirdcommand, String& fourthcommand){
+void String::tokenize(String& firstcommand, String& secondcommand, String& thirdcommand, String& fourthcommand) const{
 	String buffercopy;
+	String trash;
 	unsigned int leng = length() + 1;
 	char *context;//Strtok_s variable, need it to save the state of the string he analyzes. Doesn't needed with strtok.
 	buffercopy.buffer = new char[capacity];
@@ -152,7 +150,20 @@ void String::tokenize(String& firstcommand, String& secondcommand, String& third
 
 	firstcommand = strtok_s(buffercopy.buffer, " ,.-", &context);
 	if (*context != NULL){
-		secondcommand = strtok_s(NULL, " ", &context);
+		if (strstr(context, "gas mask") != nullptr){
+			secondcommand = "gas mask";
+			trash = strtok_s(NULL, " ", &context);
+			trash = strtok_s(NULL, " ", &context);
+		}
+		else if (strstr(context, "venom gas grenade") != nullptr){
+			secondcommand = "venom gas grenade";
+			trash = strtok_s(NULL, " ", &context);
+			trash = strtok_s(NULL, " ", &context);
+			trash = strtok_s(NULL, " ", &context);
+		}
+		else{
+			secondcommand = strtok_s(NULL, " ", &context);
+		}
 		if (*context != NULL){
 			thirdcommand = strtok_s(NULL, " ", &context);
 			if (*context != NULL){
@@ -171,7 +182,6 @@ void String::tokenize(String& firstcommand, String& secondcommand, String& third
 		secondcommand.clean();
 		thirdcommand.clean();
 		fourthcommand.clean();
-		
 	}
 	firstcommand.shrinktofit();
 	secondcommand.shrinktofit();

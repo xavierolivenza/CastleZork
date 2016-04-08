@@ -14,7 +14,7 @@
 #define NUMROOMS 9
 #define NUMCOMMANDS 7
 #define NUMEXITS 36
-#define NUMITEMS 8
+#define NUMITEMS 7
 
 class World{
 public:
@@ -29,5 +29,6 @@ public:
 	void CreateWorld() const;
 	void executecommand1word(const int, int&)const;
 	void executecommand2words(const int, const int, int&)const;
+	void executecommand4words(const int, const int, const int, const int, int&)const;
 };
 #endif //__World__

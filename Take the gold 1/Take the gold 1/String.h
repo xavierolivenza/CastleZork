@@ -23,7 +23,7 @@ public:
 	void clean();
 	unsigned int c_capacity() const;
 	void shrinktofit();
-	void tokenize(String& firstcommand, String& secondcommand, String& thirdcommand, String& fouthcommand);
+	void tokenize(String& firstcommand, String& secondcommand, String& thirdcommand, String& fouthcommand) const;
 
 public:
 

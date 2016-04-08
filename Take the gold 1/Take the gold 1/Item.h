@@ -10,6 +10,7 @@ public:
 public:
 	int attack;
 	int defense;
+	int uses;
 	bool inventory = false;
 	bool equiped = false;
 };

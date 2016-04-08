@@ -25,19 +25,26 @@ int main(){
 
 		fullcommand.tokenize(firstcommand, secondcommand, thirdcommand, fourthcommand);
 		
-		command_words = 0;
+		command_words = commandinput.check_numcommands(firstcommand, secondcommand, thirdcommand, fourthcommand);
+		
+		command1 = commandinput.check_firstcommand(firstcommand);
+		command2 = commandinput.check_secondcommand(secondcommand);
+		command3 = commandinput.check_thirdcommand(firstcommand, thirdcommand);
+		command4 = commandinput.check_fourthcommand(fourthcommand);
 
-		if (firstcommand.c_capacity() != 1){
-			command_words++;
-			if (secondcommand.c_capacity() != 1){
-				command_words++;
-				if (thirdcommand.c_capacity() != 1){
-					command_words++;
-					if (fourthcommand.c_capacity() != 1){
-						command_words++;
-					}
-				}
-			}
+		switch (command_words){
+		case 1:
+			world.executecommand1word(command1, actual_position);
+			break;
+		case 2:
+			world.executecommand2words(command1, command2, actual_position);
+			break;
+		case 4:
+			world.executecommand4words(command1, command2, command3, command4, actual_position);
+			break;
+		default:
+			printf("That's not a valid command.\n");
+			break;
 		}
 		/*
 		//TEST Prints
@@ -48,26 +55,6 @@ int main(){
 		printf("thirdcommand: '%s'\n", thirdcommand.c_str());
 		printf("fouthcommand: '%s'\n", fourthcommand.c_str());
 		printf("words = %i\n", command_words);
-		*/
-		/*
-		for (i = 0; i <= (strlen(full_firstcommand)); i++){//Detects if the command has 1 or more words
-			if (full_firstcommand[i] == ' '){
-				command_words++;
-			}
-			full_firstcommand[i] = tolower(full_firstcommand[i]);//Transform all letters to lower case
-		}
-		*/
-		/*
-		char* secondcommand = commandinput.command_split(full_firstcommand);
-		command1 = commandinput.check_firstcommand(full_firstcommand);
-
-		if ((command_words) == 0){//Execute commands with 1 word
-			world.executecommand1word(command1, actual_position);
-		}
-		else if ((command_words) == 1){//Execute commands with 2 words
-			command2 = commandinput.check_secondcommand(secondcommand);
-			world.executecommand2words(command1, command2, actual_position);
-		}
 		*/
 	} while (command1 != 4);//Cheks if command is 'quit'
 	system("pause");

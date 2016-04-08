@@ -9,6 +9,7 @@ World::World(){
 	player->current_room = &castlerooms[TOWER1];
 	items = new Item[NUMITEMS];
 }
+
 World::~World(){
 	delete[] castlerooms;
 	delete[] exits;
@@ -285,41 +286,43 @@ void World::CreateWorld() const{
 	items[0].description = "This is the ancient rusty katana of a japanese guy, but still sharpened.";
 	items[0].attack = 35;
 	items[0].defense = 0;
+	items[0].uses = 1000;
 	// Gas Mask
 	items[1].name = "Gas Mask";
 	items[1].description = "This gas mask can save you from toxic gases.";
 	items[1].attack = 0;
 	items[1].defense = 0;
+	items[1].uses = 1000;
 	// Treasure
 	items[2].name = "Treasure";
 	items[2].description = "Your goal, the mighty treasure of the king.";
 	items[2].attack = 0;
 	items[2].defense = 0;
+	items[2].uses = 1000;
 	// Venom Gas Granade 1
 	items[3].name = "Venom Gas Granade";
 	items[3].description = "Usefull against big groups of enemies, but you should search a gas mask.";
 	items[3].attack = 100;
 	items[3].defense = 0;
-	// Venom Gas Granade 2
-	items[4].name = "Venom Gas Granade";
-	items[4].description = "Usefull against big groups of enemies, but you should search a gas mask.";
-	items[4].attack = 100;
-	items[4].defense = 0;
+	items[3].uses = 2;
 	// Sword
-	items[5].name = "Sword";
-	items[5].description = "Fullmetal sharpened sword, kill enemies with 2 hits.";
-	items[5].attack = 50;
-	items[5].defense = 0;
+	items[4].name = "Sword";
+	items[4].description = "Fullmetal sharpened sword, kill enemies with 2 hits.";
+	items[4].attack = 50;
+	items[4].defense = 0;
+	items[4].uses = 1000;
 	// Shield
-	items[6].name = "Shield";
-	items[6].description = "Protect you from enemy attacks.";
-	items[6].attack = 0;
-	items[6].defense = 75;
+	items[5].name = "Shield";
+	items[5].description = "Protect you from enemy attacks.";
+	items[5].attack = 0;
+	items[5].defense = 75;
+	items[5].uses = 1000;
 	// Explosive
-	items[7].name = "Explosive";
-	items[7].description = "You can blow the treasure wall with that.";
-	items[7].attack = 1000;
-	items[7].defense = 0;
+	items[6].name = "Explosive";
+	items[6].description = "You can blow the treasure wall with that.";
+	items[6].attack = 1000;
+	items[6].defense = 0;
+	items[6].uses = 1000;
 }
 
 void World::executecommand1word(const int command1, int& actual_position)const{
@@ -375,7 +378,7 @@ void World::executecommand1word(const int command1, int& actual_position)const{
 			printf("Nothing in the inventory.\n");
 		}
 	}
-	else if (command1 == EQUIPED){
+	else if (command1 == EQUIPPED){
 		printf("Player Equipped stuff:\n");
 		for (i = 0; i <= 8; i++){
 			if (items[i].equiped == true){
@@ -519,7 +522,7 @@ void World::executecommand2words(const int command1, const int command2, int& ac
 											}
 										}
 									}
-									
+
 								}
 							}
 							else{
@@ -612,4 +615,8 @@ void World::executecommand2words(const int command1, const int command2, int& ac
 			printf("That's not a valid command.\n");
 		}
 	}
+}
+
+void World::executecommand4words(const int command1, const int command2, const int command3, const int command4, int& actual_position)const{
+
 }
