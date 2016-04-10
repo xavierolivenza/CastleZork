@@ -67,7 +67,7 @@ int Player::check_firstcommand(const String& firstcommand)const{
 	else if (firstcommand == "get"){
 		return GET;
 	}
-	else if ((firstcommand == "stats") || (firstcommand == "s")){
+	else if (firstcommand == "stats"){
 		return STATS;
 	}
 }
@@ -95,7 +95,7 @@ int Player::check_secondcommand(const String& secondcommand)const{
 		return TREASURE;
 	}
 	else if (secondcommand == "venom gas grenade"){
-		return GRANADE;
+		return GRENADE;
 	}
 	else if (secondcommand == "sword"){
 		return SWORD;

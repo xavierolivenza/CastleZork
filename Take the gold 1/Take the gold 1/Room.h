@@ -7,6 +7,8 @@ class Room : public Entity{
 public:
 	Room();
 	~Room();
+public:
+	bool cupboard = false;
 };
 
 #endif //__Room__

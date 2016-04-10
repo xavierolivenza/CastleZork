@@ -80,6 +80,7 @@ void World::CreateWorld() const{
 	// Tower 3
 	castlerooms[TOWER3].name = "Tower 3";
 	castlerooms[TOWER3].description = "In this tower there is a fireplace, probably something interesting is above it.";
+	castlerooms[TOWER3].cupboard = true;
 	//North
 	exits[8].name = "Wall.";
 	exits[8].description = "There's a wall.";
@@ -108,6 +109,7 @@ void World::CreateWorld() const{
 	// Tower 4
 	castlerooms[TOWER4].name = "Tower 4";
 	castlerooms[TOWER4].description = "In this tower there is a cupboard, probably something interesting is in there.";
+	castlerooms[TOWER4].cupboard = true;
 	//North
 	exits[12].name = "Wall.";
 	exits[12].description = "There's a wall.";
@@ -168,6 +170,7 @@ void World::CreateWorld() const{
 	// East Corridor
 	castlerooms[EASTCORRIDOR].name = "East corridor";
 	castlerooms[EASTCORRIDOR].description = "In this corridor there's a cupboard.";
+	castlerooms[EASTCORRIDOR].cupboard = true;
 	//North
 	exits[20].name = "Wall.";
 	exits[20].description = "There's a wall.";
@@ -196,6 +199,7 @@ void World::CreateWorld() const{
 	// South Corridor
 	castlerooms[SOUTHCORRIDOR].name = "South corridor";
 	castlerooms[SOUTHCORRIDOR].description = "In this corridor there's a cupboard.";
+	castlerooms[SOUTHCORRIDOR].cupboard = true;
 	//North
 	exits[24].name = "Wall.";
 	exits[24].description = "There's a wall.";
@@ -224,6 +228,7 @@ void World::CreateWorld() const{
 	// West Corridor
 	castlerooms[WESTCORRIDOR].name = "West corridor";
 	castlerooms[WESTCORRIDOR].description = "In this corridor there's a table.";
+	castlerooms[WESTCORRIDOR].cupboard = true;
 	//North
 	exits[28].name = "Tower 2 door.";
 	exits[28].description = "There is the tower 2.";
@@ -266,7 +271,7 @@ void World::CreateWorld() const{
 	exits[33].direction = East;
 	//South
 	exits[34].name = "Wall.";
-	exits[34].description = "There's a wall with a canvas.";
+	exits[34].description = "There's a wall with a portrait of the king.";
 	exits[34].origin = &castlerooms[THRONEROOM];
 	exits[34].destination = &castlerooms[THRONEROOM];
 	exits[34].direction = South;
@@ -287,42 +292,56 @@ void World::CreateWorld() const{
 	items[0].attack = 35;
 	items[0].defense = 0;
 	items[0].uses = 1000;
+	items[0].item_room = &castlerooms[SOUTHCORRIDOR];
+	items[0].item_exit = &exits[26];
 	// Gas Mask
 	items[1].name = "Gas Mask";
 	items[1].description = "This gas mask can save you from toxic gases.";
 	items[1].attack = 0;
 	items[1].defense = 0;
 	items[1].uses = 1000;
+	items[1].item_room = &castlerooms[WESTCORRIDOR];
+	items[1].item_exit = &exits[31];
 	// Treasure
 	items[2].name = "Treasure";
 	items[2].description = "Your goal, the mighty treasure of the king.";
 	items[2].attack = 0;
 	items[2].defense = 0;
-	items[2].uses = 1000;
-	// Venom Gas Granade 1
+	items[2].uses = 0;
+	items[2].item_room = &castlerooms[THRONEROOM];
+	items[2].item_exit = &exits[34];
+	// Venom Gas Granade
 	items[3].name = "Venom Gas Granade";
-	items[3].description = "Usefull against big groups of enemies, but you should search a gas mask.";
+	items[3].description = "Usefull against big groups of enemies, but you should search a gas mask to use it safely.";
 	items[3].attack = 100;
 	items[3].defense = 0;
 	items[3].uses = 2;
+	items[3].item_room = &castlerooms[EASTCORRIDOR];
+	items[3].item_exit = &exits[21];
 	// Sword
 	items[4].name = "Sword";
 	items[4].description = "Fullmetal sharpened sword, kill enemies with 2 hits.";
 	items[4].attack = 50;
 	items[4].defense = 0;
 	items[4].uses = 1000;
+	items[4].item_room = &castlerooms[TOWER3];
+	items[4].item_exit = &exits[11];
 	// Shield
 	items[5].name = "Shield";
 	items[5].description = "Protect you from enemy attacks.";
 	items[5].attack = 0;
 	items[5].defense = 75;
 	items[5].uses = 1000;
+	items[5].item_room = &castlerooms[TOWER3];
+	items[5].item_exit = &exits[11];
 	// Explosive
 	items[6].name = "Explosive";
 	items[6].description = "You can blow the treasure wall with that.";
 	items[6].attack = 1000;
 	items[6].defense = 0;
 	items[6].uses = 1000;
+	items[6].item_room = &castlerooms[TOWER4];
+	items[6].item_exit = &exits[13];
 }
 
 void World::executecommand1word(const int command1, int& actual_position)const{
@@ -374,19 +393,19 @@ void World::executecommand1word(const int command1, int& actual_position)const{
 				j++;
 			}
 		}
-		if (j != 0){
+		if (j == 0){
 			printf("Nothing in the inventory.\n");
 		}
 	}
 	else if (command1 == EQUIPPED){
 		printf("Player Equipped stuff:\n");
 		for (i = 0; i <= 8; i++){
-			if (items[i].equiped == true){
+			if (items[i].equipped == true){
 				printf("%s\n", items[i].name.c_str());
 				j++;
 			}
 		}
-		if (j != 0){
+		if (j == 0){
 			printf("Nothing equiped.\n");
 		}
 	}
@@ -486,7 +505,7 @@ void World::executecommand2words(const int command1, const int command2, int& ac
 							if (exits[exitnum].close == true){
 								exits[exitnum].close = false;//open the door of the current room
 								for (exitnumdoors = 0; exitnumdoors < NUMEXITS; exitnumdoors++){
-									if (command2 == NORTH){
+									if ((command2 == NORTH) || (command2 == EAST)){
 										if ((exitnumdoors % 4) == (command2 - 4)){//Oposite room
 											if (exits[exitnumdoors].destination->name == exits[exitnum].origin->name){
 												exits[exitnumdoors].close = false;//open the door of the next room
@@ -495,8 +514,8 @@ void World::executecommand2words(const int command1, const int command2, int& ac
 											}
 										}
 									}
-									else if (command2 == EAST){
-										if ((exitnumdoors % 4) == (command2 - 4)){//Oposite room
+									else if ((command2 == SOUTH) || (command2 == WEST)){
+										if ((exitnumdoors % 4) == (command2 - 8)){//Oposite room
 											if (exits[exitnumdoors].destination->name == exits[exitnum].origin->name){
 												exits[exitnumdoors].close = false;//open the door of the next room
 												printf("The door is opened.\n");
@@ -504,25 +523,6 @@ void World::executecommand2words(const int command1, const int command2, int& ac
 											}
 										}
 									}
-									else if (command2 == SOUTH){
-										if ((exitnumdoors % 4) == (command2 - 4)){//Oposite room
-											if (exits[exitnumdoors].destination->name == exits[exitnum].origin->name){
-												exits[exitnumdoors].close = false;//open the door of the next room
-												printf("The door is opened.\n");
-												return;
-											}
-										}
-									}
-									else if (command2 == WEST){
-										if ((exitnumdoors % 4) == (command2 - 4)){//Oposite room
-											if (exits[exitnumdoors].destination->name == exits[exitnum].origin->name){
-												exits[exitnumdoors].close = false;//open the door of the next room
-												printf("The door is opened.\n");
-												return;
-											}
-										}
-									}
-
 								}
 							}
 							else{
@@ -560,7 +560,7 @@ void World::executecommand2words(const int command1, const int command2, int& ac
 							if (exits[exitnum].close == false){
 								exits[exitnum].close = true;//close the door of the current room
 								for (exitnumdoors = 0; exitnumdoors < NUMEXITS; exitnumdoors++){
-									if (command2 == NORTH){
+									if ((command2 == NORTH) || (command2 == EAST)){
 										if ((exitnumdoors % 4) == (command2 - 4)){//Oposite room
 											if (exits[exitnumdoors].destination->name == exits[exitnum].origin->name){
 												exits[exitnumdoors].close = true;//open the door of the next room
@@ -569,26 +569,8 @@ void World::executecommand2words(const int command1, const int command2, int& ac
 											}
 										}
 									}
-									else if (command2 == EAST){
-										if ((exitnumdoors % 4) == (command2 - 4)){//Oposite room
-											if (exits[exitnumdoors].destination->name == exits[exitnum].origin->name){
-												exits[exitnumdoors].close = true;//open the door of the next room
-												printf("The door is closed.\n");
-												return;
-											}
-										}
-									}
-									else if (command2 == SOUTH){
-										if ((exitnumdoors % 4) == (command2 - 4)){//Oposite room
-											if (exits[exitnumdoors].destination->name == exits[exitnum].origin->name){
-												exits[exitnumdoors].close = true;//open the door of the next room
-												printf("The door is closed.\n");
-												return;
-											}
-										}
-									}
-									else if (command2 == WEST){
-										if ((exitnumdoors % 4) == (command2 - 4)){//Oposite room
+									else if ((command2 == SOUTH) || (command2 == WEST)){
+										if ((exitnumdoors % 4) == (command2 - 8)){//Oposite room
 											if (exits[exitnumdoors].destination->name == exits[exitnum].origin->name){
 												exits[exitnumdoors].close = true;//open the door of the next room
 												printf("The door is closed.\n");
@@ -615,8 +597,92 @@ void World::executecommand2words(const int command1, const int command2, int& ac
 			printf("That's not a valid command.\n");
 		}
 	}
+	// ---------------------------------------------------------------------------------------------------------------
+	else if (command1 == PICK){
+		if ((command2 == KATANA) || (command2 == GASMASK) || (command2 == TREASURE) || (command2 == GRENADE) || (command2 == SWORD) || (command2 == SHIELD) || (command2 == EXPLOSIVE)){
+			if (items[command2 - 21].item_room == player->current_room){//Looks if the player is in the same room of the item.
+				if (items[command2 - 21].inventory == false){//If the player don't have it
+					items[command2 - 21].inventory = true;
+				}
+				else{
+					printf("You already have this item.\n");
+				}
+			}
+			else{
+				printf("That item is not here.\n");
+			}
+		}
+		else{
+			printf("That's not a valid command.\n");
+		}
+	}
+	// ---------------------------------------------------------------------------------------------------------------
+	else if (command1 == DROP){
+		if ((command2 == KATANA) || (command2 == GASMASK) || (command2 == TREASURE) || (command2 == GRENADE) || (command2 == SWORD) || (command2 == SHIELD) || (command2 == EXPLOSIVE)){
+			if (items[command2 - 21].inventory == true){//If the player have it
+				items[command2 - 21].inventory = false;
+				items[command2 - 21].item_room = player->current_room;
+			}
+			else{
+				printf("You don't have this item.\n");
+			}
+		}
+		else{
+			printf("That's not a valid command.\n");
+		}
+	}
+	// ---------------------------------------------------------------------------------------------------------------
+	else if (command1 == EQUIP){
+		if ((command2 == KATANA) || (command2 == GASMASK) || (command2 == TREASURE) || (command2 == GRENADE) || (command2 == SWORD) || (command2 == SHIELD) || (command2 == EXPLOSIVE)){
+			if (items[command2 - 21].inventory == true){//If the player have it
+				items[command2 - 21].equipped = true;
+				player->playerattack += items[command2 - 21].attack;
+				player->playerdefense += items[command2 - 21].defense;
+			}
+			else{
+				printf("You don't have this item.\n");
+			}
+		}
+		else{
+			printf("That's not a valid command.\n");
+		}
+	}
+	// ---------------------------------------------------------------------------------------------------------------
+	else if (command1 == UNEQUIP){
+		if ((command2 == KATANA) || (command2 == GASMASK) || (command2 == TREASURE) || (command2 == GRENADE) || (command2 == SWORD) || (command2 == SHIELD) || (command2 == EXPLOSIVE)){
+			if (items[command2 - 21].equipped == true){//If the player have it
+				items[command2 - 21].equipped = false;
+				player->playerattack -= items[command2 - 21].attack;
+				player->playerdefense -= items[command2 - 21].defense;
+			}
+			else{
+				printf("You don't have this item.\n");
+			}
+		}
+		else{
+			printf("That's not a valid command.\n");
+		}
+	}
 }
 
 void World::executecommand4words(const int command1, const int command2, const int command3, const int command4, int& actual_position)const{
-
+	if (command1 == PUT){
+		if (((command2 == KATANA) || (command2 == GASMASK) || (command2 == TREASURE) || (command2 == GRENADE) || (command2 == SWORD) || (command2 == SHIELD) || (command2 == EXPLOSIVE)) && (command3 == INTO) && (command4 == CUPBOARD)){
+			if (player->current_room->cupboard == true){//looks if the player room has a cupboard
+				
+			}
+		}
+		else{
+			printf("That's not a valid command.\n");
+		}
+	}
+	// ---------------------------------------------------------------------------------------------------------------
+	else if (command1 == GET){
+		if (((command2 == KATANA) || (command2 == GASMASK) || (command2 == TREASURE) || (command2 == GRENADE) || (command2 == SWORD) || (command2 == SHIELD) || (command2 == EXPLOSIVE)) && (command3 == FROM) && (command4 == CUPBOARD)){
+			
+		}
+		else{
+			printf("That's not a valid command.\n");
+		}
+	}
 }
