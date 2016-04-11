@@ -13,7 +13,7 @@ public:
 private:
 
 	char* buffer = nullptr;
-	unsigned int capacity;
+	unsigned int capacity = 1;
 
 public:
 
@@ -23,6 +23,8 @@ public:
 	void clean();
 	unsigned int c_capacity() const;
 	void shrinktofit();
+	void trim();
+	void getcommand();
 	void tokenize(String& firstcommand, String& secondcommand, String& thirdcommand, String& fouthcommand) const;
 
 public:

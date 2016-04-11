@@ -79,11 +79,11 @@ void World::CreateWorld() const{
 	// ---------------------------------------------------------------------------------------------------------------
 	// Tower 3
 	castlerooms[TOWER3].name = "Tower 3";
-	castlerooms[TOWER3].description = "In this tower there is a fireplace, probably something interesting is above it.";
+	castlerooms[TOWER3].description = "In this tower there is a fireplace and a cupboard.";
 	castlerooms[TOWER3].cupboard = true;
 	//North
 	exits[8].name = "Wall.";
-	exits[8].description = "There's a wall.";
+	exits[8].description = "There's a fireplace.";
 	exits[8].origin = &castlerooms[TOWER3];
 	exits[8].destination = &castlerooms[TOWER3];
 	exits[8].direction = North;
@@ -101,14 +101,14 @@ void World::CreateWorld() const{
 	exits[10].direction = South;
 	//West
 	exits[11].name = "Wall.";
-	exits[11].description = "There's a wall with a sword and a shield hanging on the wall.";
+	exits[11].description = "There's a wall with a cupboard.";
 	exits[11].origin = &castlerooms[TOWER3];
 	exits[11].destination = &castlerooms[TOWER3];
 	exits[11].direction = West;
 	// ---------------------------------------------------------------------------------------------------------------
 	// Tower 4
 	castlerooms[TOWER4].name = "Tower 4";
-	castlerooms[TOWER4].description = "In this tower there is a cupboard, probably something interesting is in there.";
+	castlerooms[TOWER4].description = "In this tower there is a cupboard.";
 	castlerooms[TOWER4].cupboard = true;
 	//North
 	exits[12].name = "Wall.";
@@ -227,7 +227,7 @@ void World::CreateWorld() const{
 	// ---------------------------------------------------------------------------------------------------------------
 	// West Corridor
 	castlerooms[WESTCORRIDOR].name = "West corridor";
-	castlerooms[WESTCORRIDOR].description = "In this corridor there's a table.";
+	castlerooms[WESTCORRIDOR].description = "In this corridor there's a table with a cupboard.";
 	castlerooms[WESTCORRIDOR].cupboard = true;
 	//North
 	exits[28].name = "Tower 2 door.";
@@ -294,6 +294,7 @@ void World::CreateWorld() const{
 	items[0].uses = 1000;
 	items[0].item_room = &castlerooms[SOUTHCORRIDOR];
 	items[0].item_exit = &exits[26];
+	items[0].equipable = true;
 	// Gas Mask
 	items[1].name = "Gas Mask";
 	items[1].description = "This gas mask can save you from toxic gases.";
@@ -302,6 +303,7 @@ void World::CreateWorld() const{
 	items[1].uses = 1000;
 	items[1].item_room = &castlerooms[WESTCORRIDOR];
 	items[1].item_exit = &exits[31];
+	items[1].equipable = true;
 	// Treasure
 	items[2].name = "Treasure";
 	items[2].description = "Your goal, the mighty treasure of the king.";
@@ -326,6 +328,7 @@ void World::CreateWorld() const{
 	items[4].uses = 1000;
 	items[4].item_room = &castlerooms[TOWER3];
 	items[4].item_exit = &exits[11];
+	items[4].equipable = true;
 	// Shield
 	items[5].name = "Shield";
 	items[5].description = "Protect you from enemy attacks.";
@@ -334,6 +337,7 @@ void World::CreateWorld() const{
 	items[5].uses = 1000;
 	items[5].item_room = &castlerooms[TOWER3];
 	items[5].item_exit = &exits[11];
+	items[5].equipable = true;
 	// Explosive
 	items[6].name = "Explosive";
 	items[6].description = "You can blow the treasure wall with that.";
@@ -342,6 +346,26 @@ void World::CreateWorld() const{
 	items[6].uses = 1000;
 	items[6].item_room = &castlerooms[TOWER4];
 	items[6].item_exit = &exits[13];
+}
+
+void World::dropeditemslook()const{
+	int j = 0, i = 0;
+	for (j = 0; j < NUMITEMS; j++){//see if in the room there are objects
+		if (items[j].item_room == player->current_room){
+			i++;
+		}
+	}
+	if (i != 0){//if ther are, write their names
+		printf("Item/s in this room(dropped or inside cupboards, search for it/them):\n");
+		for (j = 0; j < NUMITEMS; j++){
+			if (items[j].item_room == player->current_room){
+				printf("%s\n", items[j].name);
+			}
+		}
+	}
+	else{
+		printf("Nothing in this room.\n");
+	}
 }
 
 void World::executecommand1word(const int command1, int& actual_position)const{
@@ -443,6 +467,17 @@ void World::executecommand2words(const int command1, const int command2, int& ac
 						return;
 					}
 				}
+			}
+		}
+		else if ((command2 == KATANA) || (command2 == GASMASK) || (command2 == TREASURE) || (command2 == GRENADE) || (command2 == SWORD) || (command2 == SHIELD) || (command2 == EXPLOSIVE)){
+			if ((items[command2 - 21].inventory == true) && items[command2 - 21].equipped == true){//If the player have it
+				printf("%s is in the inventory and equipped.\n%s\n", items[command2 - 21].name, items[command2 - 21].description);
+			}
+			else if ((items[command2 - 21].inventory == true) && items[command2 - 21].equipped == false){//If the player have it
+				printf("%s is in the inventory and not equipped.\n%s\n", items[command2 - 21].name, items[command2 - 21].description);
+			}
+			else{
+				printf("You don't have this item.\n");
 			}
 		}
 		else{
@@ -601,11 +636,17 @@ void World::executecommand2words(const int command1, const int command2, int& ac
 	else if (command1 == PICK){
 		if ((command2 == KATANA) || (command2 == GASMASK) || (command2 == TREASURE) || (command2 == GRENADE) || (command2 == SWORD) || (command2 == SHIELD) || (command2 == EXPLOSIVE)){
 			if (items[command2 - 21].item_room == player->current_room){//Looks if the player is in the same room of the item.
-				if (items[command2 - 21].inventory == false){//If the player don't have it
-					items[command2 - 21].inventory = true;
+				if (items[command2 - 21].inside_cupboard == false){
+					if (items[command2 - 21].inventory == false){//If the player don't have it
+						items[command2 - 21].inventory = true;
+						printf("Now you have %s.", items[command2 - 21].name);
+					}
+					else{
+						printf("You already have this item.\n");
+					}
 				}
 				else{
-					printf("You already have this item.\n");
+					printf("This object is inside a cupboard.\n");
 				}
 			}
 			else{
@@ -635,9 +676,19 @@ void World::executecommand2words(const int command1, const int command2, int& ac
 	else if (command1 == EQUIP){
 		if ((command2 == KATANA) || (command2 == GASMASK) || (command2 == TREASURE) || (command2 == GRENADE) || (command2 == SWORD) || (command2 == SHIELD) || (command2 == EXPLOSIVE)){
 			if (items[command2 - 21].inventory == true){//If the player have it
-				items[command2 - 21].equipped = true;
-				player->playerattack += items[command2 - 21].attack;
-				player->playerdefense += items[command2 - 21].defense;
+				if (items[command2 - 21].equipable == true){
+					if (items[command2 - 21].equipped == false){
+						items[command2 - 21].equipped = true;
+						player->playerattack += items[command2 - 21].attack;
+						player->playerdefense += items[command2 - 21].defense;
+					}
+					else{
+						printf("You have already equipped this item.");
+					}
+				}
+				else{
+					printf("This item is not equipable.\n");
+				}
 			}
 			else{
 				printf("You don't have this item.\n");
@@ -668,8 +719,24 @@ void World::executecommand2words(const int command1, const int command2, int& ac
 void World::executecommand4words(const int command1, const int command2, const int command3, const int command4, int& actual_position)const{
 	if (command1 == PUT){
 		if (((command2 == KATANA) || (command2 == GASMASK) || (command2 == TREASURE) || (command2 == GRENADE) || (command2 == SWORD) || (command2 == SHIELD) || (command2 == EXPLOSIVE)) && (command3 == INTO) && (command4 == CUPBOARD)){
-			if (player->current_room->cupboard == true){//looks if the player room has a cupboard
-				
+			if (player->current_room->cupboard == true){//looks if the player room has a cupboard and player has the item
+				if (items[command2 - 21].inventory == true){
+					if (items[command2 - 21].equipped == true){//If the player have it
+						items[command2 - 21].equipped = false;//unequip
+						player->playerattack -= items[command2 - 21].attack;
+						player->playerdefense -= items[command2 - 21].defense;
+					}
+					items[command2 - 21].inventory = false;
+					items[command2 - 21].inside_cupboard = true;
+					items[command2 - 21].item_room = player->current_room;
+					printf("You had put a %s inside the cupboard.\n", items[command2 - 21].name.c_str());
+				}
+				else{
+					printf("You don't have it.\n");
+				}
+			}
+			else{
+				printf("There's not a cupboard here.\n");
 			}
 		}
 		else{
@@ -679,7 +746,19 @@ void World::executecommand4words(const int command1, const int command2, const i
 	// ---------------------------------------------------------------------------------------------------------------
 	else if (command1 == GET){
 		if (((command2 == KATANA) || (command2 == GASMASK) || (command2 == TREASURE) || (command2 == GRENADE) || (command2 == SWORD) || (command2 == SHIELD) || (command2 == EXPLOSIVE)) && (command3 == FROM) && (command4 == CUPBOARD)){
-			
+			if (player->current_room->cupboard == true){//looks if the player room has a cupboard and player has the item
+				if (items[command2 - 21].inventory == false){
+					items[command2 - 21].inventory = true;
+					items[command2 - 21].inside_cupboard = false;
+					printf("You had put a %s inside the cupboard.\n", items[command2 - 21].name.c_str());
+				}
+				else{
+					printf("You have it.\n");
+				}
+			}
+			else{
+				printf("There's not a cupboard here.\n");
+			}
 		}
 		else{
 			printf("That's not a valid command.\n");

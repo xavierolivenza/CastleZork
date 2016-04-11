@@ -95,26 +95,6 @@ void String::operator += (const String& str){
 	strcpy_s(buffer, capacity, temp);
 	strcat_s(buffer, capacity, str.buffer);
 	delete[] temp;
-
-	/*
-	unsigned int leng1 = strlen(buffer);
-	unsigned int leng2 = strlen(str.buffer);
-
-	if (capacity < (leng1 + leng2 + 1)){
-		char *temp = nullptr;
-		temp = new char[leng1 + 1];
-		strcpy_s(temp, leng1 + 1, buffer);
-		delete[]buffer;
-		leng1 = strlen(temp) + strlen(str.buffer) + 1;
-		capacity = leng1;
-		buffer = new char[leng1];
-		strcpy_s(buffer, leng1, temp);
-		strcat_s(buffer, leng1, str.buffer);
-	}
-	else{
-		strcat_s(buffer, strlen(buffer), str.buffer);
-	}
-	*/
 }
 
 bool String::operator == (const String& str) const{
@@ -140,6 +120,28 @@ void String::shrinktofit(){
 	strcpy_s(buffer, capacity, temp);
 }
 
+void String::trim(){
+	char *lefttrimmed = buffer;
+	char *lefttrimbase = buffer;
+	//trimleft
+	while (*lefttrimbase++ == ' ' && *lefttrimbase);
+	lefttrimbase--;
+	while (*lefttrimmed++ = *lefttrimbase++);
+}
+
+void String::getcommand(){
+	char command[50];
+	printf("What do you want to do?\n");
+	gets_s(command);
+	unsigned int leng = strlen(command) + 1;
+	if (capacity < leng){
+		delete[] buffer;
+		capacity = leng;
+		buffer = new char[capacity];
+	}
+	strcpy_s(buffer, capacity, command);
+}
+
 void String::tokenize(String& firstcommand, String& secondcommand, String& thirdcommand, String& fourthcommand) const{
 	String buffercopy;
 	String trash;
@@ -147,7 +149,8 @@ void String::tokenize(String& firstcommand, String& secondcommand, String& third
 	char *context;//Strtok_s variable, need it to save the state of the string he analyzes. Doesn't needed with strtok.
 	buffercopy.buffer = new char[capacity];
 	buffercopy = buffer;
-
+	
+	//Tokenize
 	firstcommand = strtok_s(buffercopy.buffer, " ,.-", &context);
 	if (*context != NULL){
 		if (strstr(context, "gas mask") != nullptr){

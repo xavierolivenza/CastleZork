@@ -18,6 +18,8 @@ public:
 	int uses;
 	bool inventory = false;
 	bool equipped = false;
+	bool equipable = false;
+	bool inside_cupboard = true;
 };
 
 #endif //__Item__

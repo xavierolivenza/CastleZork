@@ -26,7 +26,8 @@ public:
 	World();
 	~World();
 public:
-	void CreateWorld() const;
+	void CreateWorld()const;
+	void dropeditemslook()const;
 	void executecommand1word(const int, int&)const;
 	void executecommand2words(const int, const int, int&)const;
 	void executecommand4words(const int, const int, const int, const int, int&)const;

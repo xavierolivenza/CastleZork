@@ -4,9 +4,8 @@
 
 int main(){
 	String fullcommand("\0"), firstcommand("\0"), secondcommand("\0"), thirdcommand("\0"), fourthcommand("\0");
-	char command[50];
 	int command1 = 0, command2 = 0, command3 = 0, command4 = 0;
-	int command_words = 0, i = 0;
+	int command_words = 0, i = 0, j = 0;
 	int actual_position = 0;
 
 	World world;
@@ -19,12 +18,11 @@ int main(){
 		printf("//------------------------------------------------------------//\n");
 		
 		printf("You are in %s.\n%s\n", world.player->current_room->name.c_str(), world.player->current_room->description.c_str());
-		printf("What do you want to do?\n");
-		gets_s(command);//If you enters a space -> runtime error.
-		fullcommand = command;
-
-		fullcommand.tokenize(firstcommand, secondcommand, thirdcommand, fourthcommand);
+		world.dropeditemslook();
 		
+		fullcommand.getcommand();
+		fullcommand.trim();
+		fullcommand.tokenize(firstcommand, secondcommand, thirdcommand, fourthcommand);
 		command_words = commandinput.check_numcommands(firstcommand, secondcommand, thirdcommand, fourthcommand);
 		
 		command1 = commandinput.check_firstcommand(firstcommand);
