@@ -164,6 +164,11 @@ void String::tokenize(String& firstcommand, String& secondcommand, String& third
 			trash = strtok_s(NULL, " ", &context);
 			trash = strtok_s(NULL, " ", &context);
 		}
+		else if (strstr(context, "rusty katana") != nullptr){
+			secondcommand = "rusty katana";
+			trash = strtok_s(NULL, " ", &context);
+			trash = strtok_s(NULL, " ", &context);
+		}
 		else{
 			secondcommand = strtok_s(NULL, " ", &context);
 		}

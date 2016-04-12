@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "World.h"
 
@@ -233,7 +234,7 @@ void World::CreateWorld() const{
 	exits[28].name = "Tower 2 door.";
 	exits[28].description = "There is the tower 2.";
 	exits[28].origin = &castlerooms[WESTCORRIDOR];
-	exits[28].destination = &castlerooms[TOWER2];
+	exits[28].destination = &castlerooms[TOWER3];
 	exits[28].direction = North;
 	//East
 	exits[29].name = "Throne room door.";
@@ -257,6 +258,7 @@ void World::CreateWorld() const{
 	// Throne Room
 	castlerooms[THRONEROOM].name = "Throne room";
 	castlerooms[THRONEROOM].description = "This is the mighty throne room of the king, people say that the treasure is hidden here.";
+	castlerooms[THRONEROOM].cupboard = true;
 	//North
 	exits[32].name = "North corridor door.";
 	exits[32].description = "There's a corridor, the north one.";
@@ -351,20 +353,17 @@ void World::CreateWorld() const{
 void World::dropeditemslook()const{
 	int j = 0, i = 0;
 	for (j = 0; j < NUMITEMS; j++){//see if in the room there are objects
-		if (items[j].item_room == player->current_room){
+		if ((items[j].item_room == player->current_room) && items[j].inventory == false){
 			i++;
 		}
 	}
 	if (i != 0){//if ther are, write their names
 		printf("Item/s in this room(dropped or inside cupboards, search for it/them):\n");
 		for (j = 0; j < NUMITEMS; j++){
-			if (items[j].item_room == player->current_room){
+			if ((items[j].item_room == player->current_room) && items[j].inventory == false){
 				printf("%s\n", items[j].name);
 			}
 		}
-	}
-	else{
-		printf("Nothing in this room.\n");
 	}
 }
 
@@ -410,34 +409,55 @@ void World::executecommand1word(const int command1, int& actual_position)const{
 		printf("Player Stats:\nHP:%i\nAttack:%i\nDefense:%i\n", player->playerhp, player->playerattack, player->playerdefense);
 	}
 	else if (command1 == INVENTORY){
-		printf("Player Inventory:\n");
+		printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", 201, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 187);
+		printf("%c Player Inventory:          %c\n", 186, 186);
+		printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", 204, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 185);
 		for (i = 0; i <= 8; i++){
 			if (items[i].inventory == true){
-				printf("%s\n", items[i].name.c_str());
+				printf("%c %s", 186, items[i].name.c_str());
 				j++;
+				/*
+				for (i = 0; items[i].name.length() <= 20; i++){
+					printf(" ");
+				}
+				printf("%c\n", 186);
+				*/
 			}
 		}
 		if (j == 0){
-			printf("Nothing in the inventory.\n");
+			printf("%c Nothing in the inventory.  %c\n", 186, 186);
 		}
+		printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", 200, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 188);
 	}
 	else if (command1 == EQUIPPED){
-		printf("Player Equipped stuff:\n");
+		printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", 201, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 187);
+		printf("%c Player Equipped stuff:     %c\n", 186, 186);
+		printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", 204, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 185);
 		for (i = 0; i <= 8; i++){
 			if (items[i].equipped == true){
-				printf("%s\n", items[i].name.c_str());
+				printf("%c %s", 186, items[i].name.c_str());
 				j++;
+				/*
+				for (i = 0; items[i].name.length() <= 20; i++){
+					printf(" ");
+				}
+				printf("%c\n", 186);
+				*/
 			}
 		}
 		if (j == 0){
-			printf("Nothing equiped.\n");
+			printf("%c Nothing in the inventory.  %c\n", 186, 186);
 		}
+		printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", 200, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 188);
+	}
+	else if (command1 == CLEAR){
+		system("cls");
 	}
 	else if (command1 == QUIT){
 
 	}
 	else if (command1 == HELP){
-		printf("In this game you can move using:\nn/s/e/w\nnorth/east/south/west\ngo north/go east/go south/go west\nAlso you can use the commands:\nlook->to see the description of the room where you are\nlook+north/east/south/west->to see the description of the path\nopen/close+north/east/south/west->to open/close door\nhelp/h->to see this page\nquit/q->to quit the game\n\n");
+		printf("You can move using:\n\tn/s/e/w\n\tnorth/east/south/west\n\tgo north/east/south/west/n/s/e/w\nAlso you can use the commands:\n\tlook/l -> to see the description of the room where you are\n\tlook/l + north/east/south/west/n/s/e/w -> to see the description of the\n\tpath\n\topen/close + north/east/south/west/n/s/e/w -> to open/close door\n\tpick + item name -> you can pick items from the ground\n\tdrop + item name -> you can drop items to the ground\n\tequip + item name -> you can equip items\n\tunequip + item name -> you can unequip items\n\tput + item name + into + cupboard -> put item in the cupboard\n\tget + item name + from + cupboard -> get the item from the cupboard\n\tequipped -> to see the objects that the player has equipped\n\tinventory/inv/i -> to see player inventory\n\tstats -> to see player stats\n\thelp/h -> to open the help menu\n\tquit/q -> to quit the game\n\n");
 	}
 	else{
 		printf("That's not a valid command.\n");
@@ -471,10 +491,10 @@ void World::executecommand2words(const int command1, const int command2, int& ac
 		}
 		else if ((command2 == KATANA) || (command2 == GASMASK) || (command2 == TREASURE) || (command2 == GRENADE) || (command2 == SWORD) || (command2 == SHIELD) || (command2 == EXPLOSIVE)){
 			if ((items[command2 - 21].inventory == true) && items[command2 - 21].equipped == true){//If the player have it
-				printf("%s is in the inventory and equipped.\n%s\n", items[command2 - 21].name, items[command2 - 21].description);
+				printf("%s is in the inventory and equipped.\n%s\n", items[command2 - 21].name.c_str(), items[command2 - 21].description.c_str());
 			}
 			else if ((items[command2 - 21].inventory == true) && items[command2 - 21].equipped == false){//If the player have it
-				printf("%s is in the inventory and not equipped.\n%s\n", items[command2 - 21].name, items[command2 - 21].description);
+				printf("%s is in the inventory and not equipped.\n%s\n", items[command2 - 21].name.c_str(), items[command2 - 21].description.c_str());
 			}
 			else{
 				printf("You don't have this item.\n");
@@ -639,7 +659,8 @@ void World::executecommand2words(const int command1, const int command2, int& ac
 				if (items[command2 - 21].inside_cupboard == false){
 					if (items[command2 - 21].inventory == false){//If the player don't have it
 						items[command2 - 21].inventory = true;
-						printf("Now you have %s.", items[command2 - 21].name);
+						items[command2 - 21].inside_cupboard = false;
+						printf("Now you have %s.\n", items[command2 - 21].name);
 					}
 					else{
 						printf("You already have this item.\n");
@@ -663,6 +684,8 @@ void World::executecommand2words(const int command1, const int command2, int& ac
 			if (items[command2 - 21].inventory == true){//If the player have it
 				items[command2 - 21].inventory = false;
 				items[command2 - 21].item_room = player->current_room;
+				items[command2 - 21].inside_cupboard = false;
+				printf("You had dropped %s.\n", items[command2 - 21].name);
 			}
 			else{
 				printf("You don't have this item.\n");
@@ -678,12 +701,39 @@ void World::executecommand2words(const int command1, const int command2, int& ac
 			if (items[command2 - 21].inventory == true){//If the player have it
 				if (items[command2 - 21].equipable == true){
 					if (items[command2 - 21].equipped == false){
-						items[command2 - 21].equipped = true;
-						player->playerattack += items[command2 - 21].attack;
-						player->playerdefense += items[command2 - 21].defense;
+						if ((command2 == KATANA) && (items[SWORD - 21].equipped == true)){//if you want to equip katana and you have sword equipped
+							//equip katana
+							items[command2 - 21].equipped = true;
+							player->playerattack += items[command2 - 21].attack;
+							player->playerdefense += items[command2 - 21].defense;
+							printf("%s equipped.\n", items[command2 - 21].name.c_str());
+							//unequip sword
+							items[SWORD - 21].equipped = false;
+							player->playerattack -= items[SWORD - 21].attack;
+							player->playerdefense -= items[SWORD - 21].defense;
+							printf("%s unequipped.\n", items[SWORD - 21].name.c_str());
+						}
+						else if (((command2) == SWORD) && (items[KATANA - 21].equipped == true)){//if you want to equip sword and you have katana equipped
+							//equip sword
+							items[command2 - 21].equipped = true;
+							player->playerattack += items[command2 - 21].attack;
+							player->playerdefense += items[command2 - 21].defense;
+							printf("%s equipped.\n", items[command2 - 21].name.c_str());
+							//unequip katana
+							items[KATANA - 21].equipped = false;
+							player->playerattack -= items[KATANA - 21].attack;
+							player->playerdefense -= items[KATANA - 21].defense;
+							printf("%s unequipped.\n", items[KATANA - 21].name.c_str());
+						}
+						else{
+							items[command2 - 21].equipped = true;
+							player->playerattack += items[command2 - 21].attack;
+							player->playerdefense += items[command2 - 21].defense;
+							printf("%s equipped.\n", items[command2 - 21].name.c_str());
+						}
 					}
 					else{
-						printf("You have already equipped this item.");
+						printf("You have already equipped this item.\n");
 					}
 				}
 				else{
@@ -705,6 +755,7 @@ void World::executecommand2words(const int command1, const int command2, int& ac
 				items[command2 - 21].equipped = false;
 				player->playerattack -= items[command2 - 21].attack;
 				player->playerdefense -= items[command2 - 21].defense;
+				printf("%s unequipped.\n", items[command2 - 21].name.c_str());
 			}
 			else{
 				printf("You don't have this item.\n");
@@ -721,7 +772,7 @@ void World::executecommand4words(const int command1, const int command2, const i
 		if (((command2 == KATANA) || (command2 == GASMASK) || (command2 == TREASURE) || (command2 == GRENADE) || (command2 == SWORD) || (command2 == SHIELD) || (command2 == EXPLOSIVE)) && (command3 == INTO) && (command4 == CUPBOARD)){
 			if (player->current_room->cupboard == true){//looks if the player room has a cupboard and player has the item
 				if (items[command2 - 21].inventory == true){
-					if (items[command2 - 21].equipped == true){//If the player have it
+					if (items[command2 - 21].equipped == true){//If the player have it equipped
 						items[command2 - 21].equipped = false;//unequip
 						player->playerattack -= items[command2 - 21].attack;
 						player->playerdefense -= items[command2 - 21].defense;
@@ -747,13 +798,18 @@ void World::executecommand4words(const int command1, const int command2, const i
 	else if (command1 == GET){
 		if (((command2 == KATANA) || (command2 == GASMASK) || (command2 == TREASURE) || (command2 == GRENADE) || (command2 == SWORD) || (command2 == SHIELD) || (command2 == EXPLOSIVE)) && (command3 == FROM) && (command4 == CUPBOARD)){
 			if (player->current_room->cupboard == true){//looks if the player room has a cupboard and player has the item
-				if (items[command2 - 21].inventory == false){
-					items[command2 - 21].inventory = true;
-					items[command2 - 21].inside_cupboard = false;
-					printf("You had put a %s inside the cupboard.\n", items[command2 - 21].name.c_str());
+				if (items[command2 - 21].inside_cupboard == true){
+					if (items[command2 - 21].inventory == false){
+						items[command2 - 21].inventory = true;
+						items[command2 - 21].inside_cupboard = false;
+						printf("You had put a %s inside your inventory.\n", items[command2 - 21].name.c_str());
+					}
+					else{
+						printf("You have it.\n");
+					}
 				}
 				else{
-					printf("You have it.\n");
+					printf("This item is not inside a cupboard.\n");
 				}
 			}
 			else{

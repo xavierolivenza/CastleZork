@@ -10,7 +10,7 @@ Player::~Player(){
 }
 
 int Player::check_firstcommand(const String& firstcommand)const{
-	if (firstcommand == "look"){
+	if ((firstcommand == "look") || (firstcommand == "l")){
 		return LOOK;
 	}
 	else if (firstcommand == "go"){
@@ -70,6 +70,9 @@ int Player::check_firstcommand(const String& firstcommand)const{
 	else if (firstcommand == "stats"){
 		return STATS;
 	}
+	else if ((firstcommand == "clear") || (firstcommand == "c")){
+		return CLEAR;
+	}
 }
 
 int Player::check_secondcommand(const String& secondcommand)const{
@@ -85,7 +88,7 @@ int Player::check_secondcommand(const String& secondcommand)const{
 	else if ((secondcommand == "west") || (secondcommand == "w")){
 		return WEST;
 	}
-	if (secondcommand == "katana"){
+	if (secondcommand == "rusty katana"){
 		return KATANA;
 	}
 	else if (secondcommand == "gas mask"){
