@@ -9,6 +9,7 @@
 #include "Player.h"
 #include "Room.h"
 #include "String.h"
+#include "Vector.h"
 
 #define NUMDIRECTIONS 4
 #define NUMROOMS 9
@@ -18,15 +19,15 @@
 
 class World{
 public:
-	Room* castlerooms = nullptr;
-	Exit* exits = nullptr;
+	Vector <Room*> castlerooms;
+	Vector <Exit*> exits;
+	Vector <Item*> items;
 	Player* player = nullptr;
-	Item* items = nullptr;
 public:
 	World();
 	~World();
 public:
-	void CreateWorld()const;
+	void CreateWorld();
 };
 
 extern World* worldexternpointer;

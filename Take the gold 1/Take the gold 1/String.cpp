@@ -127,6 +127,7 @@ void String::trim(){
 	while (*lefttrimbase++ == ' ' && *lefttrimbase);
 	lefttrimbase--;
 	while (*lefttrimmed++ = *lefttrimbase++);
+	//trim right is not necessari, strtok will cut it
 }
 
 void String::getcommand(){
@@ -195,4 +196,5 @@ void String::tokenize(String& firstcommand, String& secondcommand, String& third
 	secondcommand.shrinktofit();
 	thirdcommand.shrinktofit();
 	fourthcommand.shrinktofit();
+	delete[] buffercopy.buffer;
 }

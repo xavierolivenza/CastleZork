@@ -12,9 +12,9 @@ public:
 
 private:
 
-	char* buffer = nullptr;
 	unsigned int capacity = 1;
-
+	char* buffer = nullptr;
+	
 public:
 
 	unsigned int length() const;
