@@ -179,7 +179,7 @@ void Player::dropeditemslook()const{
 
 void Player::executecommand1word(const int command1, int& actual_position)const{
 	int exitnum = 0, roomnum = 0;
-	int i = 0, j = 0;
+	int i = 0, j = 0, k = 0;
 	worldexternpointer->player->current_room = worldexternpointer->castlerooms[actual_position];
 	if ((command1 == NORTH) || (command1 == EAST) || (command1 == SOUTH) || (command1 == WEST)){
 		for (exitnum = 0; exitnum < NUMEXITS; exitnum++){
@@ -212,7 +212,7 @@ void Player::executecommand1word(const int command1, int& actual_position)const{
 		}
 		printf("There is a wall.\n");
 	}
-	if (command1 == LOOK){
+	else if (command1 == LOOK){
 		printf("%s\n\n", worldexternpointer->castlerooms[actual_position]->description.c_str());
 	}
 	else if (command1 == STATS){
@@ -222,17 +222,14 @@ void Player::executecommand1word(const int command1, int& actual_position)const{
 		printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", 201, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 187);
 		printf("%c Player Inventory:          %c\n", 186, 186);
 		printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", 204, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 185);
-		for (i = 0; i <= 8; i++){
+		for (i = 0; i <= 7; i++){
 			if (worldexternpointer->items[i]->inventory == true){
 				printf("%c %s", 186, worldexternpointer->items[i]->name.c_str());
 				j++;
-				/*
-				for (i = 0; items[i].name.length() <= 20; i++){
+				for (k = worldexternpointer->items[i]->name.length(); k <= 26; k++){
 				printf(" ");
 				}
 				printf("%c\n", 186);
-				*/
-				printf("\n");
 			}
 		}
 		if (j == 0){
@@ -244,17 +241,14 @@ void Player::executecommand1word(const int command1, int& actual_position)const{
 		printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", 201, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 187);
 		printf("%c Player Equipped stuff:     %c\n", 186, 186);
 		printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", 204, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 185);
-		for (i = 0; i <= 8; i++){
+		for (i = 0; i <= 7; i++){
 			if (worldexternpointer->items[i]->equipped == true){
 				printf("%c %s", 186, worldexternpointer->items[i]->name.c_str());
 				j++;
-				/*
-				for (i = 0; items[i].name.length() <= 20; i++){
-				printf(" ");
+				for (k = worldexternpointer->items[i]->name.length(); k <= 26; k++){
+					printf(" ");
 				}
 				printf("%c\n", 186);
-				*/
-				printf("\n");
 			}
 		}
 		if (j == 0){
@@ -472,7 +466,7 @@ void Player::executecommand2words(const int command1, const int command2, int& a
 					if (worldexternpointer->items[command2 - 21]->inventory == false){//If the player don't have it
 						worldexternpointer->items[command2 - 21]->inventory = true;
 						worldexternpointer->items[command2 - 21]->inside_cupboard = false;
-						printf("Now you have %s.\n", worldexternpointer->items[command2 - 21]->name);
+						printf("Now you have %s.\n", worldexternpointer->items[command2 - 21]->name.c_str());
 					}
 					else{
 						printf("You already have this item.\n");
@@ -497,7 +491,7 @@ void Player::executecommand2words(const int command1, const int command2, int& a
 				worldexternpointer->items[command2 - 21]->inventory = false;
 				worldexternpointer->items[command2 - 21]->item_room = worldexternpointer->player->current_room;
 				worldexternpointer->items[command2 - 21]->inside_cupboard = false;
-				printf("You had dropped %s.\n", worldexternpointer->items[command2 - 21]->name);
+				printf("You had dropped %s.\n", worldexternpointer->items[command2 - 21]->name.c_str());
 			}
 			else{
 				printf("You don't have this item.\n");
