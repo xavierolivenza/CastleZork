@@ -576,24 +576,29 @@ void Player::executecommand2words(const int command1, const int command2, int& a
 void Player::executecommand4words(const int command1, const int command2, const int command3, const int command4, int& actual_position)const{
 	if (command1 == PUT){
 		if (((command2 == KATANA) || (command2 == GASMASK) || (command2 == TREASURE) || (command2 == GRENADE) || (command2 == SWORD) || (command2 == SHIELD) || (command2 == EXPLOSIVE) || (command2 == KEY)) && (command3 == INTO) && (command4 == CUPBOARD)){
-			if (worldexternpointer->player->current_room->cupboard == true){//looks if the player room has a cupboard and player has the item
-				if (worldexternpointer->items[command2 - 21]->inventory == true){
-					if (worldexternpointer->items[command2 - 21]->equipped == true){//If the player have it equipped
-						worldexternpointer->items[command2 - 21]->equipped = false;//unequip
-						worldexternpointer->player->playerattack -= worldexternpointer->items[command2 - 21]->attack;
-						worldexternpointer->player->playerdefense -= worldexternpointer->items[command2 - 21]->defense;
+			if (worldexternpointer->player->current_room == worldexternpointer->items[command2 - 21]->item_room){
+				if (worldexternpointer->player->current_room->cupboard == true){//looks if the player room has a cupboard and player has the item
+					if (worldexternpointer->items[command2 - 21]->inventory == true){
+						if (worldexternpointer->items[command2 - 21]->equipped == true){//If the player have it equipped
+							worldexternpointer->items[command2 - 21]->equipped = false;//unequip
+							worldexternpointer->player->playerattack -= worldexternpointer->items[command2 - 21]->attack;
+							worldexternpointer->player->playerdefense -= worldexternpointer->items[command2 - 21]->defense;
+						}
+						worldexternpointer->items[command2 - 21]->inventory = false;
+						worldexternpointer->items[command2 - 21]->inside_cupboard = true;
+						worldexternpointer->items[command2 - 21]->item_room = worldexternpointer->player->current_room;
+						printf("You had put a %s inside the cupboard.\n", worldexternpointer->items[command2 - 21]->name.c_str());
 					}
-					worldexternpointer->items[command2 - 21]->inventory = false;
-					worldexternpointer->items[command2 - 21]->inside_cupboard = true;
-					worldexternpointer->items[command2 - 21]->item_room = worldexternpointer->player->current_room;
-					printf("You had put a %s inside the cupboard.\n", worldexternpointer->items[command2 - 21]->name.c_str());
+					else{
+						printf("You don't have it.\n");
+					}
 				}
 				else{
-					printf("You don't have it.\n");
+					printf("There's not a cupboard here.\n");
 				}
 			}
 			else{
-				printf("There's not a cupboard here.\n");
+				printf("You are not in the room where this item is.\n");
 			}
 		}
 		else{
@@ -603,23 +608,28 @@ void Player::executecommand4words(const int command1, const int command2, const 
 	// ---------------------------------------------------------------------------------------------------------------
 	else if (command1 == GET){
 		if (((command2 == KATANA) || (command2 == GASMASK) || (command2 == TREASURE) || (command2 == GRENADE) || (command2 == SWORD) || (command2 == SHIELD) || (command2 == EXPLOSIVE) || (command2 == KEY)) && (command3 == FROM) && (command4 == CUPBOARD)){
-			if (worldexternpointer->player->current_room->cupboard == true){//looks if the player room has a cupboard and player has the item
-				if (worldexternpointer->items[command2 - 21]->inside_cupboard == true){
-					if (worldexternpointer->items[command2 - 21]->inventory == false){
-						worldexternpointer->items[command2 - 21]->inventory = true;
-						worldexternpointer->items[command2 - 21]->inside_cupboard = false;
-						printf("You had put a %s inside your inventory.\n", worldexternpointer->items[command2 - 21]->name.c_str());
+			if (worldexternpointer->player->current_room == worldexternpointer->items[command2 - 21]->item_room){
+				if (worldexternpointer->player->current_room->cupboard == true){//looks if the player room has a cupboard and player has the item
+					if (worldexternpointer->items[command2 - 21]->inside_cupboard == true){
+						if (worldexternpointer->items[command2 - 21]->inventory == false){
+							worldexternpointer->items[command2 - 21]->inventory = true;
+							worldexternpointer->items[command2 - 21]->inside_cupboard = false;
+							printf("You had put a %s inside your inventory.\n", worldexternpointer->items[command2 - 21]->name.c_str());
+						}
+						else{
+							printf("You have it.\n");
+						}
 					}
 					else{
-						printf("You have it.\n");
+						printf("This item is not inside a cupboard.\n");
 					}
 				}
 				else{
-					printf("This item is not inside a cupboard.\n");
+					printf("There's not a cupboard here.\n");
 				}
 			}
 			else{
-				printf("There's not a cupboard here.\n");
+				printf("You are not in the room where this item is.\n");
 			}
 		}
 		else{
