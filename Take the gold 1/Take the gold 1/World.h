@@ -11,9 +11,7 @@
 #include "String.h"
 #include "Vector.h"
 
-#define NUMDIRECTIONS 4
 #define NUMROOMS 9
-#define NUMCOMMANDS 7
 #define NUMEXITS 36
 #define NUMITEMS 8
 

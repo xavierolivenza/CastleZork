@@ -1,19 +1,22 @@
+#ifndef _Vector_
+#define _Vector_
+
+#include<assert.h>
+
 template <class TYPE>
 class Vector{
 public:
 	Vector(){
-		num_elements = 1;
 		buffer = new TYPE[capacity];
-		for (unsigned int i = 0; i < num_elements; i++){
-			buffer[i] = 0;
-		}
 	}
 	Vector(const Vector& v){
-		num_elements = v.num_elements;
-		capacity = v.capacity;
+		capacity = v.num_elements;
 		buffer = new TYPE[capacity];
-		for (unsigned int i = 0; i < num_elements; i++){
-			buffer[i] = v.buffer[i];
+		if (v.num_elements > 0){
+			num_elements = v.num_elements;
+			for (unsigned int i = 0; i < num_elements; i++){
+				buffer[i] = v.buffer[i];
+			}
 		}
 	}
 	~Vector(){
@@ -21,7 +24,7 @@ public:
 	}
 
 private:
-	TYPE* buffer;
+	TYPE* buffer = nullptr;
 	unsigned int capacity = 10;
 	unsigned int num_elements = 0;
 
@@ -29,10 +32,10 @@ public:
 	void pushback(const TYPE& num){
 		if (capacity == num_elements){
 			TYPE* temp = nullptr;
-			capacity *= 2;
+			capacity += 7;
 			temp = new TYPE[capacity];
 			for (unsigned int i = 0; i < num_elements; i++){
-				*(temp + i) = *(buffer + i);
+				temp[i] = buffer[i];
 			}
 			delete[]buffer;
 			buffer = temp;
@@ -41,21 +44,24 @@ public:
 	}
 
 	void pushfront(const TYPE& num){
-		TYPE* temp = nullptr;
-		if (capacity == (num_elements + 1)){
-			capacity *= 2;
+		if (capacity == num_elements){
+			TYPE *temp = nullptr;
+			capacity += 7;
+			temp = new TYPE[capacity];
+			for (unsigned int i = 0; i < num_elements; i++){
+				temp[i] = buffer[i];
+			}
+			delete[]buffer;
+			buffer = temp;
 		}
-		temp = new TYPE[capacity];
-		for (unsigned int i = 0; i < num_elements; i++){
-			*(temp + i + 1) = *(buffer + i);
+		for (unsigned int i = num_elements - 1; i >= 0; i--){
+			temp[i + 1] = buffer[i];
 		}
-		delete[]buffer;
-		buffer = temp;
 		*buffer = num;
 		num_elements++;
 	}
 
-	bool empty(){
+	bool empty() const{
 		return (num_elements == 0);
 	}
 
@@ -63,39 +69,37 @@ public:
 		num_elements = 0;
 	}
 
-	unsigned int size(){
+	unsigned int size() const{
 		return num_elements;
 	}
 
-	unsigned int c_capacity(){
+	unsigned int c_capacity() const{
 		return capacity;
 	}
 
 	void popback(){
-
+		if (num_elements > 0){
+			num_elements--;
+		}
 	}
 
 	void shrinktofit(){
-		TYPE* temp;
-		temp = new TYPE[num_elements];
-
-
-
-		/*
-		String
-
-		char *temp;
-		temp = new char[length() + 1];
-		strcpy_s(temp, length() + 1, buffer);
-		capacity = length() + 1;
-		delete[]buffer;
-		buffer = new char[capacity];
-		strcpy_s(buffer, capacity, temp);
-
-		*/
+		if (capacity != num_elements){
+			TYPE* temp = nullptr;
+			capacity = num_elements;
+			temp = new TYPE[capacity];
+			for (unsigned int = 0; i < capacity; i++){
+				temp[i] = buffer[i];
+			}
+			delete[]vector;
+			buffer = temp;
+		}
 	}
 
-	TYPE operator[](const int index){
+	const TYPE operator[](const int index) const{
+		//printf("%i, %i", index, num_elements);
+		assert(index >= 0 && index < num_elements);
 		return buffer[index];
 	}
 };
+#endif //_Vector_

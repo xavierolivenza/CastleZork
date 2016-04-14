@@ -144,15 +144,12 @@ void String::getcommand(){
 }
 
 void String::tokenize(String& firstcommand, String& secondcommand, String& thirdcommand, String& fourthcommand) const{
-	String buffercopy;
 	String trash;
 	unsigned int leng = length() + 1;
 	char *context;//Strtok_s variable, need it to save the state of the string he analyzes. Doesn't needed with strtok.
-	buffercopy.buffer = new char[capacity];
-	buffercopy = buffer;
 	
 	//Tokenize
-	firstcommand = strtok_s(buffercopy.buffer, " ,.-", &context);
+	firstcommand = strtok_s(buffer, " ,.-", &context);
 	if (*context != NULL){
 		if (strstr(context, "gas mask") != nullptr){
 			secondcommand = "gas mask";
@@ -196,5 +193,4 @@ void String::tokenize(String& firstcommand, String& secondcommand, String& third
 	secondcommand.shrinktofit();
 	thirdcommand.shrinktofit();
 	fourthcommand.shrinktofit();
-	delete[] buffercopy.buffer;
 }

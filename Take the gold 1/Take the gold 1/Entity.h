@@ -7,6 +7,7 @@ class Entity{
 
 public:
 	Entity();
+	Entity(const char*, const char*);
 	~Entity();
 
 public:
