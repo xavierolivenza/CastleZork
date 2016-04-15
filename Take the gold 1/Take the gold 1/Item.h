@@ -8,7 +8,7 @@
 class Item : public Entity{
 public:
 	Item();
-	Item(const char*, const char*, Room*, const int, const int, const int, const bool, const bool, const bool, const bool);
+	Item(const char*, const char*, Room*, const int, const int, const int, const bool, const bool, const bool, const bool, const bool);
 	~Item();
 public:
 	Room* item_room = nullptr;
@@ -20,6 +20,7 @@ public:
 	bool equipped = false;
 	bool equipable = false;
 	bool inside_cupboard = true;
+	bool inside_backpack = false;
 };
 
 #endif //__Item__

@@ -13,7 +13,7 @@
 
 #define NUMROOMS 9
 #define NUMEXITS 36
-#define NUMITEMS 8
+#define NUMITEMS 9
 
 class World{
 public:

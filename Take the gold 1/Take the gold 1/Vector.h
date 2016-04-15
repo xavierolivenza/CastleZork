@@ -9,6 +9,7 @@ public:
 	Vector(){
 		buffer = new TYPE[capacity];
 	}
+
 	Vector(const Vector& v){
 		capacity = v.num_elements;
 		buffer = new TYPE[capacity];
@@ -19,6 +20,11 @@ public:
 			}
 		}
 	}
+
+	Vector(unsigned int size){
+		buffer = new TYPE[size];
+	}
+
 	~Vector(){
 		delete[] buffer;
 	}
@@ -44,6 +50,20 @@ public:
 	}
 
 	void pushfront(const TYPE& num){
+		TYPE* temp = nullptr;
+		if (capacity <= (num_elements + 1)){
+			capacity *= 2;
+		}
+		temp = new TYPE[capacity];
+		for (unsigned int i = 0; i < num_elements; i++){
+			*(temp + i + 1) = *(buffer + i);
+		}
+		delete[]buffer;
+		buffer = temp;
+		*buffer = num;
+		num_elements++;
+
+		/*
 		if (capacity == num_elements){
 			TYPE *temp = nullptr;
 			capacity += 7;
@@ -59,6 +79,7 @@ public:
 		}
 		*buffer = num;
 		num_elements++;
+		*/
 	}
 
 	bool empty() const{
@@ -77,9 +98,14 @@ public:
 		return capacity;
 	}
 
-	void popback(){
+	bool popback(TYPE& value){
 		if (num_elements > 0){
 			num_elements--;
+			value = buffer[num_elements];
+			return true;
+		}
+		else{
+			return false;
 		}
 	}
 
@@ -91,13 +117,17 @@ public:
 			for (unsigned int = 0; i < capacity; i++){
 				temp[i] = buffer[i];
 			}
-			delete[]vector;
+			delete[]buffer;
 			buffer = temp;
 		}
 	}
 
-	const TYPE operator[](const int index) const{
-		//printf("%i, %i", index, num_elements);
+	TYPE operator[](unsigned int index) const{
+		assert(index >= 0 && index < num_elements);
+		return buffer[index];
+	}
+
+	TYPE& operator[](unsigned int index){
 		assert(index >= 0 && index < num_elements);
 		return buffer[index];
 	}
