@@ -149,6 +149,5 @@ void World::CreateWorld(){
 	// Backpack
 	worldexternpointer->items.pushback(new Item("Backpack", "Box to keep items inside.", worldexternpointer->castlerooms[TOWER2], 5, 0, 1000, false, false, false, false, false));
 
-
 	worldexternpointer->player->current_room = worldexternpointer->castlerooms[TOWER1];
 }

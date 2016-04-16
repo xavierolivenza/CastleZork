@@ -216,6 +216,7 @@ void Player::executecommand1word(const int command1, int& actual_position)const{
 		printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", 204, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 185);
 		// HP
 		printf("%c HP:%i", 186, worldexternpointer->player->playerhp);
+		//This lines are for draw the box which contains stats
 		if (worldexternpointer->player->playerhp < 10){
 			m = 1;
 		}
@@ -232,6 +233,7 @@ void Player::executecommand1word(const int command1, int& actual_position)const{
 
 		// Attack
 		printf("%c Attack:%i", 186, worldexternpointer->player->playerattack);
+		//This lines are for draw the box which contains stats
 		if (worldexternpointer->player->playerattack < 10){
 			m = 1;
 		}
@@ -248,6 +250,7 @@ void Player::executecommand1word(const int command1, int& actual_position)const{
 
 		// Defense
 		printf("%c Defense:%i", 186, worldexternpointer->player->playerdefense);
+		//This lines are for draw the box which contains stats
 		if (worldexternpointer->player->playerdefense < 10){
 			m = 1;
 		}
@@ -328,11 +331,7 @@ void Player::executecommand1word(const int command1, int& actual_position)const{
 	}
 	else if (command1 == CLEAR){
 		system("cls");
-		printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", 201, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 187);
-		printf("%c %c%c%c %c%c%c %c %c %c%c   %c%c%c %c %c %c%c   %c%c%c %c%c%c %c   %c%c  %c\n", 186, 196, 194, 196, 218, 196, 191, 179, 47, 218, 196, 196, 194, 196, 179, 179, 218, 196, 218, 196, 196, 218, 196, 191, 179, 218, 191, 186);
-		printf("%c  %c  %c%c%c %c%c  %c%c    %c  %c%c%c %c%c   %c%c%c %c %c %c   %c %c %c\n", 186, 179, 195, 196, 195, 179, 180, 195, 196, 179, 195, 196, 180, 195, 196, 195, 196, 191, 179, 179, 179, 179, 179, 186);
-		printf("%c  %c  %c %c %c %c %c%c    %c  %c %c %c%c   %c%c%c %c%c%c %c%c%c %c%c  %c\n", 186, 179, 179, 179, 179, 92, 192, 196, 179, 179, 179, 192, 196, 192, 196, 217, 192, 196, 217, 192, 196, 196, 192, 217, 186);
-		printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", 200, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 188);
+		printf("  _______    _          _   _                        _     _ \n |__   __|  | |        | | | |                      | |   | |\n    | | __ _| | _____  | |_| |__   ___    __ _  ___ | | __| |\n    | |/ _` | |/ / _ %c | __| '_ %c / _ %c  / _` |/ _ %c| |/ _` |\n    | | (_| |   <  __/ | |_| | | |  __/ | (_| | (_) | | (_| |\n    |_|%c__,_|_|%c_%c___|  %c__|_| |_|%c___|  %c__, |%c___/|_|%c__,_|\n                                          __/ |              \n                                         |___/               \n", 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92);
 		printf("By Xavier Olivenza.\n");
 	}
 	else if (command1 == QUIT){
