@@ -6,10 +6,11 @@
 class Room : public Entity{
 public:
 	Room();
-	Room(const char*, const char*, bool);
+	Room(const char*, const char*, bool, bool);
 	~Room();
 public:
 	bool cupboard = false;
+	bool exploitablewall = false;
 };
 
 #endif //__Room__

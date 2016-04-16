@@ -15,23 +15,23 @@ void World::CreateWorld(){
 	// Rooms
 	// ---------------------------------------------------------------------------------------------------------------
 	// Tower 1
-	worldexternpointer->castlerooms.pushback(new Room("Tower 1", "In this tower there is nothing interesting, you should keep moving.", false));
+	worldexternpointer->castlerooms.pushback(new Room("Tower 1", "In this tower there is nothing interesting, you should keep moving.", false, false));
 	// Tower 2
-	worldexternpointer->castlerooms.pushback(new Room("Tower 2", "A regular tower.", false));
+	worldexternpointer->castlerooms.pushback(new Room("Tower 2", "A regular tower.", false, false));
 	// Tower 3
-	worldexternpointer->castlerooms.pushback(new Room("Tower 3", "In this tower there is a fireplace and a cupboard.", true));
+	worldexternpointer->castlerooms.pushback(new Room("Tower 3", "In this tower there is a fireplace and a cupboard.", true, false));
 	// Tower 4
-	worldexternpointer->castlerooms.pushback(new Room("Tower 4", "In this tower there is a cupboard.", true));
+	worldexternpointer->castlerooms.pushback(new Room("Tower 4", "In this tower there is a cupboard.", true, false));
 	// North Corridor
-	worldexternpointer->castlerooms.pushback(new Room("North corridor", "Nothing interesting in here.", false));
+	worldexternpointer->castlerooms.pushback(new Room("North corridor", "Nothing interesting in here.", false, false));
 	// East Corridor
-	worldexternpointer->castlerooms.pushback(new Room("East corridor", "In this corridor there's a cupboard.", true));
+	worldexternpointer->castlerooms.pushback(new Room("East corridor", "In this corridor there's a cupboard.", true, false));
 	// South Corridor
-	worldexternpointer->castlerooms.pushback(new Room("South corridor", "In this corridor there's a cupboard.", true));
+	worldexternpointer->castlerooms.pushback(new Room("South corridor", "In this corridor there's a cupboard.", true, false));
 	// West Corridor
-	worldexternpointer->castlerooms.pushback(new Room("West corridor", "In this corridor there's a table with a cupboard.", true));
+	worldexternpointer->castlerooms.pushback(new Room("West corridor", "In this corridor there's a table with a cupboard.", true, false));
 	// Throne Room
-	worldexternpointer->castlerooms.pushback(new Room("Throne room", "This is the mighty throne room of the king, people say that the treasure is hidden here.", true));
+	worldexternpointer->castlerooms.pushback(new Room("Throne room", "This is the mighty throne room of the king, people say that the treasure is hidden here.", true, true));
 
 	// ---------------------------------------------------------------------------------------------------------------
 	// Exits

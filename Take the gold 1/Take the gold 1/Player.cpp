@@ -78,6 +78,9 @@ int Player::check_firstcommand(Vector <String> commands)const{
 	else if (commands[0] == "backpacked"){
 		return BACKPACKED;
 	}
+	else if (commands[0] == "use"){
+		return USE;
+	}
 	else{
 		return ERROR;
 	}
@@ -336,7 +339,7 @@ void Player::executecommand1word(const int command1, int& actual_position)const{
 
 	}
 	else if (command1 == HELP){
-		printf("You can move using:\n\tn/s/e/w\n\tnorth/east/south/west\n\tgo north/east/south/west/n/s/e/w\nAlso you can use the commands:\n\tlook/l -> to see the description of the room where you are\n\tlook/l + north/east/south/west/n/s/e/w -> to see the description of the\n\tpath\n\topen/close + north/east/south/west/n/s/e/w -> to open/close door\n\tpick + item name -> you can pick items from the ground\n\tdrop + item name -> you can drop items to the ground\n\tequip + item name -> you can equip items\n\tunequip + item name -> you can unequip items\n\tput + item name + into + cupboard -> put item in the cupboard\n\tget + item name + from + cupboard -> get the item from the cupboard\n\tequipped -> to see the objects that the player has equipped\n\tinventory/inv/i -> to see player inventory\n\tbackpacked -> to see what you had put inside the backpack if you had\n\ttaken it\n\tstats -> to see player stats\n\tclear/c -> to clean the screen\n\thelp/h -> to open the help menu\n\tquit/q -> to quit the game\n\n");
+		printf("You can move using:\n\tn/s/e/w\n\tnorth/east/south/west\n\tgo north/east/south/west/n/s/e/w\nAlso you can use the commands:\n\tlook/l -> to see the description of the room where you are\n\tlook/l + north/east/south/west/n/s/e/w -> to see the description of the\n\tpath\n\topen/close + north/east/south/west/n/s/e/w -> to open/close door\n\tpick + item name -> you can pick items from the ground\n\tdrop + item name -> you can drop items to the ground\n\tequip + item name -> you can equip items\n\tunequip + item name -> you can unequip items\n\tput + item name + into + cupboard -> put item in the cupboard\n\tget + item name + from + cupboard -> get the item from the cupboard\n\tuse + item name -> to use it\n\tequipped -> to see the objects that the player has equipped\n\tinventory/inv/i -> to see player inventory\n\tbackpacked -> to see what you had put inside the backpack if you had\n\ttaken it\n\tstats -> to see player stats\n\tclear/c -> to clean the screen\n\thelp/h -> to open the help menu\n\tquit/q -> to quit the game\n\n");
 	}
 	else{
 		printf("That's not a valid command.\n");
@@ -659,6 +662,34 @@ void Player::executecommand2words(const int command1, const int command2, int& a
 			printf("That's not a valid command.\n");
 		}
 	}
+	else if (command1 == USE){
+		if (command2 == GRENADE){
+			if (worldexternpointer->items[GRENADE - 22]->inventory == true){
+				printf("By now this don't work, wait until battle update comes.\n");
+			}
+			else{
+				printf("You don't have this item.\n");
+			}
+		}
+		else if (command2 == EXPLOSIVE){
+			if (worldexternpointer->items[EXPLOSIVE - 22]->inventory == true){
+				if (worldexternpointer->player->current_room->exploitablewall == true){
+					worldexternpointer->player->current_room->exploitablewall = false;
+					worldexternpointer->items[EXPLOSIVE - 22]->inventory = false;
+					printf("You had used your explosive against the wall.\n");
+				}
+				else{
+					printf("You can't blow this wall.\n");
+				}
+			}
+			else{
+				printf("You don't have this item.\n");
+			}
+		}
+		else{
+			printf("You can't use that.\n");
+		}
+	}
 }
 
 void Player::executecommand4words(const int command1, const int command2, const int command3, const int command4, int& actual_position)const{
@@ -666,19 +697,24 @@ void Player::executecommand4words(const int command1, const int command2, const 
 		if (((command2 == KATANA) || (command2 == GASMASK) || (command2 == TREASURE) || (command2 == GRENADE) || (command2 == SWORD) || (command2 == SHIELD) || (command2 == EXPLOSIVE) || (command2 == KEY) || (command2 == BACKPACK)) && (command3 == INTO)){
 			if (command4 == CUPBOARD){
 				if (worldexternpointer->player->current_room->cupboard == true){//looks if the player room has a cupboard and player has the item
-					if (worldexternpointer->items[command2 - 22]->inventory == true){
-						if (worldexternpointer->items[command2 - 22]->equipped == true){//If the player have it equipped
-							worldexternpointer->items[command2 - 22]->equipped = false;//unequip
-							worldexternpointer->player->playerattack -= worldexternpointer->items[command2 - 22]->attack;
-							worldexternpointer->player->playerdefense -= worldexternpointer->items[command2 - 22]->defense;
+					if (worldexternpointer->player->current_room->exploitablewall == false){
+						if (worldexternpointer->items[command2 - 22]->inventory == true){
+							if (worldexternpointer->items[command2 - 22]->equipped == true){//If the player have it equipped
+								worldexternpointer->items[command2 - 22]->equipped = false;//unequip
+								worldexternpointer->player->playerattack -= worldexternpointer->items[command2 - 22]->attack;
+								worldexternpointer->player->playerdefense -= worldexternpointer->items[command2 - 22]->defense;
+							}
+							worldexternpointer->items[command2 - 22]->inventory = false;
+							worldexternpointer->items[command2 - 22]->inside_cupboard = true;
+							worldexternpointer->items[command2 - 22]->item_room = worldexternpointer->player->current_room;
+							printf("You had put %s inside the cupboard.\n", worldexternpointer->items[command2 - 22]->name.c_str());
 						}
-						worldexternpointer->items[command2 - 22]->inventory = false;
-						worldexternpointer->items[command2 - 22]->inside_cupboard = true;
-						worldexternpointer->items[command2 - 22]->item_room = worldexternpointer->player->current_room;
-						printf("You had put %s inside the cupboard.\n", worldexternpointer->items[command2 - 22]->name.c_str());
+						else{
+							printf("You don't have it.\n");
+						}
 					}
 					else{
-						printf("You don't have it.\n");
+						printf("You can not reach the cupboard, is behind a wall, but it seems that you can blow it.\n");
 					}
 				}
 				else{
@@ -723,23 +759,28 @@ void Player::executecommand4words(const int command1, const int command2, const 
 		if (((command2 == KATANA) || (command2 == GASMASK) || (command2 == TREASURE) || (command2 == GRENADE) || (command2 == SWORD) || (command2 == SHIELD) || (command2 == EXPLOSIVE) || (command2 == KEY) || (command2 == BACKPACK)) && (command3 == FROM)){
 			if (command4 == CUPBOARD){
 				if (worldexternpointer->player->current_room == worldexternpointer->items[command2 - 22]->item_room){
-					if (worldexternpointer->player->current_room->cupboard == true){//looks if the player room has a cupboard and player has the item
-						if (worldexternpointer->items[command2 - 22]->inside_cupboard == true){
-							if (worldexternpointer->items[command2 - 22]->inventory == false){
-								worldexternpointer->items[command2 - 22]->inventory = true;
-								worldexternpointer->items[command2 - 22]->inside_cupboard = false;
-								printf("You had put %s inside your inventory.\n", worldexternpointer->items[command2 - 22]->name.c_str());
+					if (worldexternpointer->player->current_room->exploitablewall == false){
+						if (worldexternpointer->player->current_room->cupboard == true){//looks if the player room has a cupboard and player has the item
+							if (worldexternpointer->items[command2 - 22]->inside_cupboard == true){
+								if (worldexternpointer->items[command2 - 22]->inventory == false){
+									worldexternpointer->items[command2 - 22]->inventory = true;
+									worldexternpointer->items[command2 - 22]->inside_cupboard = false;
+									printf("You had put %s inside your inventory.\n", worldexternpointer->items[command2 - 22]->name.c_str());
+								}
+								else{
+									printf("You have it.\n");
+								}
 							}
 							else{
-								printf("You have it.\n");
+								printf("This item is not inside a cupboard.\n");
 							}
 						}
 						else{
-							printf("This item is not inside a cupboard.\n");
+							printf("There's not a cupboard here.\n");
 						}
 					}
 					else{
-						printf("There's not a cupboard here.\n");
+						printf("You can not reach the cupboard, is behind a wall, but it seems that you can blow it.\n");
 					}
 				}
 				else{
@@ -767,11 +808,11 @@ void Player::executecommand4words(const int command1, const int command2, const 
 				}
 			}
 			else{
-				printf("That's not a valid command.1\n");
+				printf("That's not a valid command.\n");
 			}
 		}
 		else{
-			printf("That's not a valid command.2\n");
+			printf("That's not a valid command.\n");
 		}
 	}
 }
