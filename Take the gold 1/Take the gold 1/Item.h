@@ -8,7 +8,7 @@
 class Item : public Entity{
 public:
 	Item();
-	Item(const char*, const char*, Room*, const int, const int, const int, const bool, const bool, const bool, const bool, const bool);
+	Item(const char*, const char*, Room*, int, int, int, bool, bool, bool, bool, bool);
 	~Item();
 public:
 	Room* item_room = nullptr;

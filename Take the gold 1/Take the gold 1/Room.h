@@ -6,7 +6,7 @@
 class Room : public Entity{
 public:
 	Room();
-	Room(const char*, const char*, const bool);
+	Room(const char*, const char*, bool);
 	~Room();
 public:
 	bool cupboard = false;

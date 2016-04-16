@@ -62,24 +62,6 @@ public:
 		buffer = temp;
 		*buffer = num;
 		num_elements++;
-
-		/*
-		if (capacity == num_elements){
-			TYPE *temp = nullptr;
-			capacity += 7;
-			temp = new TYPE[capacity];
-			for (unsigned int i = 0; i < num_elements; i++){
-				temp[i] = buffer[i];
-			}
-			delete[]buffer;
-			buffer = temp;
-		}
-		for (unsigned int i = num_elements - 1; i >= 0; i--){
-			temp[i + 1] = buffer[i];
-		}
-		*buffer = num;
-		num_elements++;
-		*/
 	}
 
 	bool empty() const{

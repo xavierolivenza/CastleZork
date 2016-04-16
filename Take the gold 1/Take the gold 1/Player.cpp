@@ -11,71 +11,71 @@ Player::Player(){
 Player::~Player(){
 }
 
-int Player::check_firstcommand(const String& firstcommand)const{
-	if ((firstcommand == "look") || (firstcommand == "l")){
+int Player::check_firstcommand(Vector <String> commands)const{
+	if ((commands[0] == "look") || (commands[0] == "l")){
 		return LOOK;
 	}
-	else if (firstcommand == "go"){
+	else if (commands[0] == "go"){
 		return GO;
 	}
-	else if (firstcommand == "open"){
+	else if (commands[0] == "open"){
 		return OPEN;
 	}
-	else if (firstcommand == "close"){
+	else if (commands[0] == "close"){
 		return CLOSE;
 	}
-	else if ((firstcommand == "quit") || (firstcommand == "q")){
+	else if ((commands[0] == "quit") || (commands[0] == "q")){
 		return QUIT;
 	}
-	else if ((firstcommand == "help") || (firstcommand == "h")){
+	else if ((commands[0] == "help") || (commands[0] == "h")){
 		return HELP;
 	}
 	// ---------------------------------------------------------------------------------------------------------------
 	//Detection commands with 1 word
-	else if ((firstcommand == "north") || (firstcommand == "n")){
+	else if ((commands[0] == "north") || (commands[0] == "n")){
 		return NORTH;
 	}
-	else if ((firstcommand == "east") || (firstcommand == "e")){
+	else if ((commands[0] == "east") || (commands[0] == "e")){
 		return EAST;
 	}
-	else if ((firstcommand == "south") || (firstcommand == "s")){
+	else if ((commands[0] == "south") || (commands[0] == "s")){
 		return SOUTH;
 	}
-	else if ((firstcommand == "west") || (firstcommand == "w")){
+	else if ((commands[0] == "west") || (commands[0] == "w")){
 		return WEST;
 	}
 	// ---------------------------------------------------------------------------------------------------------------
-	else if (firstcommand == "pick"){
+	else if (commands[0] == "pick"){
 		return PICK;
 	}
-	else if (firstcommand == "drop"){
+	else if (commands[0] == "drop"){
 		return DROP;
 	}
-	else if ((firstcommand == "inventory") || (firstcommand == "inv") || (firstcommand == "i")){
+	else if ((commands[0] == "inventory") || (commands[0] == "inv") || (commands[0] == "i")){
 		return INVENTORY;
 	}
-	else if (firstcommand == "equipped"){
+	else if (commands[0] == "equipped"){
 		return EQUIPPED;
 	}
-	else if (firstcommand == "equip"){
+	else if (commands[0] == "equip"){
 		return EQUIP;
 	}
-	else if (firstcommand == "unequip"){
+	else if (commands[0] == "unequip"){
 		return UNEQUIP;
 	}
-	else if (firstcommand == "put"){
+	else if (commands[0] == "put"){
 		return PUT;
 	}
-	else if (firstcommand == "get"){
+	else if (commands[0] == "get"){
 		return GET;
 	}
-	else if (firstcommand == "stats"){
+	else if (commands[0] == "stats"){
 		return STATS;
 	}
-	else if ((firstcommand == "clear") || (firstcommand == "c")){
+	else if ((commands[0] == "clear") || (commands[0] == "c")){
 		return CLEAR;
 	}
-	else if (firstcommand == "backpacked"){
+	else if (commands[0] == "backpacked"){
 		return BACKPACKED;
 	}
 	else{
@@ -83,44 +83,44 @@ int Player::check_firstcommand(const String& firstcommand)const{
 	}
 }
 
-int Player::check_secondcommand(const String& secondcommand)const{
-	if ((secondcommand == "north") || (secondcommand == "n")){
+int Player::check_secondcommand(Vector <String> commands)const{
+	if ((commands[1] == "north") || (commands[1] == "n")){
 		return NORTH;
 	}
-	else if ((secondcommand == "east") || (secondcommand == "e")){
+	else if ((commands[1] == "east") || (commands[1] == "e")){
 		return EAST;
 	}
-	else if ((secondcommand == "south") || (secondcommand == "s")){
+	else if ((commands[1] == "south") || (commands[1] == "s")){
 		return SOUTH;
 	}
-	else if ((secondcommand == "west") || (secondcommand == "w")){
+	else if ((commands[1] == "west") || (commands[1] == "w")){
 		return WEST;
 	}
-	if (secondcommand == "rusty katana"){
+	if (commands[1] == "rusty katana"){
 		return KATANA;
 	}
-	else if (secondcommand == "gas mask"){
+	else if (commands[1] == "gas mask"){
 		return GASMASK;
 	}
-	else if (secondcommand == "treasure"){
+	else if (commands[1] == "treasure"){
 		return TREASURE;
 	}
-	else if (secondcommand == "venom gas grenade"){
+	else if (commands[1] == "venom gas grenade"){
 		return GRENADE;
 	}
-	else if (secondcommand == "sword"){
+	else if (commands[1] == "sword"){
 		return SWORD;
 	}
-	else if (secondcommand == "shield"){
+	else if (commands[1] == "shield"){
 		return SHIELD;
 	}
-	else if (secondcommand == "explosive"){
+	else if (commands[1] == "explosive"){
 		return EXPLOSIVE;
 	}
-	else if (secondcommand == "key"){
+	else if (commands[1] == "key"){
 		return KEY;
 	}
-	else if (secondcommand == "backpack"){
+	else if (commands[1] == "backpack"){
 		return BACKPACK;
 	}
 	else{
@@ -128,11 +128,11 @@ int Player::check_secondcommand(const String& secondcommand)const{
 	}
 }
 
-int Player::check_thirdcommand(const String& firstcommand, const String& thirdcommand)const{
-	if ((firstcommand == "put") && (thirdcommand == "into")){
+int Player::check_thirdcommand(Vector <String> commands)const{
+	if ((commands[0] == "put") && (commands[2] == "into")){
 		return INTO;
 	}
-	else if ((firstcommand == "get") && (thirdcommand == "from")){
+	else if ((commands[0] == "get") && (commands[2] == "from")){
 		return FROM;
 	}
 	else{
@@ -140,33 +140,16 @@ int Player::check_thirdcommand(const String& firstcommand, const String& thirdco
 	}
 }
 
-int Player::check_fourthcommand(const String& fourthcommand)const{
-	if (fourthcommand == "cupboard"){
+int Player::check_fourthcommand(Vector <String> commands)const{
+	if (commands[3] == "cupboard"){
 		return CUPBOARD;
 	}
-	else if (fourthcommand == "backpack"){
+	else if (commands[3] == "backpack"){
 		return BACKPACK;
 	}
 	else{
 		return ERROR;
 	}
-}
-
-int Player::check_numcommands(const String& firstcommand, const String& secondcommand, const String& thirdcommand, const String& fourthcommand)const{
-	int command_words = 0;
-	if (firstcommand.c_capacity() != 1){
-		command_words++;
-		if (secondcommand.c_capacity() != 1){
-			command_words++;
-			if (thirdcommand.c_capacity() != 1){
-				command_words++;
-				if (fourthcommand.c_capacity() != 1){
-					command_words++;
-				}
-			}
-		}
-	}
-	return command_words;
 }
 
 void Player::dropeditemslook()const{
@@ -188,7 +171,7 @@ void Player::dropeditemslook()const{
 
 void Player::executecommand1word(const int command1, int& actual_position)const{
 	int exitnum = 0, roomnum = 0;
-	int i = 0, j = 0, k = 0;
+	int i = 0, j = 0, k = 0, l = 0, m = 0;
 	worldexternpointer->player->current_room = worldexternpointer->castlerooms[actual_position];
 	if ((command1 == NORTH) || (command1 == EAST) || (command1 == SOUTH) || (command1 == WEST)){
 		for (exitnum = 0; exitnum < NUMEXITS; exitnum++){
@@ -225,7 +208,58 @@ void Player::executecommand1word(const int command1, int& actual_position)const{
 		printf("%s\n\n", worldexternpointer->castlerooms[actual_position]->description.c_str());
 	}
 	else if (command1 == STATS){
-		printf("Player Stats:\nHP:%i\nAttack:%i\nDefense:%i\n", worldexternpointer->player->playerhp, worldexternpointer->player->playerattack, worldexternpointer->player->playerdefense);
+		printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", 201, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 187);
+		printf("%c Player Stats: %c\n", 186, 186);
+		printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", 204, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 185);
+		// HP
+		printf("%c HP:%i", 186, worldexternpointer->player->playerhp);
+		if (worldexternpointer->player->playerhp < 10){
+			m = 1;
+		}
+		else if ((worldexternpointer->player->playerhp >= 10) && (worldexternpointer->player->playerhp < 100)){
+			m = 2;
+		}
+		else if (worldexternpointer->player->playerhp == 100){
+			m = 3;
+		}
+		for (l = m; l < 11; l++){
+			printf(" ");
+		}
+		printf("%c\n", 186);
+
+		// Attack
+		printf("%c Attack:%i", 186, worldexternpointer->player->playerattack);
+		if (worldexternpointer->player->playerattack < 10){
+			m = 1;
+		}
+		else if ((worldexternpointer->player->playerattack >= 10) && (worldexternpointer->player->playerattack < 100)){
+			m = 2;
+		}
+		else if (worldexternpointer->player->playerattack == 100){
+			m = 3;
+		}
+		for (l = m; l < 7; l++){
+			printf(" ");
+		}
+		printf("%c\n", 186);
+
+		// Defense
+		printf("%c Defense:%i", 186, worldexternpointer->player->playerdefense);
+		if (worldexternpointer->player->playerdefense < 10){
+			m = 1;
+		}
+		else if ((worldexternpointer->player->playerdefense >= 10) && (worldexternpointer->player->playerdefense < 100)){
+			m = 2;
+		}
+		else if (worldexternpointer->player->playerdefense == 100){
+			m = 3;
+		}
+		for (l = m; l < 6; l++){
+			printf(" ");
+		}
+		printf("%c\n", 186);
+
+		printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", 200, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 188);
 	}
 	else if (command1 == INVENTORY){
 		printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", 201, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 187);
@@ -537,6 +571,11 @@ void Player::executecommand2words(const int command1, const int command2, int& a
 	else if (command1 == DROP){
 		if ((command2 == KATANA) || (command2 == GASMASK) || (command2 == TREASURE) || (command2 == GRENADE) || (command2 == SWORD) || (command2 == SHIELD) || (command2 == EXPLOSIVE) || (command2 == KEY) || (command2 == BACKPACK)){
 			if (worldexternpointer->items[command2 - 22]->inventory == true){//If the player have it
+				if (worldexternpointer->items[command2 - 22]->equipped == true){//If the player have it equipped
+					worldexternpointer->items[command2 - 22]->equipped = false;//unequip
+					worldexternpointer->player->playerattack -= worldexternpointer->items[command2 - 22]->attack;
+					worldexternpointer->player->playerdefense -= worldexternpointer->items[command2 - 22]->defense;
+				}
 				worldexternpointer->items[command2 - 22]->inventory = false;
 				worldexternpointer->items[command2 - 22]->item_room = worldexternpointer->player->current_room;
 				worldexternpointer->items[command2 - 22]->inside_cupboard = false;

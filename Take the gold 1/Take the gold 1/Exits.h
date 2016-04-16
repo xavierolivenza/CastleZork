@@ -10,7 +10,7 @@ public:
 	Room *destination;
 public:
 	Exit();
-	Exit(const char*, const char*, Room*, Room*, const bool, const bool);
+	Exit(const char*, const char*, Room*, Room*, bool, bool);
 	~Exit();
 public:
 	bool close = false;

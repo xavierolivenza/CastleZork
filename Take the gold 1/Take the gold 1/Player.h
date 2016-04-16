@@ -14,11 +14,10 @@ public:
 	unsigned int playerattack = 0;
 	unsigned int playerdefense = 0;
 public:
-	int check_firstcommand(const String&)const;
-	int check_secondcommand(const String&)const;
-	int check_thirdcommand(const String&, const String&)const;
-	int check_fourthcommand(const String&)const;
-	int check_numcommands(const String&, const String&, const String&, const String&)const;
+	int check_firstcommand(Vector <String>)const;
+	int check_secondcommand(Vector <String>)const;
+	int check_thirdcommand(Vector <String>)const;
+	int check_fourthcommand(Vector <String>)const;
 	void dropeditemslook()const;
 	void executecommand1word(const int, int&)const;
 	void executecommand2words(const int, const int, int&)const;

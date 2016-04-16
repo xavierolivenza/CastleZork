@@ -120,77 +120,59 @@ void String::shrinktofit(){
 	strcpy_s(buffer, capacity, temp);
 }
 
-void String::trim(){
-	char *lefttrimmed = buffer;
-	char *lefttrimbase = buffer;
+Vector <String> String::tokenize(char* command, int& command_words) const{
+	String trash;
+	Vector <String> commandvector;
+	char *lefttrimmed = command;
+	char *lefttrimbase = command;
+	unsigned int leng = length() + 1, laps = 0;
+	char *commandtosplit;
+	char *context;//Strtok_s variable, need it to save the state of the string he analyzes. Doesn't needed with strtok.
+	
+	command_words = 0;
+
 	//trimleft
 	while (*lefttrimbase++ == ' ' && *lefttrimbase);
 	lefttrimbase--;
 	while (*lefttrimmed++ = *lefttrimbase++);
-	//trim right is not necessari, strtok will cut it
-}
 
-void String::getcommand(){
-	char command[50];
-	printf("What do you want to do?\n");
-	gets_s(command);
-	unsigned int leng = strlen(command) + 1;
-	if (capacity < leng){
-		delete[] buffer;
-		capacity = leng;
-		buffer = new char[capacity];
-	}
-	strcpy_s(buffer, capacity, command);
-}
-
-void String::tokenize(String& firstcommand, String& secondcommand, String& thirdcommand, String& fourthcommand) const{
-	String trash;
-	unsigned int leng = length() + 1;
-	char *context;//Strtok_s variable, need it to save the state of the string he analyzes. Doesn't needed with strtok.
-	
 	//Tokenize
-	firstcommand = strtok_s(buffer, " ,.-", &context);
-	if (*context != NULL){
-		if (strstr(context, "gas mask") != nullptr){
-			secondcommand = "gas mask";
-			trash = strtok_s(NULL, " ", &context);
-			trash = strtok_s(NULL, " ", &context);
-		}
-		else if (strstr(context, "venom gas grenade") != nullptr){
-			secondcommand = "venom gas grenade";
-			trash = strtok_s(NULL, " ", &context);
-			trash = strtok_s(NULL, " ", &context);
-			trash = strtok_s(NULL, " ", &context);
-		}
-		else if (strstr(context, "rusty katana") != nullptr){
-			secondcommand = "rusty katana";
-			trash = strtok_s(NULL, " ", &context);
-			trash = strtok_s(NULL, " ", &context);
-		}
-		else{
-			secondcommand = strtok_s(NULL, " ", &context);
-		}
-		if (*context != NULL){
-			thirdcommand = strtok_s(NULL, " ", &context);
-			if (*context != NULL){
-				fourthcommand = strtok_s(NULL, " ,.-", &context);
+	commandtosplit = strtok_s(command, " ,.-", &context);
+	commandvector.pushback(commandtosplit);
+	command_words++;
+	while ((*context != NULL) && (laps < 3)){// I want 4 commands, but the first one is outside, so 3 laps in the while
+		if (laps == 0){
+			if (strstr(context, "gas mask") != nullptr){
+				commandtosplit = "gas mask";
+				trash = strtok_s(NULL, " ", &context);
+				trash = strtok_s(NULL, " ", &context);
+				commandvector.pushback(commandtosplit);
+			}
+			else if (strstr(context, "venom gas grenade") != nullptr){
+				commandtosplit = "venom gas grenade";
+				trash = strtok_s(NULL, " ", &context);
+				trash = strtok_s(NULL, " ", &context);
+				trash = strtok_s(NULL, " ", &context);
+				commandvector.pushback(commandtosplit);
+			}
+			else if (strstr(context, "rusty katana") != nullptr){
+				commandtosplit = "rusty katana";
+				trash = strtok_s(NULL, " ", &context);
+				trash = strtok_s(NULL, " ", &context);
+				commandvector.pushback(commandtosplit);
 			}
 			else{
-				fourthcommand.clean();
+				commandtosplit = strtok_s(NULL, " ", &context);
+				commandvector.pushback(commandtosplit);
 			}
 		}
 		else{
-			thirdcommand.clean();
-			fourthcommand.clean();
+			commandtosplit = strtok_s(NULL, " ", &context);
+			commandvector.pushback(commandtosplit);
 		}
+		laps++;
+		command_words++;
 	}
-	else{
-		secondcommand.clean();
-		thirdcommand.clean();
-		fourthcommand.clean();
-	}
-	firstcommand.shrinktofit();
-	secondcommand.shrinktofit();
-	thirdcommand.shrinktofit();
-	fourthcommand.shrinktofit();
+
+	return commandvector;
 }

@@ -1,6 +1,8 @@
 #ifndef __String__
 #define __String__
 
+#include "Vector.h"
+
 class String{
 
 public:
@@ -23,9 +25,7 @@ public:
 	void clean();
 	unsigned int c_capacity() const;
 	void shrinktofit();
-	void trim();
-	void getcommand();
-	void tokenize(String& firstcommand, String& secondcommand, String& thirdcommand, String& fouthcommand) const;
+	Vector <String> tokenize(char*, int&) const;
 
 public:
 
