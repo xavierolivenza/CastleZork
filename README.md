@@ -62,6 +62,26 @@ help/h -> to open the help menu
 
 quit/q -> to quit the game
 
+##Item names list
+
+ - Rusty katana
+ 
+ - Gas mask
+ 
+ - Treasure
+ 
+ - Venom gas grenade
+ 
+ - Sword
+ 
+ - Shield
+ 
+ - Explosive
+ 
+ - Key
+ 
+ - Backpack
+
 ## Changelog
 
 16-03-2016 -> Take the gold first release with all rooms and movement, look, open, close, help and quit commands.

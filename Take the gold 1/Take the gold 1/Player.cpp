@@ -306,7 +306,7 @@ void Player::executecommand1word(int& command1, int& actual_position)const{
 				}
 			}
 			if (j == 0){
-				printf("%c Nothing in the box.        %c\n", 186, 186);
+				printf("%c Nothing in the backpack.   %c\n", 186, 186);
 			}
 			printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", 200, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 188);
 		}
@@ -694,28 +694,31 @@ void Player::executecommand2words(int command1, int command2, int& actual_positi
 				if (worldexternpointer->player->current_room->exploitablewall == true){
 					worldexternpointer->player->current_room->exploitablewall = false;
 					worldexternpointer->items[EXPLOSIVE - 22]->inventory = false;
+
 					printf("You had armed your explosive.\n");
-					printf("3");
+					Sleep(2000);
+					printf("                _____ \n               |___ / \n                 |_ %c \n                ___) |\n               |____/", 92);
 					Sleep(333);
 					printf(".");
 					Sleep(333);
 					printf(".");
 					Sleep(333);
 					printf(".\n");
-					printf("2");
+					printf("                ____  \n               |___ %c \n                 __) |\n                / __/ \n               |_____|", 92);
 					Sleep(333);
 					printf(".");
 					Sleep(333);
 					printf(".");
 					Sleep(333);
 					printf(".\n");
-					printf("1");
+					printf("                  _ \n                 / |\n                 | |\n                 | |\n                 |_|");
 					Sleep(333);
 					printf(".");
 					Sleep(333);
 					printf(".");
 					Sleep(333);
 					printf(".\n");
+					
 					printf("   ___  ____  ____  ____  __  _________\n  / _ )/ __ %c/ __ %c/ __ %c/  |/  / / / /\n / _  / /_/ / /_/ / /_/ / /|_/ /_/_/_/ \n/____/%c____/%c____/%c____/_/  /_(_|_|_)  \n", 92, 92, 92, 92, 92, 92);
 					printf("You had used your explosive against the wall.\n");
 				}
