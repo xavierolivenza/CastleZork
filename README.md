@@ -65,6 +65,7 @@ quit/q -> to quit the game
 ## Changelog
 
 16-03-2016 -> Take the gold first release with all rooms and movement, look, open, close, help and quit commands.
+
 18-04-2016 -> Take the gold second release with all items and more commands(items look, pick, drop, equip, unequip, put, get, use, equipped, inventory, backpacked, stats, flee, clear).
 
 ##Comments
