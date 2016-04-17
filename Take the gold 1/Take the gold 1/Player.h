@@ -19,9 +19,9 @@ public:
 	int check_thirdcommand(Vector <String>)const;
 	int check_fourthcommand(Vector <String>)const;
 	void dropeditemslook()const;
-	void executecommand1word(const int, int&)const;
-	void executecommand2words(const int, const int, int&)const;
-	void executecommand4words(const int, const int, const int, const int, int&)const;
+	void executecommand1word(int&, int&)const;
+	void executecommand2words(int, int, int&)const;
+	void executecommand4words(int, int, int, int, int&)const;
 };
 
 enum rooms{ 
@@ -35,8 +35,8 @@ enum commandset {
 	PICK, DROP, INVENTORY, EQUIPPED, EQUIP, UNEQUIP, PUT, GET, INTO, FROM, STATS, BACKPACKED,
 	KATANA, GASMASK, TREASURE, GRENADE, SWORD, SHIELD, EXPLOSIVE, KEY, BACKPACK,
 	CUPBOARD,
-	USE,
+	USE, FLEE,
 	CLEAR,
-	ERROR
+	COMMANDERROR
 };
 #endif //__Player__

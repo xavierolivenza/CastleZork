@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <windows.h> //Sleep, this freeze the game X miliseconds, used in command use+explosive, for the countdown
 #include "Player.h"
 #include "World.h"
 #include "Exits.h"
@@ -72,6 +73,9 @@ int Player::check_firstcommand(Vector <String> commands)const{
 	else if (commands[0] == "stats"){
 		return STATS;
 	}
+	else if (commands[0] == "flee"){
+		return FLEE;
+	}
 	else if ((commands[0] == "clear") || (commands[0] == "c")){
 		return CLEAR;
 	}
@@ -82,7 +86,7 @@ int Player::check_firstcommand(Vector <String> commands)const{
 		return USE;
 	}
 	else{
-		return ERROR;
+		return COMMANDERROR;
 	}
 }
 
@@ -127,7 +131,7 @@ int Player::check_secondcommand(Vector <String> commands)const{
 		return BACKPACK;
 	}
 	else{
-		return ERROR;
+		return COMMANDERROR;
 	}
 }
 
@@ -139,7 +143,7 @@ int Player::check_thirdcommand(Vector <String> commands)const{
 		return FROM;
 	}
 	else{
-		return ERROR;
+		return COMMANDERROR;
 	}
 }
 
@@ -151,7 +155,7 @@ int Player::check_fourthcommand(Vector <String> commands)const{
 		return BACKPACK;
 	}
 	else{
-		return ERROR;
+		return COMMANDERROR;
 	}
 }
 
@@ -172,7 +176,7 @@ void Player::dropeditemslook()const{
 	}
 }
 
-void Player::executecommand1word(const int command1, int& actual_position)const{
+void Player::executecommand1word(int& command1, int& actual_position)const{
 	int exitnum = 0, roomnum = 0;
 	int i = 0, j = 0, k = 0, l = 0, m = 0;
 	worldexternpointer->player->current_room = worldexternpointer->castlerooms[actual_position];
@@ -329,6 +333,21 @@ void Player::executecommand1word(const int command1, int& actual_position)const{
 		}
 		printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", 200, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 188);
 	}
+	else if (command1 == FLEE){
+		if (worldexternpointer->items[TREASURE - 22]->inventory == true){
+			if (worldexternpointer->player->current_room == worldexternpointer->castlerooms[TOWER1]){
+				system("cls");
+				printf("   _____                            _         _       _   _                 \n  / ____|                          | |       | |     | | (_)                \n | |     ___  _ __   __ _ _ __ __ _| |_ _   _| | __ _| |_ _  ___  _ __  ___ \n | |    / _ %c| '_ %c / _` | '__/ _` | __| | | | |/ _` | __| |/ _ %c| '_ %c/ __|\n | |___| (_) | | | | (_| | | | (_| | |_| |_| | | (_| | |_| | (_) | | | %c__ %c\n  %c_____%c___/|_| |_|%c__, |_|  %c__,_|%c__|%c__,_|_|%c__,_|%c__|_|%c___/|_| |_|___/\n  / _|               __/ |                 | |          | | (_)             \n | |_ ___  _ __    _|___/_  _ __ ___  _ __ | | ___  __ _| |_ _ _ __   __ _  \n |  _/ _ %c| '__|  / __/ _ %c| '_ ` _ %c| '_ %c| |/ _ %c/ _` | __| | '_ %c / _` | \n | || (_) | |    | (_| (_) | | | | | | |_) | |  __/ (_| | |_| | | | | (_| | \n |_| %c___/|_|     %c___%c___/|_| |_| |_| .__/|_|%c___|%c__,_|%c__|_|_| |_|%c__, | \n   _______    _          _   _       | |              _     _         __/ | \n  |__   __|  | |        | | | |      |_|             | |   | |       |___/  \n     | | __ _| | _____  | |_| |__   ___    __ _  ___ | | __| |              \n     | |/ _` | |/ / _ %c | __| '_ %c / _ %c  / _` |/ _ %c| |/ _` |              \n     | | (_| |   <  __/ | |_| | | |  __/ | (_| | (_) | | (_| |              \n     |_|%c__,_|_|%c_%c___|  %c__|_| |_|%c___|  %c__, |%c___/|_|%c__,_|              \n                                           __/ |                            \n                                          |___/                             \n", 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92);
+				command1 = QUIT;
+			}
+			else{
+				printf("You can't flee here, you must go to the room where you had started.\n");
+			}
+		}
+		else{
+			printf("You can't flee until you take the treasure.\n");
+		}
+	}
 	else if (command1 == CLEAR){
 		system("cls");
 		printf("  _______    _          _   _                        _     _ \n |__   __|  | |        | | | |                      | |   | |\n    | | __ _| | _____  | |_| |__   ___    __ _  ___ | | __| |\n    | |/ _` | |/ / _ %c | __| '_ %c / _ %c  / _` |/ _ %c| |/ _` |\n    | | (_| |   <  __/ | |_| | | |  __/ | (_| | (_) | | (_| |\n    |_|%c__,_|_|%c_%c___|  %c__|_| |_|%c___|  %c__, |%c___/|_|%c__,_|\n                                          __/ |              \n                                         |___/               \n", 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92);
@@ -338,14 +357,14 @@ void Player::executecommand1word(const int command1, int& actual_position)const{
 
 	}
 	else if (command1 == HELP){
-		printf("You can move using:\n\tn/s/e/w\n\tnorth/east/south/west\n\tgo north/east/south/west/n/s/e/w\nAlso you can use the commands:\n\tlook/l -> to see the description of the room where you are\n\tlook/l + north/east/south/west/n/s/e/w -> to see the description of the\n\tpath\n\topen/close + north/east/south/west/n/s/e/w -> to open/close door\n\tpick + item name -> you can pick items from the ground\n\tdrop + item name -> you can drop items to the ground\n\tequip + item name -> you can equip items\n\tunequip + item name -> you can unequip items\n\tput + item name + into + cupboard -> put item in the cupboard\n\tget + item name + from + cupboard -> get the item from the cupboard\n\tuse + item name -> to use it\n\tequipped -> to see the objects that the player has equipped\n\tinventory/inv/i -> to see player inventory\n\tbackpacked -> to see what you had put inside the backpack if you had\n\ttaken it\n\tstats -> to see player stats\n\tclear/c -> to clean the screen\n\thelp/h -> to open the help menu\n\tquit/q -> to quit the game\n\n");
+		printf("You can move using:\n\tn/s/e/w\n\tnorth/east/south/west\n\tgo north/east/south/west/n/s/e/w\nAlso you can use the commands:\n\tlook/l -> to see the description of the room where you are\n\tlook/l + north/east/south/west/n/s/e/w -> to see the description of the\n\tpath\n\topen/close + north/east/south/west/n/s/e/w -> to open/close door\n\tpick + item name -> you can pick items from the ground\n\tdrop + item name -> you can drop items to the ground\n\tequip + item name -> you can equip items\n\tunequip + item name -> you can unequip items\n\tput + item name + into + cupboard -> put item in the cupboard\n\tget + item name + from + cupboard -> get the item from the cupboard\n\tuse + item name -> to use it\n\tequipped -> to see the objects that the player has equipped\n\tinventory/inv/i -> to see player inventory\n\tbackpacked -> to see what you had put inside the backpack if you had\n\ttaken it\n\tstats -> to see player stats\n\tflee -> when you have the treasure you can go to Tower 1 and flee\n\tto finish the game\n\tclear/c -> to clean the screen\n\thelp/h -> to open the help menu\n\tquit/q -> to quit the game\n\n");
 	}
 	else{
 		printf("That's not a valid command.\n");
 	}
 }
 
-void Player::executecommand2words(const int command1, const int command2, int& actual_position)const{
+void Player::executecommand2words(int command1, int command2, int& actual_position)const{
 	int exitnum = 0, roomnum = 0;
 	int exitnumdoors = 0, roomnumdoors = 0;
 	int opositeroom = 0;
@@ -675,6 +694,29 @@ void Player::executecommand2words(const int command1, const int command2, int& a
 				if (worldexternpointer->player->current_room->exploitablewall == true){
 					worldexternpointer->player->current_room->exploitablewall = false;
 					worldexternpointer->items[EXPLOSIVE - 22]->inventory = false;
+					printf("You had armed your explosive.\n");
+					printf("3");
+					Sleep(333);
+					printf(".");
+					Sleep(333);
+					printf(".");
+					Sleep(333);
+					printf(".\n");
+					printf("2");
+					Sleep(333);
+					printf(".");
+					Sleep(333);
+					printf(".");
+					Sleep(333);
+					printf(".\n");
+					printf("1");
+					Sleep(333);
+					printf(".");
+					Sleep(333);
+					printf(".");
+					Sleep(333);
+					printf(".\n");
+					printf("   ___  ____  ____  ____  __  _________\n  / _ )/ __ %c/ __ %c/ __ %c/  |/  / / / /\n / _  / /_/ / /_/ / /_/ / /|_/ /_/_/_/ \n/____/%c____/%c____/%c____/_/  /_(_|_|_)  \n", 92, 92, 92, 92, 92, 92);
 					printf("You had used your explosive against the wall.\n");
 				}
 				else{
@@ -691,7 +733,7 @@ void Player::executecommand2words(const int command1, const int command2, int& a
 	}
 }
 
-void Player::executecommand4words(const int command1, const int command2, const int command3, const int command4, int& actual_position)const{
+void Player::executecommand4words(int command1, int command2, int command3, int command4, int& actual_position)const{
 	if (command1 == PUT){
 		if (((command2 == KATANA) || (command2 == GASMASK) || (command2 == TREASURE) || (command2 == GRENADE) || (command2 == SWORD) || (command2 == SHIELD) || (command2 == EXPLOSIVE) || (command2 == KEY) || (command2 == BACKPACK)) && (command3 == INTO)){
 			if (command4 == CUPBOARD){
