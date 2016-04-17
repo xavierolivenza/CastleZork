@@ -18,27 +18,59 @@ n/s/e/w
 
 north/east/south/west
 
-go n/go e/go s/go w
+go north/east/south/west
 
-go north/go east/go south/go west
+/s/e/w\n
 
 Also you can use the commands:
 
-look->to see the description of the room where you are
+look/l -> to see the description of the room where you are
 
-look+north/n/east/e/south/s/west/w->to see the description of the path
+look/l + north/east/south/west/n/s/e/w -> to see the description of the path
 
-open/close+north/n/east/e/south/s/west/w->to open/close doors
+look/l + item name -> if you have it in the inventory you can see its lore
 
-help->to print the help menu with the commands.
+open/close + north/east/south/west/n/s/e/w -> to open/close door
 
-quit->to quit the game
+pick + item name -> you can pick items from the ground
 
-If the player tries to move in one direction and it prints again the room information where he is, means that there is a wall, this can "fix" with an if where you look if the source and destination of the exit is equal, prints "there is a wall", but I have left it to create confusion, if the player moves in one direction and information room is repeated, the player will wonder why it is happening, and if he makes a look + direction, he will know what there is there.
+drop + item name -> you can drop items to the ground
+
+equip + item name -> you can equip items
+
+unequip + item name -> you can unequip items
+
+put + item name + into + cupboard -> put item in the cupboard
+
+get + item name + from + cupboard -> get the item from the cupboard
+
+use + item name -> to use it
+
+equipped -> to see the objects that the player has equipped
+
+inventory/inv/i -> to see player inventory
+
+backpacked -> to see what you had put inside the backpack if you had taken it
+
+stats -> to see player stats
+
+flee -> when you have the treasure you can go to Tower 1 and flee to finish the game
+
+clear/c -> to clean the screen
+
+help/h -> to open the help menu
+
+quit/q -> to quit the game
 
 ## Changelog
 
 16-03-2016 -> Take the gold first release with all rooms and movement, look, open, close, help and quit commands.
+18-04-2016 -> Take the gold second release with all items and more commands(items look, pick, drop, equip, unequip, put, get, use, equipped, inventory, backpacked, stats, flee, clear).
+
+##Comments
+
+If the player tries to move in one direction and it prints again the room information where he is, means that there is a wall, this can "fix" with an if where you look if the source and destination of the exit is equal, prints "there is a wall", but I have left it to create confusion, if the player moves in one direction and information room is repeated, the player will wonder why it is happening, and if he makes a look + direction, he will know what there is there.
+Notice that there are two blade weapons, you can only equip ne, if you equip the other, the first one will be unequipped.
 
 ## Credits
 
