@@ -91,7 +91,10 @@ quit/q -> to quit the game
 ##Comments
 
 If the player tries to move in one direction and it prints again the room information where he is, means that there is a wall, this can "fix" with an if where you look if the source and destination of the exit is equal, prints "there is a wall", but I have left it to create confusion, if the player moves in one direction and information room is repeated, the player will wonder why it is happening, and if he makes a look + direction, he will know what there is there.
+
 Notice that there are two blade weapons, you can only equip ne, if you equip the other, the first one will be unequipped.
+
+Now you can take the explosive, go to throne room, use it, get treasure, go to tower 1 and flee to finish the game.
 
 ## Credits
 

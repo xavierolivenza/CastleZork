@@ -8,6 +8,15 @@ World::World(){
 
 World::~World(){
 	delete player;
+	for (int i = 0; i < NUMROOMS; i++){
+		delete castlerooms[i];
+	}
+	for (int i = 0; i < NUMEXITS; i++){
+		delete exits[i];
+	}
+	for (int i = 0; i < NUMITEMS; i++){
+		delete items[i];
+	}
 }
 
 void World::CreateWorld(){

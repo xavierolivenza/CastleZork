@@ -13,6 +13,7 @@ Player::~Player(){
 }
 
 int Player::check_firstcommand(Vector <String> commands)const{
+	//this method recibes the vector of commands and check the first one and return its value of the enum
 	if ((commands[0] == "look") || (commands[0] == "l")){
 		return LOOK;
 	}
@@ -32,7 +33,7 @@ int Player::check_firstcommand(Vector <String> commands)const{
 		return HELP;
 	}
 	// ---------------------------------------------------------------------------------------------------------------
-	//Detection commands with 1 word
+	//Detection movement commands with 1 word
 	else if ((commands[0] == "north") || (commands[0] == "n")){
 		return NORTH;
 	}
@@ -91,6 +92,7 @@ int Player::check_firstcommand(Vector <String> commands)const{
 }
 
 int Player::check_secondcommand(Vector <String> commands)const{
+	//this method recibes the vector of commands and check the second one and return its value of the enum
 	if ((commands[1] == "north") || (commands[1] == "n")){
 		return NORTH;
 	}
@@ -136,6 +138,7 @@ int Player::check_secondcommand(Vector <String> commands)const{
 }
 
 int Player::check_thirdcommand(Vector <String> commands)const{
+	//this method recibes the vector of commands and check the third one and return its value of the enum
 	if ((commands[0] == "put") && (commands[2] == "into")){
 		return INTO;
 	}
@@ -148,6 +151,7 @@ int Player::check_thirdcommand(Vector <String> commands)const{
 }
 
 int Player::check_fourthcommand(Vector <String> commands)const{
+	//this method recibes the vector of commands and check the forth one and return its value of the enum
 	if (commands[3] == "cupboard"){
 		return CUPBOARD;
 	}
@@ -160,6 +164,7 @@ int Player::check_fourthcommand(Vector <String> commands)const{
 }
 
 void Player::dropeditemslook()const{
+	//this method see if there are items in the current room
 	int j = 0, i = 0;
 	for (j = 0; j < NUMITEMS; j++){//see if in the room there are objects
 		if ((worldexternpointer->items[j]->item_room == worldexternpointer->player->current_room) && worldexternpointer->items[j]->inventory == false){
@@ -177,12 +182,17 @@ void Player::dropeditemslook()const{
 }
 
 void Player::executecommand1word(int& command1, int& actual_position)const{
+
+	//this method executes the 1 word commands
+
 	int exitnum = 0, roomnum = 0;
 	int i = 0, j = 0, k = 0, l = 0, m = 0;
 	worldexternpointer->player->current_room = worldexternpointer->castlerooms[actual_position];
+
+	//movement commands
 	if ((command1 == NORTH) || (command1 == EAST) || (command1 == SOUTH) || (command1 == WEST)){
 		for (exitnum = 0; exitnum < NUMEXITS; exitnum++){
-			if (exitnum % 4 == (command1 - 6)){
+			if ((exitnum % 4 == (command1 - 6)) && ((worldexternpointer->exits[exitnum]->origin == worldexternpointer->player->current_room))){
 				//NORTH=6, 6-6=0, exitnum % 4 == 0
 				//North exits are each 4 exits, starting from 0, North exits = 0, 4, 8, 12, 16...
 				//EAST=7, 6-6=0, exitnum % 4 == 1
@@ -191,19 +201,17 @@ void Player::executecommand1word(int& command1, int& actual_position)const{
 				//South exits are each 4 exits, starting from 2, South exits = 2, 6, 10, 14, 18...
 				//WEST=9, 6-6=0, exitnum % 4 == 3
 				//West exits are each 4 exits, starting from 3, West exits = 3, 7, 11, 15, 19...
-				if (worldexternpointer->exits[exitnum]->origin == worldexternpointer->player->current_room){
-					for (roomnum = 0; roomnum < NUMROOMS; roomnum++){//Check rooms to get the room num for actual_position
-						if (worldexternpointer->exits[exitnum]->destination == worldexternpointer->castlerooms[roomnum]){
-							if (worldexternpointer->exits[exitnum]->door == true && worldexternpointer->exits[exitnum]->close == true){
-								printf("Locked door.\n");
-								return;
-							}
-							else{
-								actual_position = roomnum;
-								worldexternpointer->player->current_room = worldexternpointer->exits[exitnum]->destination;
-								printf("Now you are in %s\n", worldexternpointer->player->current_room->name.c_str());
-								return;
-							}
+				for (roomnum = 0; roomnum < NUMROOMS; roomnum++){//Check rooms to get the room num for actual_position
+					if (worldexternpointer->exits[exitnum]->destination == worldexternpointer->castlerooms[roomnum]){
+						if (worldexternpointer->exits[exitnum]->door == true && worldexternpointer->exits[exitnum]->close == true){
+							printf("Locked door.\n");
+							return;
+						}
+						else{
+							actual_position = roomnum;
+							worldexternpointer->player->current_room = worldexternpointer->exits[exitnum]->destination;
+							printf("Now you are in %s\n", worldexternpointer->player->current_room->name.c_str());
+							return;
 						}
 					}
 				}
@@ -211,15 +219,20 @@ void Player::executecommand1word(int& command1, int& actual_position)const{
 		}
 		printf("There is a wall.\n");
 	}
+
+	//look room command
 	else if (command1 == LOOK){
 		printf("%s\n\n", worldexternpointer->castlerooms[actual_position]->description.c_str());
 	}
+
+	//stats command
 	else if (command1 == STATS){
 		printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", 201, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 187);
 		printf("%c Player Stats: %c\n", 186, 186);
 		printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", 204, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 185);
 		// HP
 		printf("%c HP:%i", 186, worldexternpointer->player->playerhp);
+		//Ascii art code purpouse
 		//This lines are for draw the box which contains stats
 		if (worldexternpointer->player->playerhp < 10){
 			m = 1;
@@ -237,6 +250,7 @@ void Player::executecommand1word(int& command1, int& actual_position)const{
 
 		// Attack
 		printf("%c Attack:%i", 186, worldexternpointer->player->playerattack);
+		//Ascii art code purpouse
 		//This lines are for draw the box which contains stats
 		if (worldexternpointer->player->playerattack < 10){
 			m = 1;
@@ -254,6 +268,7 @@ void Player::executecommand1word(int& command1, int& actual_position)const{
 
 		// Defense
 		printf("%c Defense:%i", 186, worldexternpointer->player->playerdefense);
+		//Ascii art code purpouse
 		//This lines are for draw the box which contains stats
 		if (worldexternpointer->player->playerdefense < 10){
 			m = 1;
@@ -271,6 +286,8 @@ void Player::executecommand1word(int& command1, int& actual_position)const{
 
 		printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", 200, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 188);
 	}
+
+	//see inventory command
 	else if (command1 == INVENTORY){
 		printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", 201, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 187);
 		printf("%c Player Inventory:          %c\n", 186, 186);
@@ -279,6 +296,7 @@ void Player::executecommand1word(int& command1, int& actual_position)const{
 			if (worldexternpointer->items[i]->inventory == true){
 				printf("%c %s", 186, worldexternpointer->items[i]->name.c_str());
 				j++;
+				//Ascii art code purpouse
 				for (k = worldexternpointer->items[i]->name.length(); k <= 26; k++){
 				printf(" ");
 				}
@@ -290,6 +308,8 @@ void Player::executecommand1word(int& command1, int& actual_position)const{
 		}
 		printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", 200, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 188);
 	}
+
+	//see backpacked items command
 	else if (command1 == BACKPACKED){
 		if (worldexternpointer->items[BACKPACK - 22]->inventory == true){
 			printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", 201, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 187);
@@ -299,6 +319,7 @@ void Player::executecommand1word(int& command1, int& actual_position)const{
 				if (worldexternpointer->items[i]->inside_backpack == true){
 					printf("%c %s", 186, worldexternpointer->items[i]->name.c_str());
 					j++;
+					//Ascii art code purpouse
 					for (k = worldexternpointer->items[i]->name.length(); k <= 26; k++){
 						printf(" ");
 					}
@@ -314,6 +335,8 @@ void Player::executecommand1word(int& command1, int& actual_position)const{
 			printf("You don't have a backpack.\n");
 		}
 	}
+
+	//see equipped items command
 	else if (command1 == EQUIPPED){
 		printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", 201, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 187);
 		printf("%c Player Equipped stuff:     %c\n", 186, 186);
@@ -322,6 +345,7 @@ void Player::executecommand1word(int& command1, int& actual_position)const{
 			if (worldexternpointer->items[i]->equipped == true){
 				printf("%c %s", 186, worldexternpointer->items[i]->name.c_str());
 				j++;
+				//Ascii art code purpouse
 				for (k = worldexternpointer->items[i]->name.length(); k <= 26; k++){
 					printf(" ");
 				}
@@ -333,10 +357,13 @@ void Player::executecommand1word(int& command1, int& actual_position)const{
 		}
 		printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", 200, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 188);
 	}
+
+	//flee command to escape qhen you have the treasure
 	else if (command1 == FLEE){
 		if (worldexternpointer->items[TREASURE - 22]->inventory == true){
 			if (worldexternpointer->player->current_room == worldexternpointer->castlerooms[TOWER1]){
 				system("cls");
+				//Ascii art code purpouse
 				printf("   _____                            _         _       _   _                 \n  / ____|                          | |       | |     | | (_)                \n | |     ___  _ __   __ _ _ __ __ _| |_ _   _| | __ _| |_ _  ___  _ __  ___ \n | |    / _ %c| '_ %c / _` | '__/ _` | __| | | | |/ _` | __| |/ _ %c| '_ %c/ __|\n | |___| (_) | | | | (_| | | | (_| | |_| |_| | | (_| | |_| | (_) | | | %c__ %c\n  %c_____%c___/|_| |_|%c__, |_|  %c__,_|%c__|%c__,_|_|%c__,_|%c__|_|%c___/|_| |_|___/\n  / _|               __/ |                 | |          | | (_)             \n | |_ ___  _ __    _|___/_  _ __ ___  _ __ | | ___  __ _| |_ _ _ __   __ _  \n |  _/ _ %c| '__|  / __/ _ %c| '_ ` _ %c| '_ %c| |/ _ %c/ _` | __| | '_ %c / _` | \n | || (_) | |    | (_| (_) | | | | | | |_) | |  __/ (_| | |_| | | | | (_| | \n |_| %c___/|_|     %c___%c___/|_| |_| |_| .__/|_|%c___|%c__,_|%c__|_|_| |_|%c__, | \n   _______    _          _   _       | |              _     _         __/ | \n  |__   __|  | |        | | | |      |_|             | |   | |       |___/  \n     | | __ _| | _____  | |_| |__   ___    __ _  ___ | | __| |              \n     | |/ _` | |/ / _ %c | __| '_ %c / _ %c  / _` |/ _ %c| |/ _` |              \n     | | (_| |   <  __/ | |_| | | |  __/ | (_| | (_) | | (_| |              \n     |_|%c__,_|_|%c_%c___|  %c__|_| |_|%c___|  %c__, |%c___/|_|%c__,_|              \n                                           __/ |                            \n                                          |___/                             \n", 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92);
 				command1 = QUIT;
 			}
@@ -348,32 +375,46 @@ void Player::executecommand1word(int& command1, int& actual_position)const{
 			printf("You can't flee until you take the treasure.\n");
 		}
 	}
+
+	//clear screen command
 	else if (command1 == CLEAR){
 		system("cls");
+		//Ascii art code purpouse
 		printf("  _______    _          _   _                        _     _ \n |__   __|  | |        | | | |                      | |   | |\n    | | __ _| | _____  | |_| |__   ___    __ _  ___ | | __| |\n    | |/ _` | |/ / _ %c | __| '_ %c / _ %c  / _` |/ _ %c| |/ _` |\n    | | (_| |   <  __/ | |_| | | |  __/ | (_| | (_) | | (_| |\n    |_|%c__,_|_|%c_%c___|  %c__|_| |_|%c___|  %c__, |%c___/|_|%c__,_|\n                                          __/ |              \n                                         |___/               \n", 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92);
 		printf("By Xavier Olivenza.\n");
 	}
+
+	//quit command, this don't do anything, it's just to avoid the else printf
 	else if (command1 == QUIT){
 
 	}
+
+	//help command
 	else if (command1 == HELP){
 		printf("You can move using:\n\tn/s/e/w\n\tnorth/east/south/west\n\tgo north/east/south/west/n/s/e/w\nAlso you can use the commands:\n\tlook/l -> to see the description of the room where you are\n\tlook/l + north/east/south/west/n/s/e/w -> to see the description of the\n\tpath\n\tlook/l + item name -> if you have it in the inventory you can see its\n\tlore\n\topen/close + north/east/south/west/n/s/e/w -> to open/close door\n\tpick + item name -> you can pick items from the ground\n\tdrop + item name -> you can drop items to the ground\n\tequip + item name -> you can equip items\n\tunequip + item name -> you can unequip items\n\tput + item name + into + cupboard -> put item in the cupboard\n\tget + item name + from + cupboard -> get the item from the cupboard\n\tuse + item name -> to use it\n\tequipped -> to see the objects that the player has equipped\n\tinventory/inv/i -> to see player inventory\n\tbackpacked -> to see what you had put inside the backpack if you had\n\ttaken it\n\tstats -> to see player stats\n\tflee -> when you have the treasure you can go to Tower 1 and flee\n\tto finish the game\n\tclear/c -> to clean the screen\n\thelp/h -> to open the help menu\n\tquit/q -> to quit the game\n\n");
 	}
+
+	//error print
 	else{
 		printf("That's not a valid command.\n");
 	}
 }
 
 void Player::executecommand2words(int command1, int command2, int& actual_position)const{
+
+	//this method executes commands with 2 words
+
 	int exitnum = 0, roomnum = 0;
 	int exitnumdoors = 0, roomnumdoors = 0;
 	int opositeroom = 0;
 	worldexternpointer->player->current_room = worldexternpointer->castlerooms[actual_position];
 	// ---------------------------------------------------------------------------------------------------------------
+	//look command
 	if (command1 == LOOK){
+		//for directions
 		if ((command2 == NORTH) || (command2 == EAST) || (command2 == SOUTH) || (command2 == WEST)){
 			for (exitnum = 0; exitnum < NUMEXITS; exitnum++){
-				if (exitnum % 4 == command2 - 6){
+				if ((exitnum % 4 == command2 - 6) && (worldexternpointer->exits[exitnum]->origin == worldexternpointer->player->current_room)){
 					//NORTH=6, 6-6=0, exitnum % 4 == 0
 					//North exits are each 4 exits, starting from 0, North exits = 0, 4, 8, 12, 16...
 					//EAST=7, 6-6=0, exitnum % 4 == 1
@@ -382,13 +423,12 @@ void Player::executecommand2words(int command1, int command2, int& actual_positi
 					//South exits are each 4 exits, starting from 2, South exits = 2, 6, 10, 14, 18...
 					//WEST=9, 6-6=0, exitnum % 4 == 3
 					//West exits are each 4 exits, starting from 3, West exits = 3, 7, 11, 15, 19...
-					if (worldexternpointer->exits[exitnum]->origin == worldexternpointer->player->current_room){
-						printf("%s\n", worldexternpointer->exits[exitnum]->description.c_str());
-						return;
-					}
+					printf("%s\n", worldexternpointer->exits[exitnum]->description.c_str());
+					return;
 				}
 			}
 		}
+		//for inventory items
 		else if ((command2 == KATANA) || (command2 == GASMASK) || (command2 == TREASURE) || (command2 == GRENADE) || (command2 == SWORD) || (command2 == SHIELD) || (command2 == EXPLOSIVE) || (command2 == KEY) || (command2 == BACKPACK)){
 			if ((worldexternpointer->items[command2 - 22]->inventory == true) && worldexternpointer->items[command2 - 22]->equipped == true){//If the player have it
 				printf("%s is in the inventory and equipped.\n%s\nDamage:%i\nDefense:%i\n", worldexternpointer->items[command2 - 22]->name.c_str(), worldexternpointer->items[command2 - 22]->description.c_str(), worldexternpointer->items[command2 - 22]->attack, worldexternpointer->items[command2 - 22]->defense);
@@ -405,10 +445,11 @@ void Player::executecommand2words(int command1, int command2, int& actual_positi
 		}
 	}
 	// ---------------------------------------------------------------------------------------------------------------
+	//movement commands
 	else if (command1 == GO){
 		if ((command2 == NORTH) || (command2 == EAST) || (command2 == SOUTH) || (command2 == WEST)){
 			for (exitnum = 0; exitnum < NUMEXITS; exitnum++){
-				if (exitnum % 4 == command2 - 6){
+				if ((exitnum % 4 == command2 - 6) && (worldexternpointer->exits[exitnum]->origin == worldexternpointer->player->current_room)){
 					//NORTH=6, 6-6=0, exitnum % 4 == 0
 					//North exits are each 4 exits, starting from 0, North exits = 0, 4, 8, 12, 16...
 					//EAST=7, 6-6=0, exitnum % 4 == 1
@@ -417,24 +458,19 @@ void Player::executecommand2words(int command1, int command2, int& actual_positi
 					//South exits are each 4 exits, starting from 2, South exits = 2, 6, 10, 14, 18...
 					//WEST=9, 6-6=0, exitnum % 4 == 3
 					//West exits are each 4 exits, starting from 3, West exits = 3, 7, 11, 15, 19...
-					if (worldexternpointer->exits[exitnum]->origin == worldexternpointer->player->current_room){
-						for (roomnum = 0; roomnum < NUMROOMS; roomnum++){//Check rooms to get the room num for actual_position
-							if (worldexternpointer->exits[exitnum]->destination == worldexternpointer->castlerooms[roomnum]){
-								if (worldexternpointer->exits[exitnum]->door == true && worldexternpointer->exits[exitnum]->close == true){
-									printf("Locked door.\n");
-									return;
-								}
-								else{
-									actual_position = roomnum;
-									worldexternpointer->player->current_room = worldexternpointer->exits[exitnum]->destination;
-									printf("Now you are in %s\n", worldexternpointer->player->current_room->name.c_str());
-									return;
-								}
-							}
+					for (roomnum = 0; roomnum < NUMROOMS; roomnum++){//Check rooms to get the room num for actual_position
+						if ((worldexternpointer->exits[exitnum]->destination == worldexternpointer->castlerooms[roomnum]) && (worldexternpointer->exits[exitnum]->door == true && worldexternpointer->exits[exitnum]->close == true)){
+							printf("Locked door.\n");
+							return;
+						}
+						else{
+							actual_position = roomnum;
+							worldexternpointer->player->current_room = worldexternpointer->exits[exitnum]->destination;
+							printf("Now you are in %s\n", worldexternpointer->player->current_room->name.c_str());
+							return;
 						}
 					}
 				}
-
 			}
 			printf("There is a wall.\n");
 		}
@@ -443,53 +479,48 @@ void Player::executecommand2words(int command1, int command2, int& actual_positi
 		}
 	}
 	// ---------------------------------------------------------------------------------------------------------------
+	//open command
 	else if (command1 == OPEN){
 		if ((command2 == NORTH) || (command2 == EAST) || (command2 == SOUTH) || (command2 == WEST)){
-			if (worldexternpointer->items[KEY - 22]->inventory == true){
+			if (worldexternpointer->items[KEY - 22]->inventory == true){//you need key to open
 				for (exitnum = 0; exitnum < NUMEXITS; exitnum++){
-					if (worldexternpointer->exits[exitnum]->origin->name == worldexternpointer->player->current_room->name){
-						if (exitnum % 4 == command2 - 6){
-							//NORTH=6, 6-6=0, exitnum % 4 == 0
-							//North exits are each 4 exits, starting from 0, North exits = 0, 4, 8, 12, 16...
-							//EAST=7, 6-6=0, exitnum % 4 == 1
-							//East exits are each 4 exits, starting from 1, East exits = 1, 5, 9, 13...
-							//SOUTH=8, 6-6=0, exitnum % 4 == 2
-							//South exits are each 4 exits, starting from 2, South exits = 2, 6, 10, 14, 18...
-							//WEST=9, 6-6=0, exitnum % 4 == 3
-							//West exits are each 4 exits, starting from 3, West exits = 3, 7, 11, 15, 19...
-							if (worldexternpointer->exits[exitnum]->door == true){//check if there's a door
-								if (worldexternpointer->exits[exitnum]->close == true){
-									worldexternpointer->exits[exitnum]->close = false;//open the door of the current room
-									for (exitnumdoors = 0; exitnumdoors < NUMEXITS; exitnumdoors++){
-										if ((command2 == NORTH) || (command2 == EAST)){
-											if ((exitnumdoors % 4) == (command2 - 4)){//Oposite room
-												if (worldexternpointer->exits[exitnumdoors]->destination->name == worldexternpointer->exits[exitnum]->origin->name){
-													worldexternpointer->exits[exitnumdoors]->close = false;//open the door of the next room
-													printf("The door is opened.\n");
-													return;
-												}
-											}
+					if ((worldexternpointer->exits[exitnum]->origin->name == worldexternpointer->player->current_room->name) && (exitnum % 4 == command2 - 6)){
+						//NORTH=6, 6-6=0, exitnum % 4 == 0
+						//North exits are each 4 exits, starting from 0, North exits = 0, 4, 8, 12, 16...
+						//EAST=7, 6-6=0, exitnum % 4 == 1
+						//East exits are each 4 exits, starting from 1, East exits = 1, 5, 9, 13...
+						//SOUTH=8, 6-6=0, exitnum % 4 == 2
+						//South exits are each 4 exits, starting from 2, South exits = 2, 6, 10, 14, 18...
+						//WEST=9, 6-6=0, exitnum % 4 == 3
+						//West exits are each 4 exits, starting from 3, West exits = 3, 7, 11, 15, 19...
+						if (worldexternpointer->exits[exitnum]->door == true){//check if there's a door
+							if (worldexternpointer->exits[exitnum]->close == true){
+								worldexternpointer->exits[exitnum]->close = false;//open the door of the current room
+								for (exitnumdoors = 0; exitnumdoors < NUMEXITS; exitnumdoors++){
+									if ((command2 == NORTH) || (command2 == EAST)){
+										if (((exitnumdoors % 4) == (command2 - 4)) && (worldexternpointer->exits[exitnumdoors]->destination->name == worldexternpointer->exits[exitnum]->origin->name)){//Oposite room
+											worldexternpointer->exits[exitnumdoors]->close = false;//open the door of the next room
+											printf("The door is opened.\n");
+											return;
 										}
-										else if ((command2 == SOUTH) || (command2 == WEST)){
-											if ((exitnumdoors % 4) == (command2 - 8)){//Oposite room
-												if (worldexternpointer->exits[exitnumdoors]->destination->name == worldexternpointer->exits[exitnum]->origin->name){
-													worldexternpointer->exits[exitnumdoors]->close = false;//open the door of the next room
-													printf("The door is opened.\n");
-													return;
-												}
-											}
+									}
+									else if ((command2 == SOUTH) || (command2 == WEST)){
+										if (((exitnumdoors % 4) == (command2 - 8)) && (worldexternpointer->exits[exitnumdoors]->destination->name == worldexternpointer->exits[exitnum]->origin->name)){//Oposite room
+											worldexternpointer->exits[exitnumdoors]->close = false;//open the door of the next room
+											printf("The door is opened.\n");
+											return;
 										}
 									}
 								}
-								else{
-									printf("The door was already opened.\n");
-									break;
-								}
 							}
 							else{
-								printf("There is not a door here.\n");
+								printf("The door was already opened.\n");
 								break;
 							}
+						}
+						else{
+							printf("There is not a door here.\n");
+							break;
 						}
 					}
 				}
@@ -503,53 +534,48 @@ void Player::executecommand2words(int command1, int command2, int& actual_positi
 		}
 	}
 	// ---------------------------------------------------------------------------------------------------------------
+	//close command
 	else if (command1 == CLOSE){
 		if ((command2 == NORTH) || (command2 == EAST) || (command2 == SOUTH) || (command2 == WEST)){
-			if (worldexternpointer->items[KEY - 22]->inventory == true){
+			if (worldexternpointer->items[KEY - 22]->inventory == true){//you need key to close
 				for (exitnum = 0; exitnum < NUMEXITS; exitnum++){
-					if (worldexternpointer->exits[exitnum]->origin->name == worldexternpointer->player->current_room->name){
-						if (exitnum % 4 == command2 - 6){
-							//NORTH=6, 6-6=0, exitnum % 4 == 0
-							//North exits are each 4 exits, starting from 0, North exits = 0, 4, 8, 12, 16...
-							//EAST=7, 6-6=0, exitnum % 4 == 1
-							//East exits are each 4 exits, starting from 1, East exits = 1, 5, 9, 13...
-							//SOUTH=8, 6-6=0, exitnum % 4 == 2
-							//South exits are each 4 exits, starting from 2, South exits = 2, 6, 10, 14, 18...
-							//WEST=9, 6-6=0, exitnum % 4 == 3
-							//West exits are each 4 exits, starting from 3, West exits = 3, 7, 11, 15, 19...
-							if (worldexternpointer->exits[exitnum]->door == true){//check if there's a door
-								if (worldexternpointer->exits[exitnum]->close == false){
-									worldexternpointer->exits[exitnum]->close = true;//close the door of the current room
-									for (exitnumdoors = 0; exitnumdoors < NUMEXITS; exitnumdoors++){
-										if ((command2 == NORTH) || (command2 == EAST)){
-											if ((exitnumdoors % 4) == (command2 - 4)){//Oposite room
-												if (worldexternpointer->exits[exitnumdoors]->destination->name == worldexternpointer->exits[exitnum]->origin->name){
-													worldexternpointer->exits[exitnumdoors]->close = true;//open the door of the next room
-													printf("The door is closed.\n");
-													return;
-												}
-											}
+					if ((worldexternpointer->exits[exitnum]->origin->name == worldexternpointer->player->current_room->name) && (exitnum % 4 == command2 - 6)){
+						//NORTH=6, 6-6=0, exitnum % 4 == 0
+						//North exits are each 4 exits, starting from 0, North exits = 0, 4, 8, 12, 16...
+						//EAST=7, 6-6=0, exitnum % 4 == 1
+						//East exits are each 4 exits, starting from 1, East exits = 1, 5, 9, 13...
+						//SOUTH=8, 6-6=0, exitnum % 4 == 2
+						//South exits are each 4 exits, starting from 2, South exits = 2, 6, 10, 14, 18...
+						//WEST=9, 6-6=0, exitnum % 4 == 3
+						//West exits are each 4 exits, starting from 3, West exits = 3, 7, 11, 15, 19...
+						if (worldexternpointer->exits[exitnum]->door == true){//check if there's a door
+							if (worldexternpointer->exits[exitnum]->close == false){
+								worldexternpointer->exits[exitnum]->close = true;//close the door of the current room
+								for (exitnumdoors = 0; exitnumdoors < NUMEXITS; exitnumdoors++){
+									if ((command2 == NORTH) || (command2 == EAST)){
+										if (((exitnumdoors % 4) == (command2 - 4)) && (worldexternpointer->exits[exitnumdoors]->destination->name == worldexternpointer->exits[exitnum]->origin->name)){//Oposite room
+											worldexternpointer->exits[exitnumdoors]->close = true;//open the door of the next room
+											printf("The door is closed.\n");
+											return;
 										}
-										else if ((command2 == SOUTH) || (command2 == WEST)){
-											if ((exitnumdoors % 4) == (command2 - 8)){//Oposite room
-												if (worldexternpointer->exits[exitnumdoors]->destination->name == worldexternpointer->exits[exitnum]->origin->name){
-													worldexternpointer->exits[exitnumdoors]->close = true;//open the door of the next room
-													printf("The door is closed.\n");
-													return;
-												}
-											}
+									}
+									else if ((command2 == SOUTH) || (command2 == WEST)){
+										if (((exitnumdoors % 4) == (command2 - 8)) && (worldexternpointer->exits[exitnumdoors]->destination->name == worldexternpointer->exits[exitnum]->origin->name)){//Oposite room
+											worldexternpointer->exits[exitnumdoors]->close = true;//open the door of the next room
+											printf("The door is closed.\n");
+											return;
 										}
 									}
 								}
-								else{
-									printf("The door was already closed.\n");
-									break;
-								}
 							}
 							else{
-								printf("There is not a door here.\n");
+								printf("The door was already closed.\n");
 								break;
 							}
+						}
+						else{
+							printf("There is not a door here.\n");
+							break;
 						}
 					}
 				}
@@ -563,6 +589,7 @@ void Player::executecommand2words(int command1, int command2, int& actual_positi
 		}
 	}
 	// ---------------------------------------------------------------------------------------------------------------
+	//pick command
 	else if (command1 == PICK){
 		if ((command2 == KATANA) || (command2 == GASMASK) || (command2 == TREASURE) || (command2 == GRENADE) || (command2 == SWORD) || (command2 == SHIELD) || (command2 == EXPLOSIVE) || (command2 == KEY) || (command2 == BACKPACK)){
 			if (worldexternpointer->items[command2 - 22]->item_room == worldexternpointer->player->current_room){//Looks if the player is in the same room of the item.
@@ -589,6 +616,7 @@ void Player::executecommand2words(int command1, int command2, int& actual_positi
 		}
 	}
 	// ---------------------------------------------------------------------------------------------------------------
+	//drop command
 	else if (command1 == DROP){
 		if ((command2 == KATANA) || (command2 == GASMASK) || (command2 == TREASURE) || (command2 == GRENADE) || (command2 == SWORD) || (command2 == SHIELD) || (command2 == EXPLOSIVE) || (command2 == KEY) || (command2 == BACKPACK)){
 			if (worldexternpointer->items[command2 - 22]->inventory == true){//If the player have it
@@ -611,6 +639,7 @@ void Player::executecommand2words(int command1, int command2, int& actual_positi
 		}
 	}
 	// ---------------------------------------------------------------------------------------------------------------
+	//equip command
 	else if (command1 == EQUIP){
 		if ((command2 == KATANA) || (command2 == GASMASK) || (command2 == TREASURE) || (command2 == GRENADE) || (command2 == SWORD) || (command2 == SHIELD) || (command2 == EXPLOSIVE) || (command2 == KEY) || (command2 == BACKPACK)){
 			if (worldexternpointer->items[command2 - 22]->inventory == true){//If the player have it
@@ -664,6 +693,7 @@ void Player::executecommand2words(int command1, int command2, int& actual_positi
 		}
 	}
 	// ---------------------------------------------------------------------------------------------------------------
+	//unequip command
 	else if (command1 == UNEQUIP){
 		if ((command2 == KATANA) || (command2 == GASMASK) || (command2 == TREASURE) || (command2 == GRENADE) || (command2 == SWORD) || (command2 == SHIELD) || (command2 == EXPLOSIVE) || (command2 == KEY) || (command2 == BACKPACK)){
 			if (worldexternpointer->items[command2 - 22]->equipped == true){//If the player have it
@@ -680,6 +710,8 @@ void Player::executecommand2words(int command1, int command2, int& actual_positi
 			printf("That's not a valid command.\n");
 		}
 	}
+
+	//use command, by now this only works for use explosive
 	else if (command1 == USE){
 		if (command2 == GRENADE){
 			if (worldexternpointer->items[GRENADE - 22]->inventory == true){
@@ -695,6 +727,8 @@ void Player::executecommand2words(int command1, int command2, int& actual_positi
 					worldexternpointer->player->current_room->exploitablewall = false;
 					worldexternpointer->items[EXPLOSIVE - 22]->inventory = false;
 
+					//Ascii art code purpouse
+					//countdown
 					printf("You had armed your explosive.\n");
 					Sleep(2000);
 					printf("                _____ \n               |___ / \n                 |_ %c \n                ___) |\n               |____/", 92);
@@ -737,6 +771,9 @@ void Player::executecommand2words(int command1, int command2, int& actual_positi
 }
 
 void Player::executecommand4words(int command1, int command2, int command3, int command4, int& actual_position)const{
+	//this method executes commands with four words
+	
+	//put command
 	if (command1 == PUT){
 		if (((command2 == KATANA) || (command2 == GASMASK) || (command2 == TREASURE) || (command2 == GRENADE) || (command2 == SWORD) || (command2 == SHIELD) || (command2 == EXPLOSIVE) || (command2 == KEY) || (command2 == BACKPACK)) && (command3 == INTO)){
 			if (command4 == CUPBOARD){
@@ -799,6 +836,7 @@ void Player::executecommand4words(int command1, int command2, int command3, int 
 		}
 	}
 	// ---------------------------------------------------------------------------------------------------------------
+	//get command
 	else if (command1 == GET){
 		if (((command2 == KATANA) || (command2 == GASMASK) || (command2 == TREASURE) || (command2 == GRENADE) || (command2 == SWORD) || (command2 == SHIELD) || (command2 == EXPLOSIVE) || (command2 == KEY) || (command2 == BACKPACK)) && (command3 == FROM)){
 			if (command4 == CUPBOARD){

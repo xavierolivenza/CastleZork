@@ -2,7 +2,7 @@
 Room::Room(){
 }
 
-Room::Room(const char* s1, const char* s2, bool s3, bool s4) :Entity(s1, s2), cupboard(s3), exploitablewall(s4){
+Room::Room(const char* name, const char* description, bool cupboard, bool exploitablewall) :Entity(name, description), cupboard(cupboard), exploitablewall(exploitablewall){
 }
 
 Room::~Room(){

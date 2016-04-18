@@ -3,6 +3,7 @@
 
 #include <string.h>
 
+#include "MemLeaks.h"
 #include "Entity.h"
 #include "Exits.h"
 #include "Item.h"

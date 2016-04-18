@@ -10,9 +10,9 @@ public:
 	Player();
 	~Player();
 public:
-	unsigned int playerhp = 100;
-	unsigned int playerattack = 0;
-	unsigned int playerdefense = 0;
+	unsigned int playerhp = 100;//player health points
+	unsigned int playerattack = 0;//player attack, modified by equipped items
+	unsigned int playerdefense = 0;//player defense, modified by equipped items
 public:
 	int check_firstcommand(Vector <String>)const;
 	int check_secondcommand(Vector <String>)const;

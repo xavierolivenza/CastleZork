@@ -13,14 +13,14 @@ public:
 public:
 	Room* item_room = nullptr;
 public:
-	int attack;
-	int defense;
-	int uses;
-	bool inventory = false;
-	bool equipped = false;
-	bool equipable = false;
-	bool inside_cupboard = true;
-	bool inside_backpack = false;
+	int attack;//attack of the item
+	int defense;//defense of the
+	int uses;//uses of the item, by now it is useless, for the next release, this will be usefull
+	bool inventory = false;//the item is in the inventory?
+	bool equipped = false;//the item is equipped?
+	bool equipable = false;//the item is equippable?
+	bool inside_cupboard = true;//the item is inside a cupboard?
+	bool inside_backpack = false;//the item is inside the backpack?
 };
 
 #endif //__Item__

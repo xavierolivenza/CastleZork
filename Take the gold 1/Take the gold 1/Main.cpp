@@ -5,6 +5,8 @@
 World* worldexternpointer = new World();
 
 int main(){
+	ReportMemoryLeaks();
+
 	String commandmanagement;
 	char command[50];
 	int command1 = 0, command2 = 0, command3 = 0, command4 = 0;

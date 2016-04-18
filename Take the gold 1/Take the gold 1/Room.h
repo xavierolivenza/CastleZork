@@ -9,8 +9,8 @@ public:
 	Room(const char*, const char*, bool, bool);
 	~Room();
 public:
-	bool cupboard = false;
-	bool exploitablewall = false;
+	bool cupboard = false;//there's a cupboard in the room?, they are inmobile
+	bool exploitablewall = false;//there's a wall that you can explode?, only in throne room
 };
 
 #endif //__Room__
