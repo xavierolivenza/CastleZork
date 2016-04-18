@@ -146,7 +146,7 @@ void World::CreateWorld(){
 	// Treasure
 	worldexternpointer->items.pushback(new Item("Treasure", "Your goal, the mighty treasure of the king.", worldexternpointer->castlerooms[THRONEROOM], 0, 0, 0, false, false, false, true, false));
 	// Venom Gas Granade
-	worldexternpointer->items.pushback(new Item("Venom Gas Granade", "Usefull against big groups of enemies, but you should search a gas mask to use it safely.", worldexternpointer->castlerooms[EASTCORRIDOR], 100, 0, 2, false, false, false, true, false));
+	worldexternpointer->items.pushback(new Item("Venom Gas Grenade", "Usefull against big groups of enemies, but you should search a gas mask to use it safely.", worldexternpointer->castlerooms[EASTCORRIDOR], 100, 0, 2, false, false, false, true, false));
 	// Sword
 	worldexternpointer->items.pushback(new Item("Sword", "Fullmetal sharpened sword, kill enemies with 2 hits.", worldexternpointer->castlerooms[TOWER3], 50, 0, 1000, false, false, true, true, false));
 	// Shield
