@@ -96,6 +96,8 @@ Notice that there are two blade weapons, you can only equip ne, if you equip the
 
 Now you can take the explosive, go to throne room, use it, get treasure, go to tower 1 and flee to finish the game.
 
+Special feature, to get the treasure you must blow up the wall, use the explosive and a countdown will apear.
+
 ## Credits
 
 Xavier Olivenza Busquets, first year student in the degree in video game design and development of CITM Terrassa, Catalonia, Spain.
