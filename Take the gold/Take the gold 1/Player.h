@@ -37,6 +37,7 @@ enum commandset {
 	CUPBOARD,
 	USE, FLEE,
 	CLEAR,
+	GOD,
 	COMMANDERROR
 };
 #endif //__Player__
