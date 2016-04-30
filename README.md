@@ -20,7 +20,7 @@ north/east/south/west
 
 go north/east/south/west
 
-/s/e/w\n
+/s/e/w
 
 Also you can use the commands:
 
