@@ -3,14 +3,17 @@
 
 #include "String.h"
 
+enum EntityType{ EXIT, ITEM, PLAYER, ROOM };
+
 class Entity{
 
 public:
 	Entity();
-	Entity(const char*, const char*);
+	Entity(const char*, const char*, EntityType);
 	~Entity();
 
 public:
+	EntityType type;
 	String name;
 	String description;
 };

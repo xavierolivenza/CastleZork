@@ -18,9 +18,7 @@
 
 class World{
 public:
-	Vector <Room*> castlerooms;
-	Vector <Exit*> exits;
-	Vector <Item*> items;
+	Vector <Entity*> entities;
 	Player* player = nullptr;
 public:
 	World();

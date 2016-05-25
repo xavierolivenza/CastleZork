@@ -8,14 +8,8 @@ World::World(){
 
 World::~World(){
 	delete player;
-	for (int i = 0; i < NUMROOMS; i++){
-		delete castlerooms[i];
-	}
-	for (int i = 0; i < NUMEXITS; i++){
-		delete exits[i];
-	}
-	for (int i = 0; i < NUMITEMS; i++){
-		delete items[i];
+	for (int i = 0; i < worldexternpointer->entities.size(); i++){
+		delete entities[i];
 	}
 }
 
@@ -24,139 +18,139 @@ void World::CreateWorld(){
 	// Rooms
 	// ---------------------------------------------------------------------------------------------------------------
 	// Tower 1
-	worldexternpointer->castlerooms.pushback(new Room("Tower 1", "In this tower there is nothing interesting, you should keep moving.", false, false));
+	worldexternpointer->entities.pushback(new Room("Tower 1", "In this tower there is nothing interesting, you should keep moving.", false, false, ROOM));
 	// Tower 2
-	worldexternpointer->castlerooms.pushback(new Room("Tower 2", "A regular tower.", false, false));
+	worldexternpointer->entities.pushback(new Room("Tower 2", "A regular tower.", false, false, ROOM));
 	// Tower 3
-	worldexternpointer->castlerooms.pushback(new Room("Tower 3", "In this tower there is a fireplace and a cupboard.", true, false));
+	worldexternpointer->entities.pushback(new Room("Tower 3", "In this tower there is a fireplace and a cupboard.", true, false, ROOM));
 	// Tower 4
-	worldexternpointer->castlerooms.pushback(new Room("Tower 4", "In this tower there is a cupboard.", true, false));
+	worldexternpointer->entities.pushback(new Room("Tower 4", "In this tower there is a cupboard.", true, false, ROOM));
 	// North Corridor
-	worldexternpointer->castlerooms.pushback(new Room("North corridor", "Nothing interesting in here.", false, false));
+	worldexternpointer->entities.pushback(new Room("North corridor", "Nothing interesting in here.", false, false, ROOM));
 	// East Corridor
-	worldexternpointer->castlerooms.pushback(new Room("East corridor", "In this corridor there's a cupboard.", true, false));
+	worldexternpointer->entities.pushback(new Room("East corridor", "In this corridor there's a cupboard.", true, false, ROOM));
 	// South Corridor
-	worldexternpointer->castlerooms.pushback(new Room("South corridor", "In this corridor there's a cupboard.", true, false));
+	worldexternpointer->entities.pushback(new Room("South corridor", "In this corridor there's a cupboard.", true, false, ROOM));
 	// West Corridor
-	worldexternpointer->castlerooms.pushback(new Room("West corridor", "In this corridor there's a table with a cupboard.", true, false));
+	worldexternpointer->entities.pushback(new Room("West corridor", "In this corridor there's a table with a cupboard.", true, false, ROOM));
 	// Throne Room
-	worldexternpointer->castlerooms.pushback(new Room("Throne room", "This is the mighty throne room of the king, people say that the treasure is hidden here.", true, true));
+	worldexternpointer->entities.pushback(new Room("Throne room", "This is the mighty throne room of the king, people say that the treasure is hidden here.", true, true, ROOM));
+
+	// ---------------------------------------------------------------------------------------------------------------
+	// Items
+	// ---------------------------------------------------------------------------------------------------------------
+	// Katana
+	worldexternpointer->entities.pushback(new Item("Rusty Katana", "This is the ancient rusty katana of a japanese guy, but still sharpened.", (Room*)worldexternpointer->entities[6], 35, 0, 1000, false, false, true, true, false, ITEM));
+	// Gas Mask
+	worldexternpointer->entities.pushback(new Item("Gas Mask", "This gas mask can save you from toxic gases.", (Room*)worldexternpointer->entities[7], 0, 0, 1000, false, false, true, true, false, ITEM));
+	// Treasure
+	worldexternpointer->entities.pushback(new Item("Treasure", "Your goal, the mighty treasure of the king.", (Room*)worldexternpointer->entities[8], 0, 0, 0, false, false, false, true, false, ITEM));
+	// Venom Gas Granade
+	worldexternpointer->entities.pushback(new Item("Venom Gas Grenade", "Usefull against big groups of enemies, but you should search a gas mask to use it safely.", (Room*)worldexternpointer->entities[5], 100, 0, 2, false, false, false, true, false, ITEM));
+	// Sword
+	worldexternpointer->entities.pushback(new Item("Sword", "Fullmetal sharpened sword, kill enemies with 2 hits.", (Room*)worldexternpointer->entities[2], 50, 0, 1000, false, false, true, true, false, ITEM));
+	// Shield
+	worldexternpointer->entities.pushback(new Item("Shield", "Protect you from enemy attacks.", (Room*)worldexternpointer->entities[2], 0, 75, 1000, false, false, true, true, false, ITEM));
+	// Explosive
+	worldexternpointer->entities.pushback(new Item("Explosive", "You can blow the treasure wall with that.", (Room*)worldexternpointer->entities[3], 1000, 0, 1000, false, false, false, true, false, ITEM));
+	// Key
+	worldexternpointer->entities.pushback(new Item("Key", "Key of tower 4.", (Room*)worldexternpointer->entities[4], 1, 0, 1, false, false, false, false, false, ITEM));
+	// Backpack
+	worldexternpointer->entities.pushback(new Item("Backpack", "Box to keep items inside.", (Room*)worldexternpointer->entities[1], 5, 0, 1000, false, false, false, false, false, ITEM));
 
 	// ---------------------------------------------------------------------------------------------------------------
 	// Exits
 	// ---------------------------------------------------------------------------------------------------------------
 	// Tower 1
 	//North
-	worldexternpointer->exits.pushback(new Exit("East corridor door.", "There's a corridor, the east one.", worldexternpointer->castlerooms[TOWER1], worldexternpointer->castlerooms[EASTCORRIDOR], false, false));
+	worldexternpointer->entities.pushback(new Exit("East corridor door.", "There's a corridor, the east one.", (Room*)worldexternpointer->entities[0], (Room*)worldexternpointer->entities[5], false, false, EXIT, north));
 	//East
-	worldexternpointer->exits.pushback(new Exit("Wall.", "There's a wall.", worldexternpointer->castlerooms[TOWER1], worldexternpointer->castlerooms[TOWER1], false, false));
+	worldexternpointer->entities.pushback(new Exit("Wall.", "There's a wall.", (Room*)worldexternpointer->entities[0], (Room*)worldexternpointer->entities[0], false, false, EXIT, east));
 	//South
-	worldexternpointer->exits.pushback(new Exit("Wall.", "There's a wall.", worldexternpointer->castlerooms[TOWER1], worldexternpointer->castlerooms[TOWER1], false, false));
+	worldexternpointer->entities.pushback(new Exit("Wall.", "There's a wall.", (Room*)worldexternpointer->entities[0], (Room*)worldexternpointer->entities[0], false, false, EXIT, south));
 	//West
-	worldexternpointer->exits.pushback(new Exit("South corridor door.", "There's a corridor, the south one.", worldexternpointer->castlerooms[TOWER1], worldexternpointer->castlerooms[SOUTHCORRIDOR], false, false));
+	worldexternpointer->entities.pushback(new Exit("South corridor door.", "There's a corridor, the south one.", (Room*)worldexternpointer->entities[0], (Room*)worldexternpointer->entities[6], false, false, EXIT, west));
 	// ---------------------------------------------------------------------------------------------------------------
 	// Tower 2
 	//North
-	worldexternpointer->exits.pushback(new Exit("West corridor door.", "There's a corridor, the west one.", worldexternpointer->castlerooms[TOWER2], worldexternpointer->castlerooms[WESTCORRIDOR], false, false));
+	worldexternpointer->entities.pushback(new Exit("West corridor door.", "There's a corridor, the west one.", (Room*)worldexternpointer->entities[1], (Room*)worldexternpointer->entities[7], false, false, EXIT, north));
 	//East
-	worldexternpointer->exits.pushback(new Exit("South corridor door.", "There's a corridor, the south one.", worldexternpointer->castlerooms[TOWER2], worldexternpointer->castlerooms[SOUTHCORRIDOR], false, false));
+	worldexternpointer->entities.pushback(new Exit("South corridor door.", "There's a corridor, the south one.", (Room*)worldexternpointer->entities[1], (Room*)worldexternpointer->entities[6], false, false, EXIT, east));
 	//South
-	worldexternpointer->exits.pushback(new Exit("Wall.", "There's a wall.", worldexternpointer->castlerooms[TOWER2], worldexternpointer->castlerooms[TOWER2], false, false));
+	worldexternpointer->entities.pushback(new Exit("Wall.", "There's a wall.", (Room*)worldexternpointer->entities[1], (Room*)worldexternpointer->entities[1], false, false, EXIT, south));
 	//West
-	worldexternpointer->exits.pushback(new Exit("Wall.", "There's a wall.", worldexternpointer->castlerooms[TOWER2], worldexternpointer->castlerooms[TOWER2], false, false));
+	worldexternpointer->entities.pushback(new Exit("Wall.", "There's a wall.", (Room*)worldexternpointer->entities[1], (Room*)worldexternpointer->entities[1], false, false, EXIT, west));
 	// ---------------------------------------------------------------------------------------------------------------
 	// Tower 3
 	//North
-	worldexternpointer->exits.pushback(new Exit("Wall.", "There's a fireplace.", worldexternpointer->castlerooms[TOWER3], worldexternpointer->castlerooms[TOWER3], false, false));
+	worldexternpointer->entities.pushback(new Exit("Wall.", "There's a fireplace.", (Room*)worldexternpointer->entities[2], (Room*)worldexternpointer->entities[2], false, false, EXIT, north));
 	//East
-	worldexternpointer->exits.pushback(new Exit("North corridor door.", "There's a corridor, the north one.", worldexternpointer->castlerooms[TOWER3], worldexternpointer->castlerooms[NORTHCORRIDOR], false, false));
+	worldexternpointer->entities.pushback(new Exit("North corridor door.", "There's a corridor, the north one.", (Room*)worldexternpointer->entities[2], (Room*)worldexternpointer->entities[4], false, false, EXIT, east));
 	//South
-	worldexternpointer->exits.pushback(new Exit("West corridor door.", "There's a corridor, the west one.", worldexternpointer->castlerooms[TOWER3], worldexternpointer->castlerooms[WESTCORRIDOR], false, false));
+	worldexternpointer->entities.pushback(new Exit("West corridor door.", "There's a corridor, the west one.", (Room*)worldexternpointer->entities[2], (Room*)worldexternpointer->entities[7], false, false, EXIT, south));
 	//West
-	worldexternpointer->exits.pushback(new Exit("Wall.", "There's a wall with a cupboard.", worldexternpointer->castlerooms[TOWER3], worldexternpointer->castlerooms[TOWER3], false, false));
+	worldexternpointer->entities.pushback(new Exit("Wall.", "There's a wall with a cupboard.", (Room*)worldexternpointer->entities[2], (Room*)worldexternpointer->entities[2], false, false, EXIT, west));
 	// ---------------------------------------------------------------------------------------------------------------
 	// Tower 4
 	//North
-	worldexternpointer->exits.pushback(new Exit("Wall.", "There's a wall.", worldexternpointer->castlerooms[TOWER4], worldexternpointer->castlerooms[TOWER4], false, false));
+	worldexternpointer->entities.pushback(new Exit("Wall.", "There's a wall.", (Room*)worldexternpointer->entities[3], (Room*)worldexternpointer->entities[3], false, false, EXIT, north));
 	//East
-	worldexternpointer->exits.pushback(new Exit("Wall.", "There's a cupboard that seems that it could be oppened.", worldexternpointer->castlerooms[TOWER4], worldexternpointer->castlerooms[TOWER4], false, false));
+	worldexternpointer->entities.pushback(new Exit("Wall.", "There's a cupboard that seems that it could be oppened.", (Room*)worldexternpointer->entities[3], (Room*)worldexternpointer->entities[3], false, false, EXIT, east));
 	//South
-	worldexternpointer->exits.pushback(new Exit("Wall.", "There's a wall.", worldexternpointer->castlerooms[TOWER4], worldexternpointer->castlerooms[TOWER4], false, false));
+	worldexternpointer->entities.pushback(new Exit("Wall.", "There's a wall.", (Room*)worldexternpointer->entities[3], (Room*)worldexternpointer->entities[3], false, false, EXIT, south));
 	//West
-	worldexternpointer->exits.pushback(new Exit("North corridor door.", "There's a corridor, the north one.", worldexternpointer->castlerooms[TOWER4], worldexternpointer->castlerooms[NORTHCORRIDOR], true, true));
+	worldexternpointer->entities.pushback(new Exit("North corridor door.", "There's a corridor, the north one.", (Room*)worldexternpointer->entities[3], (Room*)worldexternpointer->entities[4], true, true, EXIT, west));
 	// ---------------------------------------------------------------------------------------------------------------
 	// North Corridor
 	//North
-	worldexternpointer->exits.pushback(new Exit("Wall.", "There's a wall.", worldexternpointer->castlerooms[NORTHCORRIDOR], worldexternpointer->castlerooms[NORTHCORRIDOR], false, false));
+	worldexternpointer->entities.pushback(new Exit("Wall.", "There's a wall.", (Room*)worldexternpointer->entities[4], (Room*)worldexternpointer->entities[4], false, false, EXIT, north));
 	//East
-	worldexternpointer->exits.pushback(new Exit("Tower 4 door.", "There is the tower 4.", worldexternpointer->castlerooms[NORTHCORRIDOR], worldexternpointer->castlerooms[TOWER4], true, true));
+	worldexternpointer->entities.pushback(new Exit("Tower 4 door.", "There is the tower 4.", (Room*)worldexternpointer->entities[4], (Room*)worldexternpointer->entities[3], true, true, EXIT, east));
 	//South
-	worldexternpointer->exits.pushback(new Exit("Throne room door.", "There is a room, the throne room.", worldexternpointer->castlerooms[NORTHCORRIDOR], worldexternpointer->castlerooms[THRONEROOM], false, false));
+	worldexternpointer->entities.pushback(new Exit("Throne room door.", "There is a room, the throne room.", (Room*)worldexternpointer->entities[4], (Room*)worldexternpointer->entities[8], false, false, EXIT, south));
 	//West
-	worldexternpointer->exits.pushback(new Exit("Tower 3 door.", "There is the tower 3.", worldexternpointer->castlerooms[NORTHCORRIDOR], worldexternpointer->castlerooms[TOWER3], false, false));
+	worldexternpointer->entities.pushback(new Exit("Tower 3 door.", "There is the tower 3.", (Room*)worldexternpointer->entities[4], (Room*)worldexternpointer->entities[2], false, false, EXIT, west));
 	// ---------------------------------------------------------------------------------------------------------------
 	// East Corridor
 	//North
-	worldexternpointer->exits.pushback(new Exit("Wall.", "There's a wall.", worldexternpointer->castlerooms[EASTCORRIDOR], worldexternpointer->castlerooms[EASTCORRIDOR], false, false));
+	worldexternpointer->entities.pushback(new Exit("Wall.", "There's a wall.", (Room*)worldexternpointer->entities[5], (Room*)worldexternpointer->entities[5], false, false, EXIT, north));
 	//East
-	worldexternpointer->exits.pushback(new Exit("Wall.", "There's a cupboard that seems that it could be oppened.", worldexternpointer->castlerooms[EASTCORRIDOR], worldexternpointer->castlerooms[EASTCORRIDOR], false, false));
+	worldexternpointer->entities.pushback(new Exit("Wall.", "There's a cupboard that seems that it could be oppened.", (Room*)worldexternpointer->entities[5], (Room*)worldexternpointer->entities[5], false, false, EXIT, east));
 	//South
-	worldexternpointer->exits.pushback(new Exit("Tower 1 door.", "There is the tower 1.", worldexternpointer->castlerooms[EASTCORRIDOR], worldexternpointer->castlerooms[TOWER1], false, false));
+	worldexternpointer->entities.pushback(new Exit("Tower 1 door.", "There is the tower 1.", (Room*)worldexternpointer->entities[5], (Room*)worldexternpointer->entities[0], false, false, EXIT, south));
 	//West
-	worldexternpointer->exits.pushback(new Exit("Throne room door.", "There is a room, the throne room.", worldexternpointer->castlerooms[EASTCORRIDOR], worldexternpointer->castlerooms[THRONEROOM], false, false));
+	worldexternpointer->entities.pushback(new Exit("Throne room door.", "There is a room, the throne room.", (Room*)worldexternpointer->entities[5], (Room*)worldexternpointer->entities[8], false, false, EXIT, west));
 	// ---------------------------------------------------------------------------------------------------------------
 	// South Corridor
 	//North
-	worldexternpointer->exits.pushback(new Exit("Wall.", "There's a wall.", worldexternpointer->castlerooms[SOUTHCORRIDOR], worldexternpointer->castlerooms[SOUTHCORRIDOR], false, false));
+	worldexternpointer->entities.pushback(new Exit("Wall.", "There's a wall.", (Room*)worldexternpointer->entities[6], (Room*)worldexternpointer->entities[6], false, false, EXIT, north));
 	//East
-	worldexternpointer->exits.pushback(new Exit("Tower 1 door.", "There is the tower 1.", worldexternpointer->castlerooms[SOUTHCORRIDOR], worldexternpointer->castlerooms[TOWER1], false, false));
+	worldexternpointer->entities.pushback(new Exit("Tower 1 door.", "There is the tower 1.", (Room*)worldexternpointer->entities[6], (Room*)worldexternpointer->entities[0], false, false, EXIT, east));
 	//South
-	worldexternpointer->exits.pushback(new Exit("Wall.", "There's a cupboard that seems that it could be oppened.", worldexternpointer->castlerooms[SOUTHCORRIDOR], worldexternpointer->castlerooms[SOUTHCORRIDOR], false, false));
+	worldexternpointer->entities.pushback(new Exit("Wall.", "There's a cupboard that seems that it could be oppened.", (Room*)worldexternpointer->entities[6], (Room*)worldexternpointer->entities[6], false, false, EXIT, south));
 	//West
-	worldexternpointer->exits.pushback(new Exit("Tower 2 door.", "There is the tower 2.", worldexternpointer->castlerooms[SOUTHCORRIDOR], worldexternpointer->castlerooms[TOWER2], false, false));
+	worldexternpointer->entities.pushback(new Exit("Tower 2 door.", "There is the tower 2.", (Room*)worldexternpointer->entities[6], (Room*)worldexternpointer->entities[1], false, false, EXIT, west));
 	// ---------------------------------------------------------------------------------------------------------------
 	// West Corridor
 	//North
-	worldexternpointer->exits.pushback(new Exit("Tower 2 door.", "There is the tower 2.", worldexternpointer->castlerooms[WESTCORRIDOR], worldexternpointer->castlerooms[TOWER3], false, false));
+	worldexternpointer->entities.pushback(new Exit("Tower 2 door.", "There is the tower 2.", (Room*)worldexternpointer->entities[7], (Room*)worldexternpointer->entities[2], false, false, EXIT, north));
 	//East
-	worldexternpointer->exits.pushback(new Exit("Throne room door.", "There is a room, the throne room.", worldexternpointer->castlerooms[WESTCORRIDOR], worldexternpointer->castlerooms[THRONEROOM], false, false));
+	worldexternpointer->entities.pushback(new Exit("Throne room door.", "There is a room, the throne room.", (Room*)worldexternpointer->entities[7], (Room*)worldexternpointer->entities[8], false, false, EXIT, east));
 	//South
-	worldexternpointer->exits.pushback(new Exit("Tower 3 door.", "There is the tower 3.", worldexternpointer->castlerooms[WESTCORRIDOR], worldexternpointer->castlerooms[TOWER2], false, false));
+	worldexternpointer->entities.pushback(new Exit("Tower 3 door.", "There is the tower 3.", (Room*)worldexternpointer->entities[7], (Room*)worldexternpointer->entities[1], false, false, EXIT, south));
 	//West
-	worldexternpointer->exits.pushback(new Exit("Wall.", "There's a cupboard that seems that it could be oppened.", worldexternpointer->castlerooms[WESTCORRIDOR], worldexternpointer->castlerooms[WESTCORRIDOR], false, false));
+	worldexternpointer->entities.pushback(new Exit("Wall.", "There's a cupboard that seems that it could be oppened.", (Room*)worldexternpointer->entities[7], (Room*)worldexternpointer->entities[7], false, false, EXIT, west));
 	// ---------------------------------------------------------------------------------------------------------------
 	// Throne Room
 	//North
-	worldexternpointer->exits.pushback(new Exit("North corridor door.", "There's a corridor, the north one.", worldexternpointer->castlerooms[THRONEROOM], worldexternpointer->castlerooms[NORTHCORRIDOR], false, false));
+	worldexternpointer->entities.pushback(new Exit("North corridor door.", "There's a corridor, the north one.", (Room*)worldexternpointer->entities[8], (Room*)worldexternpointer->entities[4], false, false, EXIT, north));
 	//East
-	worldexternpointer->exits.pushback(new Exit("East corridor door.", "There's a corridor, the east one.", worldexternpointer->castlerooms[THRONEROOM], worldexternpointer->castlerooms[EASTCORRIDOR], false, false));
+	worldexternpointer->entities.pushback(new Exit("East corridor door.", "There's a corridor, the east one.", (Room*)worldexternpointer->entities[8], (Room*)worldexternpointer->entities[5], false, false, EXIT, east));
 	//South
-	worldexternpointer->exits.pushback(new Exit("Wall.", "There's a wall with a portrait of the king.", worldexternpointer->castlerooms[THRONEROOM], worldexternpointer->castlerooms[THRONEROOM], false, false));
+	worldexternpointer->entities.pushback(new Exit("Wall.", "There's a wall with a portrait of the king.", (Room*)worldexternpointer->entities[8], (Room*)worldexternpointer->entities[8], false, false, EXIT, south));
 	//West
-	worldexternpointer->exits.pushback(new Exit("West corridor door.", "There's a corridor, the west one.", worldexternpointer->castlerooms[THRONEROOM], worldexternpointer->castlerooms[WESTCORRIDOR], false, false));
+	worldexternpointer->entities.pushback(new Exit("West corridor door.", "There's a corridor, the west one.", (Room*)worldexternpointer->entities[8], (Room*)worldexternpointer->entities[7], false, false, EXIT, west));
 	// ---------------------------------------------------------------------------------------------------------------
 
-	// ---------------------------------------------------------------------------------------------------------------
-	// Items
-	// ---------------------------------------------------------------------------------------------------------------
-	// Katana
-	worldexternpointer->items.pushback(new Item("Rusty Katana", "This is the ancient rusty katana of a japanese guy, but still sharpened.", worldexternpointer->castlerooms[SOUTHCORRIDOR], 35, 0, 1000, false, false, true, true, false));
-	// Gas Mask
-	worldexternpointer->items.pushback(new Item("Gas Mask", "This gas mask can save you from toxic gases.", worldexternpointer->castlerooms[WESTCORRIDOR], 0, 0, 1000, false, false, true, true, false));
-	// Treasure
-	worldexternpointer->items.pushback(new Item("Treasure", "Your goal, the mighty treasure of the king.", worldexternpointer->castlerooms[THRONEROOM], 0, 0, 0, false, false, false, true, false));
-	// Venom Gas Granade
-	worldexternpointer->items.pushback(new Item("Venom Gas Grenade", "Usefull against big groups of enemies, but you should search a gas mask to use it safely.", worldexternpointer->castlerooms[EASTCORRIDOR], 100, 0, 2, false, false, false, true, false));
-	// Sword
-	worldexternpointer->items.pushback(new Item("Sword", "Fullmetal sharpened sword, kill enemies with 2 hits.", worldexternpointer->castlerooms[TOWER3], 50, 0, 1000, false, false, true, true, false));
-	// Shield
-	worldexternpointer->items.pushback(new Item("Shield", "Protect you from enemy attacks.", worldexternpointer->castlerooms[TOWER3], 0, 75, 1000, false, false, true, true, false));
-	// Explosive
-	worldexternpointer->items.pushback(new Item("Explosive", "You can blow the treasure wall with that.", worldexternpointer->castlerooms[TOWER4], 1000, 0, 1000, false, false, false, true, false));
-	// Key
-	worldexternpointer->items.pushback(new Item("Key", "Key of tower 4.", worldexternpointer->castlerooms[NORTHCORRIDOR], 1, 0, 1, false, false, false, false, false));
-	// Backpack
-	worldexternpointer->items.pushback(new Item("Backpack", "Box to keep items inside.", worldexternpointer->castlerooms[TOWER2], 5, 0, 1000, false, false, false, false, false));
-
-	worldexternpointer->player->current_room = worldexternpointer->castlerooms[TOWER1];
+	worldexternpointer->player->current_room = (Room*)worldexternpointer->entities[0];
 }

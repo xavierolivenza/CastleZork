@@ -6,7 +6,7 @@
 class Room : public Entity{
 public:
 	Room();
-	Room(const char*, const char*, bool, bool);
+	Room(const char*, const char*, bool, bool, EntityType);
 	~Room();
 public:
 	bool cupboard = false;//there's a cupboard in the room?, they are inmobile

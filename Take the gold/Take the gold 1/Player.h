@@ -24,11 +24,6 @@ public:
 	void executecommand4words(int, int, int, int, int&)const;
 };
 
-enum rooms{ 
-	TOWER1, TOWER2, TOWER3, TOWER4, 
-	NORTHCORRIDOR, EASTCORRIDOR, SOUTHCORRIDOR, WESTCORRIDOR, 
-	THRONEROOM
-};
 enum commandset { 
 	LOOK, GO, OPEN, CLOSE, QUIT, HELP,
 	NORTH, EAST, SOUTH, WEST,
