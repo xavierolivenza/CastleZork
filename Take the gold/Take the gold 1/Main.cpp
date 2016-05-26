@@ -41,6 +41,9 @@ int main(){
 		//printf("S");
 		if (_kbhit()){
 			if (charcommandnum < (COMMANDBUFFER - 2)){
+				if (charcommandnum == 0){
+					printf("//------------------------------------------------------------------------//\n");
+				}
 				command[charcommandnum] = _getch();
 				command[charcommandnum + 1] = '\0';
 				if (command[charcommandnum] != '\r'){
@@ -49,6 +52,7 @@ int main(){
 				//printf("String: %s\n", command);//print command
 				charcommandnum++;
 				if (command[charcommandnum - 1] == '\r'){//Enter-> erase command and print
+					printf("//------------------------------------------------------------------------//\n");
 					//printf("Your command is: %s\n", command);
 					command[charcommandnum - 1] = '\0';
 					//---------------------------------------------------

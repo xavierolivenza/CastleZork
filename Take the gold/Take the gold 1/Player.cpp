@@ -138,6 +138,9 @@ int Player::check_secondcommand(Vector <String> commands)const{
 	else if (commands[1] == "backpack"){
 		return BACKPACK;
 	}
+	else if (commands[1] == "items"){
+		return ITEMS;
+	}
 	else{
 		return COMMANDERROR;
 	}
@@ -403,6 +406,7 @@ void Player::executecommand1word(int& command1, int& actual_position)const{
 		//Ascii art code purpouse
 		printf("  _______    _          _   _                        _     _ \n |__   __|  | |        | | | |                      | |   | |\n    | | __ _| | _____  | |_| |__   ___    __ _  ___ | | __| |\n    | |/ _` | |/ / _ %c | __| '_ %c / _ %c  / _` |/ _ %c| |/ _` |\n    | | (_| |   <  __/ | |_| | | |  __/ | (_| | (_) | | (_| |\n    |_|%c__,_|_|%c_%c___|  %c__|_| |_|%c___|  %c__, |%c___/|_|%c__,_|\n                                          __/ |              \n                                         |___/               \n", 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92);
 		printf("By Xavier Olivenza.\n");
+		printf("What do you want to do?\n");
 	}
 
 	//quit command, this don't do anything, it's just to avoid the else printf
@@ -469,6 +473,9 @@ void Player::executecommand2words(int command1, int command2, int& actual_positi
 			else{
 				printf("You don't have this item.\n");
 			}
+		}
+		else if (command2 == ITEMS){
+			dropeditemslook();
 		}
 		else{
 			printf("That's not a valid command.\n");

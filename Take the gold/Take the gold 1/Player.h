@@ -34,6 +34,7 @@ enum commandset {
 	USE, FLEE,
 	CLEAR,
 	GOD,
+	ITEMS,
 	COMMANDERROR
 };
 #endif //__Player__
