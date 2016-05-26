@@ -3,11 +3,9 @@
 #include "World.h"
 
 World::World(){
-	player = new Player;
 }
 
 World::~World(){
-	delete player;
 	for (int i = 0; i < worldexternpointer->entities.size(); i++){
 		delete entities[i];
 	}
@@ -152,5 +150,6 @@ void World::CreateWorld(){
 	worldexternpointer->entities.pushback(new Exit("West corridor door.", "There's a corridor, the west one.", (Room*)worldexternpointer->entities[8], (Room*)worldexternpointer->entities[7], false, false, EXIT, west));
 	// ---------------------------------------------------------------------------------------------------------------
 
-	worldexternpointer->player->current_room = (Room*)worldexternpointer->entities[0];
+	//The player
+	worldexternpointer->entities.pushback(new Player("The mighty hero.", "It's you, the mighty hero.", (Room*)worldexternpointer->entities[0], PLAYER));
 }

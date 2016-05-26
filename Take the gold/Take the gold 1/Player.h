@@ -1,13 +1,14 @@
 #ifndef __Player__
 #define __Player__
 
+#include "Entity.h"
 #include "Room.h"
+#include "Creature.h"
 
-class Player{
-public:
-	Room* current_room = nullptr;
+class Player : public Creature{
 public:
 	Player();
+	Player(const char*, const char*, Room*, EntityType);
 	~Player();
 public:
 	unsigned int playerhp = 100;//player health points

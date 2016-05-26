@@ -9,6 +9,9 @@
 Player::Player(){
 }
 
+Player::Player(const char* name, const char* description, Room* initialroom, EntityType type): Creature(name, description, initialroom, type) {
+}
+
 Player::~Player(){
 }
 
@@ -170,14 +173,14 @@ void Player::dropeditemslook()const{
 	//this method see if there are items in the current room
 	int j = 0, i = 0;
 	for (j = 0; j < NUMITEMS; j++){//see if in the room there are objects
-		if ((((Item*)worldexternpointer->entities[j + 9])->item_room == worldexternpointer->player->current_room) && (((Item*)worldexternpointer->entities[j + 9])->inventory == false)){
+		if ((((Item*)worldexternpointer->entities[j + 9])->item_room == ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room) && (((Item*)worldexternpointer->entities[j + 9])->inventory == false)){
 			i++;
 		}
 	}
 	if (i != 0){//if ther are, write their names
 		printf("Item/s in this room(dropped or inside cupboards, search for it/them):\n");
 		for (j = 0; j < NUMITEMS; j++){
-			if ((((Item*)worldexternpointer->entities[j + 9])->item_room == worldexternpointer->player->current_room) && ((Item*)worldexternpointer->entities[j + 9])->inventory == false){
+			if ((((Item*)worldexternpointer->entities[j + 9])->item_room == ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room) && ((Item*)worldexternpointer->entities[j + 9])->inventory == false){
 				printf("%s\n", ((Item*)worldexternpointer->entities[j + 9])->name.c_str());
 			}
 		}
@@ -190,7 +193,7 @@ void Player::executecommand1word(int& command1, int& actual_position)const{
 
 	int exitnum = 0, roomnum = 0;
 	int i = 0, j = 0, k = 0, l = 0, m = 0;
-	worldexternpointer->player->current_room = ((Room*)worldexternpointer->entities[actual_position]);
+	((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room = ((Room*)worldexternpointer->entities[actual_position]);
 
 	//movement commands
 	if ((command1 == NORTH) || (command1 == EAST) || (command1 == SOUTH) || (command1 == WEST)){
@@ -204,7 +207,7 @@ void Player::executecommand1word(int& command1, int& actual_position)const{
 				//South exits are each 4 exits, starting from 2, South exits = 2, 6, 10, 14, 18...
 				//WEST=9, 6-6=0, exitnum % 4 == 3
 				//West exits are each 4 exits, starting from 3, West exits = 3, 7, 11, 15, 19...
-				if (((Exit*)worldexternpointer->entities[exitnum + 18])->origin == worldexternpointer->player->current_room){
+				if (((Exit*)worldexternpointer->entities[exitnum + 18])->origin == ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room){
 					for (roomnum = 0; roomnum < NUMROOMS; roomnum++){//Check rooms to get the room num for actual_position
 						if (((Exit*)worldexternpointer->entities[exitnum + 18])->destination == ((Room*)worldexternpointer->entities[roomnum])){
 							if (((Exit*)worldexternpointer->entities[exitnum + 18])->door == true && ((Exit*)worldexternpointer->entities[exitnum + 18])->close == true){
@@ -213,8 +216,8 @@ void Player::executecommand1word(int& command1, int& actual_position)const{
 							}
 							else{
 								actual_position = roomnum;
-								worldexternpointer->player->current_room = ((Exit*)worldexternpointer->entities[exitnum + 18])->destination;
-								printf("Now you are in %s\n", worldexternpointer->player->current_room->name.c_str());
+								((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room = ((Exit*)worldexternpointer->entities[exitnum + 18])->destination;
+								printf("Now you are in %s\n", ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room->name.c_str());
 								return;
 							}
 						}
@@ -236,18 +239,18 @@ void Player::executecommand1word(int& command1, int& actual_position)const{
 		printf("%c Player Stats: %c\n", 186, 186);
 		printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", 204, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 185);
 		// HP
-		printf("%c HP:%i", 186, worldexternpointer->player->playerhp);
+		printf("%c HP:%i", 186, ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->playerhp);
 		//This lines are for draw the box which contains stats
-		if (worldexternpointer->player->playerhp < 10){
+		if (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->playerhp < 10){
 			m = 1;
 		}
-		else if ((worldexternpointer->player->playerhp >= 10) && (worldexternpointer->player->playerhp < 100)){
+		else if ((((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->playerhp >= 10) && (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->playerhp < 100)){
 			m = 2;
 		}
-		else if (worldexternpointer->player->playerhp == 100){
+		else if (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->playerhp == 100){
 			m = 3;
 		}
-		else if ((worldexternpointer->player->playerhp > 100) && (worldexternpointer->player->playerhp <= 1000)){
+		else if ((((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->playerhp > 100) && (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->playerhp <= 1000)){
 			m = 4;
 		}
 		for (l = m; l < 11; l++){
@@ -256,18 +259,18 @@ void Player::executecommand1word(int& command1, int& actual_position)const{
 		printf("%c\n", 186);
 
 		// Attack
-		printf("%c Attack:%i", 186, worldexternpointer->player->playerattack);
+		printf("%c Attack:%i", 186, ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->playerattack);
 		//This lines are for draw the box which contains stats
-		if (worldexternpointer->player->playerattack < 10){
+		if (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->playerattack < 10){
 			m = 1;
 		}
-		else if ((worldexternpointer->player->playerattack >= 10) && (worldexternpointer->player->playerattack < 100)){
+		else if ((((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->playerattack >= 10) && (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->playerattack < 100)){
 			m = 2;
 		}
-		else if (worldexternpointer->player->playerattack == 100){
+		else if (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->playerattack == 100){
 			m = 3;
 		}
-		else if ((worldexternpointer->player->playerattack > 100) && (worldexternpointer->player->playerattack <= 1000)){
+		else if ((((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->playerattack > 100) && (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->playerattack <= 1000)){
 			m = 4;
 		}
 		for (l = m; l < 7; l++){
@@ -276,18 +279,18 @@ void Player::executecommand1word(int& command1, int& actual_position)const{
 		printf("%c\n", 186);
 
 		// Defense
-		printf("%c Defense:%i", 186, worldexternpointer->player->playerdefense);
+		printf("%c Defense:%i", 186, ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->playerdefense);
 		//This lines are for draw the box which contains stats
-		if (worldexternpointer->player->playerdefense < 10){
+		if (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->playerdefense < 10){
 			m = 1;
 		}
-		else if ((worldexternpointer->player->playerdefense >= 10) && (worldexternpointer->player->playerdefense < 100)){
+		else if ((((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->playerdefense >= 10) && (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->playerdefense < 100)){
 			m = 2;
 		}
-		else if (worldexternpointer->player->playerdefense == 100){
+		else if (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->playerdefense == 100){
 			m = 3;
 		}
-		else if ((worldexternpointer->player->playerdefense > 100) && (worldexternpointer->player->playerdefense <= 1000)){
+		else if ((((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->playerdefense > 100) && (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->playerdefense <= 1000)){
 			m = 4;
 		}
 		for (l = m; l < 6; l++){
@@ -379,7 +382,7 @@ void Player::executecommand1word(int& command1, int& actual_position)const{
 	//flee command to escape qhen you have the treasure
 	else if (command1 == FLEE){
 		if (((Item*)worldexternpointer->entities[11])->inventory == true){
-			if (worldexternpointer->player->current_room == worldexternpointer->entities[0]){
+			if (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room == worldexternpointer->entities[0]){
 				system("cls");
 				//Ascii art code purpouse
 				printf("   _____                            _         _       _   _                 \n  / ____|                          | |       | |     | | (_)                \n | |     ___  _ __   __ _ _ __ __ _| |_ _   _| | __ _| |_ _  ___  _ __  ___ \n | |    / _ %c| '_ %c / _` | '__/ _` | __| | | | |/ _` | __| |/ _ %c| '_ %c/ __|\n | |___| (_) | | | | (_| | | | (_| | |_| |_| | | (_| | |_| | (_) | | | %c__ %c\n  %c_____%c___/|_| |_|%c__, |_|  %c__,_|%c__|%c__,_|_|%c__,_|%c__|_|%c___/|_| |_|___/\n  / _|               __/ |                 | |          | | (_)             \n | |_ ___  _ __    _|___/_  _ __ ___  _ __ | | ___  __ _| |_ _ _ __   __ _  \n |  _/ _ %c| '__|  / __/ _ %c| '_ ` _ %c| '_ %c| |/ _ %c/ _` | __| | '_ %c / _` | \n | || (_) | |    | (_| (_) | | | | | | |_) | |  __/ (_| | |_| | | | | (_| | \n |_| %c___/|_|     %c___%c___/|_| |_| |_| .__/|_|%c___|%c__,_|%c__|_|_| |_|%c__, | \n   _______    _          _   _       | |              _     _         __/ | \n  |__   __|  | |        | | | |      |_|             | |   | |       |___/  \n     | | __ _| | _____  | |_| |__   ___    __ _  ___ | | __| |              \n     | |/ _` | |/ / _ %c | __| '_ %c / _ %c  / _` |/ _ %c| |/ _` |              \n     | | (_| |   <  __/ | |_| | | |  __/ | (_| | (_) | | (_| |              \n     |_|%c__,_|_|%c_%c___|  %c__|_| |_|%c___|  %c__, |%c___/|_|%c__,_|              \n                                           __/ |                            \n                                          |___/                             \n", 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92, 92);
@@ -413,9 +416,9 @@ void Player::executecommand1word(int& command1, int& actual_position)const{
 	}
 
 	else if (command1 == GOD){
-		worldexternpointer->player->playerhp = 1000;
-		worldexternpointer->player->playerattack = 1000;
-		worldexternpointer->player->playerdefense = 1000;
+		((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->playerhp = 1000;
+		((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->playerattack = 1000;
+		((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->playerdefense = 1000;
 		printf("God mode activated, you should been testing something...\n");
 	}
 
@@ -432,7 +435,7 @@ void Player::executecommand2words(int command1, int command2, int& actual_positi
 	int exitnum = 0, roomnum = 0;
 	int exitnumdoors = 0, roomnumdoors = 0;
 	int opositeroom = 0;
-	worldexternpointer->player->current_room = ((Room*)worldexternpointer->entities[actual_position]);
+	((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room = ((Room*)worldexternpointer->entities[actual_position]);
 	// ---------------------------------------------------------------------------------------------------------------
 	//look command
 	if (command1 == LOOK){
@@ -448,7 +451,7 @@ void Player::executecommand2words(int command1, int command2, int& actual_positi
 					//South exits are each 4 exits, starting from 2, South exits = 2, 6, 10, 14, 18...
 					//WEST=9, 6-6=0, exitnum % 4 == 3
 					//West exits are each 4 exits, starting from 3, West exits = 3, 7, 11, 15, 19...
-					if (((Exit*)worldexternpointer->entities[exitnum + 18])->origin == worldexternpointer->player->current_room){
+					if (((Exit*)worldexternpointer->entities[exitnum + 18])->origin == ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room){
 						printf("%s\n", ((Exit*)worldexternpointer->entities[exitnum + 18])->description.c_str());
 						return;
 					}
@@ -485,7 +488,7 @@ void Player::executecommand2words(int command1, int command2, int& actual_positi
 					//South exits are each 4 exits, starting from 2, South exits = 2, 6, 10, 14, 18...
 					//WEST=9, 6-6=0, exitnum % 4 == 3
 					//West exits are each 4 exits, starting from 3, West exits = 3, 7, 11, 15, 19...
-					if (((Exit*)worldexternpointer->entities[exitnum + 18])->origin == worldexternpointer->player->current_room){
+					if (((Exit*)worldexternpointer->entities[exitnum + 18])->origin == ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room){
 						for (roomnum = 0; roomnum < NUMROOMS; roomnum++){//Check rooms to get the room num for actual_position
 							if (((Exit*)worldexternpointer->entities[exitnum + 18])->destination == ((Room*)worldexternpointer->entities[roomnum])){
 								if (((Exit*)worldexternpointer->entities[exitnum + 18])->door == true && ((Exit*)worldexternpointer->entities[exitnum + 18])->close == true){
@@ -494,8 +497,8 @@ void Player::executecommand2words(int command1, int command2, int& actual_positi
 								}
 								else{
 									actual_position = roomnum;
-									worldexternpointer->player->current_room = ((Exit*)worldexternpointer->entities[exitnum + 18])->destination;
-									printf("Now you are in %s\n", worldexternpointer->player->current_room->name.c_str());
+									((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room = ((Exit*)worldexternpointer->entities[exitnum + 18])->destination;
+									printf("Now you are in %s\n", ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room->name.c_str());
 									return;
 								}
 							}
@@ -515,7 +518,7 @@ void Player::executecommand2words(int command1, int command2, int& actual_positi
 		if ((command2 == NORTH) || (command2 == EAST) || (command2 == SOUTH) || (command2 == WEST)){
 			if (((Item*)worldexternpointer->entities[16])->inventory == true){
 				for (exitnum = 0; exitnum < NUMEXITS; exitnum++){
-					if (((Exit*)worldexternpointer->entities[exitnum + 18])->origin->name == worldexternpointer->player->current_room->name){
+					if (((Exit*)worldexternpointer->entities[exitnum + 18])->origin->name == ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room->name){
 						if (exitnum % 4 == command2 - 6){
 							//NORTH=6, 6-6=0, exitnum % 4 == 0
 							//North exits are each 4 exits, starting from 0, North exits = 0, 4, 8, 12, 16...
@@ -576,7 +579,7 @@ void Player::executecommand2words(int command1, int command2, int& actual_positi
 		if ((command2 == NORTH) || (command2 == EAST) || (command2 == SOUTH) || (command2 == WEST)){
 			if (((Item*)worldexternpointer->entities[16])->inventory == true){
 				for (exitnum = 0; exitnum < NUMEXITS; exitnum++){
-					if (((Exit*)worldexternpointer->entities[exitnum + 18])->origin->name == worldexternpointer->player->current_room->name){
+					if (((Exit*)worldexternpointer->entities[exitnum + 18])->origin->name == ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room->name){
 						if (exitnum % 4 == command2 - 6){
 							//NORTH=6, 6-6=0, exitnum % 4 == 0
 							//North exits are each 4 exits, starting from 0, North exits = 0, 4, 8, 12, 16...
@@ -635,7 +638,7 @@ void Player::executecommand2words(int command1, int command2, int& actual_positi
 	//pick command
 	else if (command1 == PICK){
 		if ((command2 == KATANA) || (command2 == GASMASK) || (command2 == TREASURE) || (command2 == GRENADE) || (command2 == SWORD) || (command2 == SHIELD) || (command2 == EXPLOSIVE) || (command2 == KEY) || (command2 == BACKPACK)){
-			if (((Item*)worldexternpointer->entities[command2 - 13])->item_room == worldexternpointer->player->current_room){//Looks if the player is in the same room of the item.
+			if (((Item*)worldexternpointer->entities[command2 - 13])->item_room == ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room){//Looks if the player is in the same room of the item.
 				if (((Item*)worldexternpointer->entities[command2 - 13])->inside_cupboard == false){
 					if (((Item*)worldexternpointer->entities[command2 - 13])->inventory == false){//If the player don't have it
 						((Item*)worldexternpointer->entities[command2 - 13])->inventory = true;
@@ -665,11 +668,11 @@ void Player::executecommand2words(int command1, int command2, int& actual_positi
 			if (((Item*)worldexternpointer->entities[command2 - 13])->inventory == true){//If the player have it
 				if (((Item*)worldexternpointer->entities[command2 - 13])->equipped == true){//If the player have it equipped
 					((Item*)worldexternpointer->entities[command2 - 13])->equipped = false;//unequip
-					worldexternpointer->player->playerattack -= ((Item*)worldexternpointer->entities[command2 - 13])->attack;
-					worldexternpointer->player->playerdefense -= ((Item*)worldexternpointer->entities[command2 - 13])->defense;
+					((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->playerattack -= ((Item*)worldexternpointer->entities[command2 - 13])->attack;
+					((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->playerdefense -= ((Item*)worldexternpointer->entities[command2 - 13])->defense;
 				}
 				((Item*)worldexternpointer->entities[command2 - 13])->inventory = false;
-				((Item*)worldexternpointer->entities[command2 - 13])->item_room = worldexternpointer->player->current_room;
+				((Item*)worldexternpointer->entities[command2 - 13])->item_room = ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room;
 				((Item*)worldexternpointer->entities[command2 - 13])->inside_cupboard = false;
 				printf("You had dropped %s.\n", ((Item*)worldexternpointer->entities[command2 - 13])->name.c_str());
 			}
@@ -691,31 +694,31 @@ void Player::executecommand2words(int command1, int command2, int& actual_positi
 						if ((command2 == KATANA) && (((Item*)worldexternpointer->entities[13])->equipped == true)){//if you want to equip katana and you have sword equipped
 							//equip katana
 							((Item*)worldexternpointer->entities[command2 - 22])->equipped = true;
-							worldexternpointer->player->playerattack += ((Item*)worldexternpointer->entities[command2 - 13])->attack;
-							worldexternpointer->player->playerdefense += ((Item*)worldexternpointer->entities[command2 - 13])->defense;
+							((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->playerattack += ((Item*)worldexternpointer->entities[command2 - 13])->attack;
+							((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->playerdefense += ((Item*)worldexternpointer->entities[command2 - 13])->defense;
 							printf("%s equipped.\n", ((Item*)worldexternpointer->entities[command2 - 13])->name.c_str());
 							//unequip sword
 							((Item*)worldexternpointer->entities[13])->equipped = false;
-							worldexternpointer->player->playerattack -= ((Item*)worldexternpointer->entities[13])->attack;
-							worldexternpointer->player->playerdefense -= ((Item*)worldexternpointer->entities[13])->defense;
+							((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->playerattack -= ((Item*)worldexternpointer->entities[13])->attack;
+							((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->playerdefense -= ((Item*)worldexternpointer->entities[13])->defense;
 							printf("%s unequipped.\n", ((Item*)worldexternpointer->entities[13])->name.c_str());
 						}
 						else if (((command2) == SWORD) && (((Item*)worldexternpointer->entities[9])->equipped == true)){//if you want to equip sword and you have katana equipped
 							//equip sword
 							((Item*)worldexternpointer->entities[command2 - 22])->equipped = true;
-							worldexternpointer->player->playerattack += ((Item*)worldexternpointer->entities[command2 - 13])->attack;
-							worldexternpointer->player->playerdefense += ((Item*)worldexternpointer->entities[command2 - 13])->defense;
+							((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->playerattack += ((Item*)worldexternpointer->entities[command2 - 13])->attack;
+							((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->playerdefense += ((Item*)worldexternpointer->entities[command2 - 13])->defense;
 							printf("%s equipped.\n", ((Item*)worldexternpointer->entities[command2 - 13])->name.c_str());
 							//unequip katana
 							((Item*)worldexternpointer->entities[9])->equipped = false;
-							worldexternpointer->player->playerattack -= ((Item*)worldexternpointer->entities[9])->attack;
-							worldexternpointer->player->playerdefense -= ((Item*)worldexternpointer->entities[9])->defense;
+							((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->playerattack -= ((Item*)worldexternpointer->entities[9])->attack;
+							((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->playerdefense -= ((Item*)worldexternpointer->entities[9])->defense;
 							printf("%s unequipped.\n", ((Item*)worldexternpointer->entities[9])->name.c_str());
 						}
 						else{
 							((Item*)worldexternpointer->entities[command2 - 13])->equipped = true;
-							worldexternpointer->player->playerattack += ((Item*)worldexternpointer->entities[command2 - 13])->attack;
-							worldexternpointer->player->playerdefense += ((Item*)worldexternpointer->entities[command2 - 13])->defense;
+							((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->playerattack += ((Item*)worldexternpointer->entities[command2 - 13])->attack;
+							((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->playerdefense += ((Item*)worldexternpointer->entities[command2 - 13])->defense;
 							printf("%s equipped.\n", ((Item*)worldexternpointer->entities[command2 - 13])->name.c_str());
 						}
 					}
@@ -741,8 +744,8 @@ void Player::executecommand2words(int command1, int command2, int& actual_positi
 		if ((command2 == KATANA) || (command2 == GASMASK) || (command2 == TREASURE) || (command2 == GRENADE) || (command2 == SWORD) || (command2 == SHIELD) || (command2 == EXPLOSIVE) || (command2 == KEY) || (command2 == BACKPACK)){
 			if (((Item*)worldexternpointer->entities[command2 - 13])->equipped == true){//If the player have it
 				((Item*)worldexternpointer->entities[command2 - 13])->equipped = false;
-				worldexternpointer->player->playerattack -= ((Item*)worldexternpointer->entities[command2 - 13])->attack;
-				worldexternpointer->player->playerdefense -= ((Item*)worldexternpointer->entities[command2 - 13])->defense;
+				((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->playerattack -= ((Item*)worldexternpointer->entities[command2 - 13])->attack;
+				((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->playerdefense -= ((Item*)worldexternpointer->entities[command2 - 13])->defense;
 				printf("%s unequipped.\n", ((Item*)worldexternpointer->entities[command2 - 13])->name.c_str());
 			}
 			else{
@@ -766,8 +769,8 @@ void Player::executecommand2words(int command1, int command2, int& actual_positi
 		}
 		else if (command2 == EXPLOSIVE){
 			if (((Item*)worldexternpointer->entities[15])->inventory == true){
-				if (worldexternpointer->player->current_room->exploitablewall == true){
-					worldexternpointer->player->current_room->exploitablewall = false;
+				if (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room->exploitablewall == true){
+					((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room->exploitablewall = false;
 					((Item*)worldexternpointer->entities[15])->inventory = false;
 
 					//Ascii art code purpouse
@@ -820,17 +823,17 @@ void Player::executecommand4words(int command1, int command2, int command3, int 
 	if (command1 == PUT){
 		if (((command2 == KATANA) || (command2 == GASMASK) || (command2 == TREASURE) || (command2 == GRENADE) || (command2 == SWORD) || (command2 == SHIELD) || (command2 == EXPLOSIVE) || (command2 == KEY) || (command2 == BACKPACK)) && (command3 == INTO)){
 			if (command4 == CUPBOARD){
-				if (worldexternpointer->player->current_room->cupboard == true){//looks if the player room has a cupboard and player has the item
-					if (worldexternpointer->player->current_room->exploitablewall == false){
+				if (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room->cupboard == true){//looks if the player room has a cupboard and player has the item
+					if (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room->exploitablewall == false){
 						if (((Item*)worldexternpointer->entities[command2 - 13])->inventory == true){
 							if (((Item*)worldexternpointer->entities[command2 - 13])->equipped == true){//If the player have it equipped
 								((Item*)worldexternpointer->entities[command2 - 13])->equipped = false;//unequip
-								worldexternpointer->player->playerattack -= ((Item*)worldexternpointer->entities[command2 - 13])->attack;
-								worldexternpointer->player->playerdefense -= ((Item*)worldexternpointer->entities[command2 - 13])->defense;
+								((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->playerattack -= ((Item*)worldexternpointer->entities[command2 - 13])->attack;
+								((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->playerdefense -= ((Item*)worldexternpointer->entities[command2 - 13])->defense;
 							}
 							((Item*)worldexternpointer->entities[command2 - 13])->inventory = false;
 							((Item*)worldexternpointer->entities[command2 - 13])->inside_cupboard = true;
-							((Item*)worldexternpointer->entities[command2 - 13])->item_room = worldexternpointer->player->current_room;
+							((Item*)worldexternpointer->entities[command2 - 13])->item_room = ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room;
 							printf("You had put %s inside the cupboard.\n", ((Item*)worldexternpointer->entities[command2 - 13])->name.c_str());
 						}
 						else{
@@ -851,8 +854,8 @@ void Player::executecommand4words(int command1, int command2, int command3, int 
 						if (((Item*)worldexternpointer->entities[command2 - 13])->inventory == true){
 							if (((Item*)worldexternpointer->entities[command2 - 13])->equipped == true){//If the player have it equipped
 								((Item*)worldexternpointer->entities[command2 - 13])->equipped = false;//unequip
-								worldexternpointer->player->playerattack -= ((Item*)worldexternpointer->entities[command2 - 13])->attack;
-								worldexternpointer->player->playerdefense -= ((Item*)worldexternpointer->entities[command2 - 13])->defense;
+								((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->playerattack -= ((Item*)worldexternpointer->entities[command2 - 13])->attack;
+								((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->playerdefense -= ((Item*)worldexternpointer->entities[command2 - 13])->defense;
 							}
 							((Item*)worldexternpointer->entities[command2 - 13])->inventory = false;
 							((Item*)worldexternpointer->entities[command2 - 13])->inside_backpack = true;
@@ -883,9 +886,9 @@ void Player::executecommand4words(int command1, int command2, int command3, int 
 	else if (command1 == GET){
 		if (((command2 == KATANA) || (command2 == GASMASK) || (command2 == TREASURE) || (command2 == GRENADE) || (command2 == SWORD) || (command2 == SHIELD) || (command2 == EXPLOSIVE) || (command2 == KEY) || (command2 == BACKPACK)) && (command3 == FROM)){
 			if (command4 == CUPBOARD){
-				if (worldexternpointer->player->current_room == ((Item*)worldexternpointer->entities[command2 - 13])->item_room){
-					if (worldexternpointer->player->current_room->exploitablewall == false){
-						if (worldexternpointer->player->current_room->cupboard == true){//looks if the player room has a cupboard and player has the item
+				if (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room == ((Item*)worldexternpointer->entities[command2 - 13])->item_room){
+					if (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room->exploitablewall == false){
+						if (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room->cupboard == true){//looks if the player room has a cupboard and player has the item
 							if (((Item*)worldexternpointer->entities[command2 - 13])->inside_cupboard == true){
 								if (((Item*)worldexternpointer->entities[command2 - 13])->inventory == false){
 									((Item*)worldexternpointer->entities[command2 - 13])->inventory = true;

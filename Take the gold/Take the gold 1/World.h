@@ -9,6 +9,7 @@
 #include "Item.h"
 #include "Player.h"
 #include "Room.h"
+#include "Creature.h"
 #include "String.h"
 #include "Vector.h"
 
