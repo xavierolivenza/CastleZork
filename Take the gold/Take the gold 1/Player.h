@@ -11,10 +11,6 @@ public:
 	Player(const char*, const char*, Room*, EntityType);
 	~Player();
 public:
-	unsigned int playerhp = 100;//player health points
-	unsigned int playerattack = 0;//player attack, modified by equipped items
-	unsigned int playerdefense = 0;//player defense, modified by equipped items
-public:
 	int check_firstcommand(Vector <String>)const;
 	int check_secondcommand(Vector <String>)const;
 	int check_thirdcommand(Vector <String>)const;
@@ -23,6 +19,10 @@ public:
 	void executecommand1word(int&, int&)const;
 	void executecommand2words(int, int, int&)const;
 	void executecommand4words(int, int, int, int, int&)const;
+public:
+	void move(int&, int&);
+	void creaturemove();
+	void creatureattack();
 };
 
 enum commandset { 

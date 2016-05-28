@@ -10,6 +10,7 @@
 #include "Player.h"
 #include "Room.h"
 #include "Creature.h"
+#include "Enemie_normal_soldier.h"
 #include "String.h"
 #include "Vector.h"
 
@@ -26,6 +27,7 @@ public:
 	~World();
 public:
 	void CreateWorld();
+	void Update();
 };
 
 extern World* worldexternpointer;

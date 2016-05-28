@@ -17,13 +17,7 @@ int main(){
 	int command1 = 0, command2 = 0, command3 = 0, command4 = 0;
 	int command_words = 0, i = 0, j = 0;
 	int actual_position = 0;
-	Player commandinput;
-
-
 	unsigned int charcommandnum = 0;
-
-
-
 
 	worldexternpointer->CreateWorld();
 	printf("Welcome to:\n\n");
@@ -33,7 +27,7 @@ int main(){
 	printf("//------------------------------------------------------------------------//\n");
 
 	printf("You are in %s.\n%s\n", ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room->name.c_str(), ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room->description.c_str());
-	commandinput.dropeditemslook();
+	worldexternpointer->player->dropeditemslook();
 	
 	printf("What do you want to do?\n");
 	
@@ -51,7 +45,7 @@ int main(){
 				}
 				//printf("String: %s\n", command);//print command
 				charcommandnum++;
-				if (command[charcommandnum - 1] == '\r'){//Enter-> erase command and print
+				if (command[charcommandnum - 1] == '\r'){//Enter-> erase command and execute
 					printf("//------------------------------------------------------------------------//\n");
 					//printf("Your command is: %s\n", command);
 					command[charcommandnum - 1] = '\0';
@@ -63,20 +57,20 @@ int main(){
 
 						switch (command_words){
 						case 1:
-							command1 = commandinput.check_firstcommand(commands);
-							commandinput.executecommand1word(command1, actual_position);
+							command1 = worldexternpointer->player->check_firstcommand(commands);
+							worldexternpointer->player->executecommand1word(command1, actual_position);
 							break;
 						case 2:
-							command1 = commandinput.check_firstcommand(commands);
-							command2 = commandinput.check_secondcommand(commands);
-							commandinput.executecommand2words(command1, command2, actual_position);
+							command1 = worldexternpointer->player->check_firstcommand(commands);
+							command2 = worldexternpointer->player->check_secondcommand(commands);
+							worldexternpointer->player->executecommand2words(command1, command2, actual_position);
 							break;
 						case 4:
-							command1 = commandinput.check_firstcommand(commands);
-							command2 = commandinput.check_secondcommand(commands);
-							command3 = commandinput.check_thirdcommand(commands);
-							command4 = commandinput.check_fourthcommand(commands);
-							commandinput.executecommand4words(command1, command2, command3, command4, actual_position);
+							command1 = worldexternpointer->player->check_firstcommand(commands);
+							command2 = worldexternpointer->player->check_secondcommand(commands);
+							command3 = worldexternpointer->player->check_thirdcommand(commands);
+							command4 = worldexternpointer->player->check_fourthcommand(commands);
+							worldexternpointer->player->executecommand4words(command1, command2, command3, command4, actual_position);
 							break;
 						default:
 							printf("That's not a valid command.\n");
@@ -95,6 +89,7 @@ int main(){
 				command[COMMANDBUFFER - 1] = '\0';
 			}
 		}
+		//worldexternpointer->Update();
 	} while (command1 != QUIT);
 	system("pause");
 	delete worldexternpointer;

@@ -6,9 +6,13 @@ World::World(){
 }
 
 World::~World(){
-	for (int i = 0; i < worldexternpointer->entities.size(); i++){
+	for (int i = 0; i < (worldexternpointer->entities.size() - 2); i++){
 		delete entities[i];
 	}
+}
+
+void Update(){
+
 }
 
 void World::CreateWorld(){
@@ -149,6 +153,9 @@ void World::CreateWorld(){
 	//West
 	worldexternpointer->entities.pushback(new Exit("West corridor door.", "There's a corridor, the west one.", (Room*)worldexternpointer->entities[8], (Room*)worldexternpointer->entities[7], false, false, EXIT, west));
 	// ---------------------------------------------------------------------------------------------------------------
+
+	//The enemies
+	worldexternpointer->entities.pushback(new Enemie_normal_soldier("Soldier1.", "Soldier1.", (Room*)worldexternpointer->entities[8], ENEMIE));
 
 	//The player
 	worldexternpointer->entities.pushback(new Player("The mighty hero.", "It's you, the mighty hero.", (Room*)worldexternpointer->entities[0], PLAYER));

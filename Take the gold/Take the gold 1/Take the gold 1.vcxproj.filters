@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Archivos de encabezado\Enemies">
+      <UniqueIdentifier>{82bf35cc-b6b1-489c-a89e-39781356c921}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de código fuente\Enemies">
+      <UniqueIdentifier>{1ff4a15f-d5a3-490b-86b9-ec8967d06213}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -41,6 +47,9 @@
     </ClCompile>
     <ClCompile Include="Creature.cpp">
       <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemie_normal_soldier.cpp">
+      <Filter>Archivos de código fuente\Enemies</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -73,6 +82,9 @@
     </ClInclude>
     <ClInclude Include="Creature.h">
       <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemie_normal_soldier.h">
+      <Filter>Archivos de encabezado\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
