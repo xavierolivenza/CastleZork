@@ -35,9 +35,15 @@ void Player::move(int& command1, int& actual_position){
 							return;
 						}
 						else{
-							actual_position = roomnum;
-							((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room = ((Exit*)worldexternpointer->entities[exitnum + 18])->destination;
-							printf("Now you are in %s\n", ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room->name.c_str());
+							if (actual_position == roomnum){
+								printf("There is a wall.\n");
+							}
+							else{
+								actual_position = roomnum;
+								((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room = ((Exit*)worldexternpointer->entities[exitnum + 18])->destination;
+								printf("You are in %s.\n%s\n", ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room->name.c_str(), ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room->description.c_str());
+								dropeditemslook();
+							}
 							return;
 						}
 					}
