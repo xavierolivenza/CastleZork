@@ -21,6 +21,9 @@ public:
 	void executecommand2words(int, int, int&)const;
 	void executecommand4words(int, int, int, int, int&)const;
 public:
+	unsigned int hp = 100;//health points
+	unsigned int attack = 10;//attack, modified by equipped items in player
+	unsigned int defense = 0;//defense, modified by equipped items in player
 	void move(int&, int&);
 };
 

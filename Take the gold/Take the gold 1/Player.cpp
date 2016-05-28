@@ -832,8 +832,19 @@ void Player::executecommand2words(int command1, int command2, int& actual_positi
 			printf("That's not a valid command.\n");
 		}
 	}
-	//use command, by now this only works for use explosive
 
+	//Attack command
+	else if (command1 == ATTACK){
+		if ((command2 == SOLDIER1) || (command2 == SOLDIER2) || (command2 == SOLDIER3) || (command2 == SOLDIER4) || (command2 == SOLDIER5) || (command2 == SOLDIER6) || (command2 == BIGSOLDIER) || (command2 == SELLER)){
+
+
+		}
+		else{
+			printf("That's not valid.\n");
+		}
+	}
+
+	//use command, this only works for use explosive and grenade
 	else if (command1 == USE){
 		if (command2 == GRENADE){
 			if (((Item*)worldexternpointer->entities[12])->inventory == true){
