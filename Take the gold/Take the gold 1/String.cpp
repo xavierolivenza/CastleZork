@@ -161,6 +161,18 @@ Vector <String> String::tokenize(char* command, int& command_words) const{
 				trash = strtok_s(NULL, " ", &context);
 				commandvector.pushback(commandtosplit);
 			}
+			else if (strstr(context, "big soldier") != nullptr){
+				commandtosplit = "big soldier";
+				trash = strtok_s(NULL, " ", &context);
+				trash = strtok_s(NULL, " ", &context);
+				commandvector.pushback(commandtosplit);
+			}
+			else if (strstr(context, "hidden blade") != nullptr){
+				commandtosplit = "hidden blade";
+				trash = strtok_s(NULL, " ", &context);
+				trash = strtok_s(NULL, " ", &context);
+				commandvector.pushback(commandtosplit);
+			}
 			else{
 				commandtosplit = strtok_s(NULL, " ", &context);
 				commandvector.pushback(commandtosplit);

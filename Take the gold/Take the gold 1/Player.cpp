@@ -132,6 +132,18 @@ int Player::check_firstcommand(Vector <String> & commands)const{
 	else if (commands[0] == "god"){
 		return GOD;
 	}
+	else if (commands[0] == "attack"){
+		return ATTACK;
+	}
+	else if (commands[0] == "special"){
+		return SPECIAL;
+	}
+	else if (commands[0] == "buy"){
+		return BUY;
+	}
+	else if (commands[0] == "sell"){
+		return SELL;
+	}
 	else{
 		return COMMANDERROR;
 	}
@@ -181,6 +193,33 @@ int Player::check_secondcommand(Vector <String> & commands)const{
 	else if (commands[1] == "items"){
 		return ITEMS;
 	}
+	else if (commands[1] == "soldier1"){
+		return SOLDIER1;
+	}
+	else if (commands[1] == "soldier2"){
+		return SOLDIER2;
+	}
+	else if (commands[1] == "soldier3"){
+		return SOLDIER3;
+	}
+	else if (commands[1] == "soldier4"){
+		return SOLDIER4;
+	}
+	else if (commands[1] == "soldier5"){
+		return SOLDIER5;
+	}
+	else if (commands[1] == "soldier6"){
+		return SOLDIER6;
+	}
+	else if (commands[1] == "big soldier"){
+		return BIGSOLDIER;
+	}
+	else if (commands[1] == "seller"){
+		return SELLER;
+	}
+	else if (commands[1] == "hidden blade"){
+		return HIDDENBLADE;
+	}
 	else{
 		return COMMANDERROR;
 	}
@@ -206,6 +245,30 @@ int Player::check_fourthcommand(Vector <String> & commands)const{
 	}
 	else if (commands[3] == "backpack"){
 		return BACKPACK;
+	}
+	else if (commands[3] == "soldier1"){
+		return SOLDIER1;
+	}
+	else if (commands[3] == "soldier2"){
+		return SOLDIER2;
+	}
+	else if (commands[3] == "soldier3"){
+		return SOLDIER3;
+	}
+	else if (commands[3] == "soldier4"){
+		return SOLDIER4;
+	}
+	else if (commands[3] == "soldier5"){
+		return SOLDIER5;
+	}
+	else if (commands[3] == "soldier6"){
+		return SOLDIER6;
+	}
+	else if (commands[3] == "big soldier"){
+		return BIGSOLDIER;
+	}
+	else if (commands[3] == "seller"){
+		return SELLER;
 	}
 	else{
 		return COMMANDERROR;
