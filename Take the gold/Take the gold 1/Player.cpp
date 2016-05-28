@@ -43,6 +43,7 @@ void Player::move(int& command1, int& actual_position){
 								((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room = ((Exit*)worldexternpointer->entities[exitnum + 18])->destination;
 								printf("You are in %s.\n%s\n", ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room->name.c_str(), ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room->description.c_str());
 								dropeditemslook();
+								enemieslook();
 							}
 							return;
 						}
@@ -54,7 +55,7 @@ void Player::move(int& command1, int& actual_position){
 	printf("There is a wall.\n");
 }
 
-int Player::check_firstcommand(Vector <String> commands)const{
+int Player::check_firstcommand(Vector <String> & commands)const{
 	//this method recibes the vector of commands and check the first one and return its value of the enum
 	if ((commands[0] == "look") || (commands[0] == "l")){
 		return LOOK;
@@ -136,7 +137,7 @@ int Player::check_firstcommand(Vector <String> commands)const{
 	}
 }
 
-int Player::check_secondcommand(Vector <String> commands)const{
+int Player::check_secondcommand(Vector <String> & commands)const{
 	//this method recibes the vector of commands and check the second one and return its value of the enum
 	if ((commands[1] == "north") || (commands[1] == "n")){
 		return NORTH;
@@ -185,7 +186,7 @@ int Player::check_secondcommand(Vector <String> commands)const{
 	}
 }
 
-int Player::check_thirdcommand(Vector <String> commands)const{
+int Player::check_thirdcommand(Vector <String> & commands)const{
 	//this method recibes the vector of commands and check the third one and return its value of the enum
 	if ((commands[0] == "put") && (commands[2] == "into")){
 		return INTO;
@@ -198,7 +199,7 @@ int Player::check_thirdcommand(Vector <String> commands)const{
 	}
 }
 
-int Player::check_fourthcommand(Vector <String> commands)const{
+int Player::check_fourthcommand(Vector <String> & commands)const{
 	//this method recibes the vector of commands and check the forth one and return its value of the enum
 	if (commands[3] == "cupboard"){
 		return CUPBOARD;
@@ -226,6 +227,31 @@ void Player::dropeditemslook()const{
 				printf("%s\n", ((Item*)worldexternpointer->entities[j + 9])->name.c_str());
 			}
 		}
+	}
+}
+
+void Player::enemieslook()const{
+	unsigned int j = 0;
+	for (unsigned int i = 0; i < (worldexternpointer->entities.size()); i++){
+		if (worldexternpointer->entities[i]->type == ENEMIE){
+			if (((NPC*)worldexternpointer->entities[i])->current_room == ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room){
+				j++;
+			}
+		}
+	}
+	if (j != 0){
+		printf("There are NPC's here, be carefull, they can be hostile.\n");
+		printf("NPC in the room list:\n");
+		for (unsigned int i = 0; i < (worldexternpointer->entities.size()); i++){
+			if (worldexternpointer->entities[i]->type == ENEMIE){
+				if (((NPC*)worldexternpointer->entities[i])->current_room == ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room){
+					printf("%s\n", ((NPC*)worldexternpointer->entities[i])->name.c_str());
+				}
+			}
+		}
+	}
+	else{
+		printf("No NPC's here.\n");
 	}
 }
 

@@ -11,11 +11,12 @@ public:
 	Player(const char*, const char*, Room*, EntityType);
 	~Player();
 public:
-	int check_firstcommand(Vector <String>)const;
-	int check_secondcommand(Vector <String>)const;
-	int check_thirdcommand(Vector <String>)const;
-	int check_fourthcommand(Vector <String>)const;
+	int check_firstcommand(Vector <String> &)const;
+	int check_secondcommand(Vector <String> &)const;
+	int check_thirdcommand(Vector <String> &)const;
+	int check_fourthcommand(Vector <String> &)const;
 	void dropeditemslook()const;
+	void enemieslook()const;
 	void executecommand1word(int&, int&)const;
 	void executecommand2words(int, int, int&)const;
 	void executecommand4words(int, int, int, int, int&)const;

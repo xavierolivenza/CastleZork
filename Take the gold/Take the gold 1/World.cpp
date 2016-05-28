@@ -6,7 +6,7 @@ World::World(){
 }
 
 World::~World(){
-	for (int i = 0; i < (worldexternpointer->entities.size() - 2); i++){
+	for (int i = 0; i < (worldexternpointer->entities.size() - 7); i++){
 		delete entities[i];
 	}
 }
@@ -164,7 +164,7 @@ void World::CreateWorld(){
 	worldexternpointer->entities.pushback(new Enemie_normal_soldier("Soldier3.", "Soldier3.", (Room*)worldexternpointer->entities[8], ENEMIE));
 	worldexternpointer->entities.pushback(new Enemie_normal_soldier("Soldier4.", "Soldier4.", (Room*)worldexternpointer->entities[3], ENEMIE));
 	worldexternpointer->entities.pushback(new Enemie_normal_soldier("Soldier5.", "Soldier5.", (Room*)worldexternpointer->entities[3], ENEMIE));
-	worldexternpointer->entities.pushback(new Enemie_big_soldier("BigSoldier.", "BigSoldier.", (Room*)worldexternpointer->entities[3], ENEMIE));
+	worldexternpointer->entities.pushback(new Enemie_big_soldier("BigSoldier.", "BigSoldier.", (Room*)worldexternpointer->entities[4], ENEMIE));
 
 	//The player
 	worldexternpointer->entities.pushback(new Player("The mighty hero.", "It's you, the mighty hero.", (Room*)worldexternpointer->entities[0], PLAYER));
