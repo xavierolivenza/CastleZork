@@ -51,6 +51,9 @@
     <ClCompile Include="Enemie_normal_soldier.cpp">
       <Filter>Archivos de código fuente\Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="NPC.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entity.h">
@@ -85,6 +88,9 @@
     </ClInclude>
     <ClInclude Include="Enemie_normal_soldier.h">
       <Filter>Archivos de encabezado\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="NPC.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

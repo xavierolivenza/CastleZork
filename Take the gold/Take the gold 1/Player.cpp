@@ -54,14 +54,6 @@ void Player::move(int& command1, int& actual_position){
 	printf("There is a wall.\n");
 }
 
-void Player::creaturemove(){
-
-}
-
-void Player::creatureattack(){
-
-}
-
 int Player::check_firstcommand(Vector <String> commands)const{
 	//this method recibes the vector of commands and check the first one and return its value of the enum
 	if ((commands[0] == "look") || (commands[0] == "l")){

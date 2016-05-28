@@ -21,8 +21,6 @@ public:
 	void executecommand4words(int, int, int, int, int&)const;
 public:
 	void move(int&, int&);
-	void creaturemove();
-	void creatureattack();
 };
 
 enum commandset { 

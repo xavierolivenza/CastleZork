@@ -3,9 +3,9 @@
 
 #include "Entity.h"
 #include "Room.h"
-#include "Creature.h"
+#include "NPC.h"
 
-class Enemie_normal_soldier : public Creature{
+class Enemie_normal_soldier : public NPC{
 public:
 	Enemie_normal_soldier();
 	Enemie_normal_soldier(const char*, const char*, Room*, EntityType);
@@ -16,8 +16,8 @@ public:
 	unsigned int attack = 8;//attack, modified by equipped items in player
 	unsigned int defense = 2;//defense, modified by equipped items in player
 public:
-	void creaturemove();
-	void creatureattack();
+	void NPCmove();
+	void NPCattack();
 };
 
 #endif //__Enemie_normal_soldier__

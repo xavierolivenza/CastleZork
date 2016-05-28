@@ -1,0 +1,20 @@
+#ifndef __NPC__
+#define __NPC__
+
+#include "Entity.h"
+#include "Room.h"
+#include "Creature.h"
+
+class NPC : public Creature{
+public:
+	NPC();
+	NPC(const char*, const char*, Room*, EntityType);
+	~NPC();
+public:
+	virtual void NPCmove() = 0;
+	virtual void NPCattack() = 0;
+public:
+	void NPCUpdate();
+};
+
+#endif //__NPC__
