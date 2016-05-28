@@ -3,7 +3,7 @@
 
 #include "String.h"
 
-enum EntityType{ EXIT, ITEM, PLAYER, ROOM , ENEMIE};
+enum EntityType{ EXIT, ITEM, PLAYER, ROOM , ENEMIE, MOVINGENEMIE};
 
 class Entity{
 

@@ -16,6 +16,9 @@ public:
 	unsigned int attack = 5;//attack, modified by equipped items in player
 	unsigned int defense = 0;//defense, modified by equipped items in player
 public:
+	unsigned int currenttime = 0;
+	unsigned int initialtime = 0;
+public:
 	void NPCmove();
 	void NPCattack();
 	void NPCUpdate();
