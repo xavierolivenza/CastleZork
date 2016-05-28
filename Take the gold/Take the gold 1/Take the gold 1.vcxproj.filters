@@ -57,6 +57,9 @@
     <ClCompile Include="Enemie_big_soldier.cpp">
       <Filter>Archivos de código fuente\Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="Enemie_moving_soldier.cpp">
+      <Filter>Archivos de código fuente\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entity.h">
@@ -96,6 +99,9 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="Enemie_big_soldier.h">
+      <Filter>Archivos de encabezado\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemie_moving_soldier.h">
       <Filter>Archivos de encabezado\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
