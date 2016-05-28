@@ -89,7 +89,7 @@ int main(){
 				command[COMMANDBUFFER - 1] = '\0';
 			}
 		}
-		//worldexternpointer->Update();
+		worldexternpointer->Update();
 	} while (command1 != QUIT);
 	system("pause");
 	delete worldexternpointer;

@@ -14,7 +14,7 @@ public:
 	virtual void NPCmove() = 0;
 	virtual void NPCattack() = 0;
 public:
-	void NPCUpdate();
+	virtual void NPCUpdate() = 0;
 };
 
 #endif //__NPC__

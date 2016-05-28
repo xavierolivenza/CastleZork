@@ -9,6 +9,11 @@ Enemie_normal_soldier::Enemie_normal_soldier(const char* name, const char* descr
 Enemie_normal_soldier::~Enemie_normal_soldier(){
 }
 
+void Enemie_normal_soldier::NPCUpdate(){
+	NPCmove();
+	NPCattack();
+}
+
 void Enemie_normal_soldier::NPCmove(){
 
 }

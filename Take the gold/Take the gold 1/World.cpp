@@ -11,8 +11,12 @@ World::~World(){
 	}
 }
 
-void Update(){
-
+void World::Update(){
+	for (int i = 0; i < (worldexternpointer->entities.size()); i++){
+		if (worldexternpointer->entities[i]->type == ENEMIE){
+			((NPC*)(worldexternpointer->entities[i]))->NPCUpdate();
+		}
+	}
 }
 
 void World::CreateWorld(){
@@ -156,6 +160,11 @@ void World::CreateWorld(){
 
 	//The enemies
 	worldexternpointer->entities.pushback(new Enemie_normal_soldier("Soldier1.", "Soldier1.", (Room*)worldexternpointer->entities[8], ENEMIE));
+	worldexternpointer->entities.pushback(new Enemie_normal_soldier("Soldier2.", "Soldier2.", (Room*)worldexternpointer->entities[8], ENEMIE));
+	worldexternpointer->entities.pushback(new Enemie_normal_soldier("Soldier3.", "Soldier3.", (Room*)worldexternpointer->entities[8], ENEMIE));
+	worldexternpointer->entities.pushback(new Enemie_normal_soldier("Soldier4.", "Soldier4.", (Room*)worldexternpointer->entities[3], ENEMIE));
+	worldexternpointer->entities.pushback(new Enemie_normal_soldier("Soldier5.", "Soldier5.", (Room*)worldexternpointer->entities[3], ENEMIE));
+	worldexternpointer->entities.pushback(new Enemie_big_soldier("BigSoldier.", "BigSoldier.", (Room*)worldexternpointer->entities[3], ENEMIE));
 
 	//The player
 	worldexternpointer->entities.pushback(new Player("The mighty hero.", "It's you, the mighty hero.", (Room*)worldexternpointer->entities[0], PLAYER));

@@ -18,6 +18,7 @@ public:
 public:
 	void NPCmove();
 	void NPCattack();
+	void NPCUpdate();
 };
 
 #endif //__Enemie_normal_soldier__
