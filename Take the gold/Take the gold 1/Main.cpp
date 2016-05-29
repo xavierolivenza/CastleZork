@@ -89,6 +89,9 @@ int main(){
 				command[COMMANDBUFFER - 1] = '\0';
 			}
 		}
+		if (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->attackactive == true){
+			worldexternpointer->player->executecommand2words(command1, command2, actual_position);
+		}
 		worldexternpointer->Update();
 	} while (command1 != QUIT);
 	system("pause");

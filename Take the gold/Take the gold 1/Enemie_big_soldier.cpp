@@ -15,9 +15,10 @@ void Enemie_big_soldier::NPCUpdate(){
 }
 
 void Enemie_big_soldier::NPCmove(){
-
+	//This NPC doesn't move
 }
 
 void Enemie_big_soldier::NPCattack(){
+	//if player is in the room auto attack
 
 }

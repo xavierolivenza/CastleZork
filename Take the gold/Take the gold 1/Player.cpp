@@ -297,7 +297,7 @@ void Player::enemieslook()const{
 	unsigned int j = 0;
 	for (unsigned int i = 0; i < (worldexternpointer->entities.size()); i++){
 		if (worldexternpointer->entities[i]->type == ENEMIE){
-			if (((NPC*)worldexternpointer->entities[i])->current_room == ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room){
+			if ((((NPC*)worldexternpointer->entities[i])->current_room == ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room) && (((NPC*)worldexternpointer->entities[i])->hp > 0)){
 				j++;
 			}
 		}
@@ -307,7 +307,7 @@ void Player::enemieslook()const{
 		printf("NPC in the room list:\n");
 		for (unsigned int i = 0; i < (worldexternpointer->entities.size()); i++){
 			if (worldexternpointer->entities[i]->type == ENEMIE){
-				if (((NPC*)worldexternpointer->entities[i])->current_room == ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room){
+				if ((((NPC*)worldexternpointer->entities[i])->current_room == ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room) && (((NPC*)worldexternpointer->entities[i])->hp > 0)){
 					printf("%s\n", ((NPC*)worldexternpointer->entities[i])->name.c_str());
 				}
 			}
@@ -540,6 +540,7 @@ void Player::executecommand2words(int command1, int command2, int& actual_positi
 	int exitnumdoors = 0, roomnumdoors = 0;
 	int opositeroom = 0;
 	((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room = ((Room*)worldexternpointer->entities[actual_position]);
+	((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->currenttime = GetTickCount();
 	// ---------------------------------------------------------------------------------------------------------------
 	//look command
 	if (command1 == LOOK){
@@ -836,8 +837,8 @@ void Player::executecommand2words(int command1, int command2, int& actual_positi
 	//Attack command
 	else if (command1 == ATTACK){
 		if ((command2 == SOLDIER1) || (command2 == SOLDIER2) || (command2 == SOLDIER3) || (command2 == SOLDIER4) || (command2 == SOLDIER5) || (command2 == SOLDIER6) || (command2 == BIGSOLDIER) || (command2 == SELLER)){
-
-
+			((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->attackactive = true;
+			((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget = command2;
 		}
 		else{
 			printf("That's not valid.\n");
@@ -899,6 +900,26 @@ void Player::executecommand2words(int command1, int command2, int& actual_positi
 		}
 		else{
 			printf("You can't use that.\n");
+		}
+	}
+	if (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->attackactive == true){
+		if (((NPC*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->hp > 0){
+			if (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->currenttime >= (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->initialtime + 2000)){
+				if (((NPC*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->current_room == ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room){
+					((NPC*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->hp -= (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->attack - ((NPC*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->defense);
+					printf("You had damaged %s\nWith %i points of damage.\n", ((NPC*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->name.c_str(), (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->attack - ((NPC*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->defense));
+				}
+				else{
+					printf("This NPC is not here.\n");
+					((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->attackactive = false;
+				}
+
+				((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->initialtime = ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->currenttime;
+			}
+		}
+		else{
+			printf("You had killed %s\n", ((NPC*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->name.c_str());
+			((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->attackactive = false;
 		}
 	}
 }

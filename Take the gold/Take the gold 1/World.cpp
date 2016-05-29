@@ -164,8 +164,8 @@ void World::CreateWorld(){
 	worldexternpointer->entities.pushback(new Enemie_normal_soldier("Soldier3.", "Soldier3.", (Room*)worldexternpointer->entities[8], ENEMIE));
 	worldexternpointer->entities.pushback(new Enemie_normal_soldier("Soldier4.", "Soldier4.", (Room*)worldexternpointer->entities[3], ENEMIE));
 	worldexternpointer->entities.pushback(new Enemie_normal_soldier("Soldier5.", "Soldier5.", (Room*)worldexternpointer->entities[3], ENEMIE));
-	worldexternpointer->entities.pushback(new Enemie_big_soldier("BigSoldier.", "BigSoldier.", (Room*)worldexternpointer->entities[4], ENEMIE));
 	worldexternpointer->entities.pushback(new Enemie_moving_soldier("Soldier6.", "Soldier6.", (Room*)worldexternpointer->entities[2], MOVINGENEMIE));
+	worldexternpointer->entities.pushback(new Enemie_big_soldier("BigSoldier.", "BigSoldier.", (Room*)worldexternpointer->entities[4], ENEMIE));
 	worldexternpointer->entities.pushback(new Enemie_normal_soldier("Seller.", "Seller.", (Room*)worldexternpointer->entities[1], ENEMIE));
 
 	//The player
