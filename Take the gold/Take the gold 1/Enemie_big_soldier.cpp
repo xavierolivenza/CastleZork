@@ -10,8 +10,8 @@ Enemie_big_soldier::~Enemie_big_soldier(){
 }
 
 void Enemie_big_soldier::NPCUpdate(){
-	NPCmove();
-	NPCattack();
+	Enemie_big_soldier::NPCmove();
+	Enemie_big_soldier::NPCattack();
 }
 
 void Enemie_big_soldier::NPCmove(){

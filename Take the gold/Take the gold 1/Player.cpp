@@ -296,7 +296,7 @@ void Player::dropeditemslook()const{
 void Player::enemieslook()const{
 	unsigned int j = 0;
 	for (unsigned int i = 0; i < (worldexternpointer->entities.size()); i++){
-		if (worldexternpointer->entities[i]->type == ENEMIE){
+		if ((worldexternpointer->entities[i]->type == ENEMIE) || (worldexternpointer->entities[i]->type == BIGENEMIE) || (worldexternpointer->entities[i]->type == SELLERENEMIE) || (worldexternpointer->entities[i]->type == SELLERENEMIE)){
 			if ((((NPC*)worldexternpointer->entities[i])->current_room == ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room) && (((NPC*)worldexternpointer->entities[i])->hp > 0)){
 				j++;
 			}
@@ -306,7 +306,12 @@ void Player::enemieslook()const{
 		printf("There are NPC's here, be carefull, they can be hostile.\n");
 		printf("NPC in the room list:\n");
 		for (unsigned int i = 0; i < (worldexternpointer->entities.size()); i++){
-			if (worldexternpointer->entities[i]->type == ENEMIE){
+			if ((worldexternpointer->entities[i]->type == ENEMIE)){
+				if ((((NPC*)worldexternpointer->entities[i])->current_room == ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room) && (((NPC*)worldexternpointer->entities[i])->hp > 0)){
+					printf("%s\n", ((Enemie_normal_soldier*)worldexternpointer->entities[i])->name.c_str());
+				}
+			}
+			else if ((worldexternpointer->entities[i]->type == BIGENEMIE) || (worldexternpointer->entities[i]->type == SELLERENEMIE) || (worldexternpointer->entities[i]->type == SELLERENEMIE)){
 				if ((((NPC*)worldexternpointer->entities[i])->current_room == ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room) && (((NPC*)worldexternpointer->entities[i])->hp > 0)){
 					printf("%s\n", ((NPC*)worldexternpointer->entities[i])->name.c_str());
 				}
@@ -904,16 +909,31 @@ void Player::executecommand2words(int command1, int command2, int& actual_positi
 	}
 	if (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->attackactive == true){
 		if (((NPC*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->hp > 0){
-			if (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->currenttime >= (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->initialtime + 2000)){
+			if (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->currenttime >= (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->initialtime + 1500)){
 				if (((NPC*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->current_room == ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room){
-					((NPC*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->hp -= (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->attack - ((NPC*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->defense);
-					printf("You had damaged %s\nWith %i points of damage.\n", ((NPC*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->name.c_str(), (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->attack - ((NPC*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->defense));
+					switch (((NPC*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->type){
+					case ENEMIE:
+						((Enemie_normal_soldier*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->hp -= (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->attack - ((Enemie_normal_soldier*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->defense);
+						printf("You had damaged %s\nWith %i points of damage.\n", ((Enemie_normal_soldier*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->name.c_str(), (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->attack - ((Enemie_normal_soldier*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->defense));
+						break;
+					case BIGENEMIE:
+						((Enemie_big_soldier*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->hp -= (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->attack - ((Enemie_big_soldier*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->defense);
+						printf("You had damaged %s\nWith %i points of damage.\n", ((Enemie_big_soldier*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->name.c_str(), (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->attack - ((Enemie_big_soldier*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->defense));
+						break;
+					case MOVINGENEMIE:
+						((Enemie_moving_soldier*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->hp -= (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->attack - ((Enemie_moving_soldier*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->defense);
+						printf("You had damaged %s\nWith %i points of damage.\n", ((Enemie_moving_soldier*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->name.c_str(), (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->attack - ((Enemie_moving_soldier*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->defense));
+						break;
+					case SELLERENEMIE:
+						((NPC*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->hp -= (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->attack - ((NPC*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->defense);
+						printf("You had damaged %s\nWith %i points of damage.\n", ((NPC*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->name.c_str(), (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->attack - ((NPC*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->defense));
+						break;
+					}
 				}
 				else{
 					printf("This NPC is not here.\n");
 					((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->attackactive = false;
 				}
-
 				((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->initialtime = ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->currenttime;
 			}
 		}

@@ -12,9 +12,11 @@ public:
 	~Enemie_big_soldier();
 public:
 	Room* current_room = nullptr;
+	/*
 	unsigned int hp = 100;//health points
 	unsigned int attack = 16;//attack, modified by equipped items in player
 	unsigned int defense = 4;//defense, modified by equipped items in player
+	*/
 public:
 	void NPCmove();
 	void NPCattack();

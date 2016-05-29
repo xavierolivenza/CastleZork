@@ -18,6 +18,8 @@ int main(){
 	int command_words = 0, i = 0, j = 0;
 	int actual_position = 0;
 	unsigned int charcommandnum = 0;
+	unsigned int currenttime = 0;
+	unsigned int initialtime = 0;
 
 	worldexternpointer->CreateWorld();
 	printf("Welcome to:\n\n");
@@ -92,8 +94,17 @@ int main(){
 		if (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->attackactive == true){
 			worldexternpointer->player->executecommand2words(command1, command2, actual_position);
 		}
+		//regeneration
+		currenttime = GetTickCount();
+		if (currenttime >= (initialtime + 1000)){
+			((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->hp += 1;
+			if (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->hp > 100){
+				((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->hp = 100;
+			}
+			initialtime = currenttime;
+		}
 		worldexternpointer->Update();
-	} while (command1 != QUIT);
+	} while ((command1 != QUIT) || (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->dead == true));
 	system("pause");
 	delete worldexternpointer;
 	return 0;

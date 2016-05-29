@@ -12,6 +12,8 @@ public:
 	~Enemie_normal_soldier();
 public:
 	Room* current_room = nullptr;
+	unsigned int currenttime = 0;
+	unsigned int initialtime = 0;
 	unsigned int hp = 50;//health points
 	unsigned int attack = 8;//attack, modified by equipped items in player
 	unsigned int defense = 2;//defense, modified by equipped items in player

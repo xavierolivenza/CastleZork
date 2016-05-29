@@ -15,8 +15,8 @@ Enemie_moving_soldier::~Enemie_moving_soldier(){
 }
 
 void Enemie_moving_soldier::NPCUpdate(){
-	NPCmove();
-	NPCattack();
+	Enemie_moving_soldier::NPCmove();
+	Enemie_moving_soldier::NPCattack();
 }
 
 void Enemie_moving_soldier::NPCmove(){

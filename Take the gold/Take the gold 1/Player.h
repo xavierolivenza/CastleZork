@@ -26,6 +26,7 @@ public:
 	bool attackactive = false;
 	unsigned int actualtarget = 0;
 public:
+	bool dead = false;
 	unsigned int hp = 100;//health points
 	unsigned int attack = 10;//attack, modified by equipped items in player
 	unsigned int defense = 0;//defense, modified by equipped items in player
