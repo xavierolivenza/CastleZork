@@ -227,10 +227,10 @@ int Player::check_secondcommand(Vector <String> & commands)const{
 
 int Player::check_thirdcommand(Vector <String> & commands)const{
 	//this method recibes the vector of commands and check the third one and return its value of the enum
-	if ((commands[0] == "put") && (commands[2] == "into")){
+	if (commands[2] == "into"){
 		return INTO;
 	}
-	else if ((commands[0] == "get") && (commands[2] == "from")){
+	else if (commands[2] == "from"){
 		return FROM;
 	}
 	else{
@@ -1167,8 +1167,25 @@ void Player::executecommand4words(int command1, int command2, int command3, int 
 	else if (command1 == BUY){
 		if (((command2 == KATANA) || (command2 == GASMASK) || (command2 == TREASURE) || (command2 == GRENADE) || (command2 == SWORD) || (command2 == SHIELD) || (command2 == EXPLOSIVE) || (command2 == KEY) || (command2 == BACKPACK)) && (command3 == FROM)){
 			if ((command4 == SELLER)){
-
-
+				if (((NPC*)worldexternpointer->entities[61])->current_room == ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room){
+					if (((Item*)worldexternpointer->entities[command2 - 13])->sellerinventory == true){
+						if (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->coins>=500){
+							((Item*)worldexternpointer->entities[command2 - 13])->sellerinventory = false;
+							((Item*)worldexternpointer->entities[command2 - 13])->inventory = true;
+							((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->coins -= 500;
+							printf("You has bought: %s\n", ((Item*)worldexternpointer->entities[command2 - 13])->name.c_str());
+						}
+						else{
+							printf("You doesn't have enough coins.\n");
+						}
+					}
+					else{
+						printf("The seller doesn't have this item.\n");
+					}
+				}
+				else{
+					printf("You are not in the room where the seller is.\n");
+				}
 			}
 			else{
 				printf("You can't trade with that.\n");

@@ -8,7 +8,7 @@
 class Item : public Entity{
 public:
 	Item();
-	Item(const char*, const char*, Room*, int, int, int, bool, bool, bool, bool, bool, bool, EntityType);
+	Item(const char*, const char*, Room*, int, int, int, bool, bool, bool, bool, bool, bool, EntityType, unsigned int);
 	~Item();
 public:
 	Room* item_room = nullptr;
@@ -22,6 +22,7 @@ public:
 	bool inside_cupboard = true;//the item is inside a cupboard?
 	bool inside_backpack = false;//the item is inside the backpack?
 	bool sellerinventory = false;//the item is in the inventory of the seller?
+	unsigned int price = 0;//price of the item
 };
 
 #endif //__Item__
