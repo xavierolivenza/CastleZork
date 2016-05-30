@@ -144,6 +144,9 @@ int Player::check_firstcommand(Vector <String> & commands)const{
 	else if (commands[0] == "sell"){
 		return SELL;
 	}
+	else if (commands[0] == "wallet"){
+		return WALLET;
+	}
 	else{
 		return COMMANDERROR;
 	}
@@ -510,6 +513,11 @@ void Player::executecommand1word(int& command1, int& actual_position)const{
 			printf("%c Nothing in the inventory.  %c\n", 186, 186);
 		}
 		printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", 200, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 188);
+	}
+
+	//see wallet
+	else if (command1 == WALLET){
+		printf("Wallet: %i", ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->coins);
 	}
 
 	//flee command to escape qhen you have the treasure
