@@ -51,23 +51,23 @@ void World::CreateWorld(){
 	// Items
 	// ---------------------------------------------------------------------------------------------------------------
 	// Katana
-	worldexternpointer->entities.pushback(new Item("Rusty Katana", "This is the ancient rusty katana of a japanese guy, but still sharpened.", (Room*)worldexternpointer->entities[6], 35, 0, 1000, false, false, true, true, false, ITEM));
+	worldexternpointer->entities.pushback(new Item("Rusty Katana", "This is the ancient rusty katana of a japanese guy, but still sharpened.", (Room*)worldexternpointer->entities[6], 35, 0, 1000, false, false, true, true, false, false, ITEM));
 	// Gas Mask
-	worldexternpointer->entities.pushback(new Item("Gas Mask", "This gas mask can save you from toxic gases.", (Room*)worldexternpointer->entities[7], 0, 0, 1000, false, false, true, true, false, ITEM));
+	worldexternpointer->entities.pushback(new Item("Gas Mask", "This gas mask can save you from toxic gases.", (Room*)worldexternpointer->entities[7], 0, 0, 1000, false, false, true, true, false, false, ITEM));
 	// Treasure
-	worldexternpointer->entities.pushback(new Item("Treasure", "Your goal, the mighty treasure of the king.", (Room*)worldexternpointer->entities[8], 0, 0, 0, false, false, false, true, false, ITEM));
+	worldexternpointer->entities.pushback(new Item("Treasure", "Your goal, the mighty treasure of the king.", (Room*)worldexternpointer->entities[8], 0, 0, 0, false, false, false, true, false, false, ITEM));
 	// Venom Gas Granade
-	worldexternpointer->entities.pushback(new Item("Venom Gas Grenade", "Usefull against big groups of enemies, but you should search a gas mask to use it safely.", (Room*)worldexternpointer->entities[5], 100, 0, 2, false, false, false, true, false, ITEM));
+	worldexternpointer->entities.pushback(new Item("Venom Gas Grenade", "Usefull against big groups of enemies, but you should search a gas mask to use it safely.", (Room*)worldexternpointer->entities[5], 100, 0, 2, false, false, false, true, false, false, ITEM));
 	// Sword
-	worldexternpointer->entities.pushback(new Item("Sword", "Fullmetal sharpened sword, kill enemies with 2 hits.", (Room*)worldexternpointer->entities[2], 50, 0, 1000, false, false, true, true, false, ITEM));
+	worldexternpointer->entities.pushback(new Item("Sword", "Fullmetal sharpened sword, kill enemies with 2 hits.", (Room*)worldexternpointer->entities[2], 50, 0, 1000, false, false, true, true, false, false, ITEM));
 	// Shield
-	worldexternpointer->entities.pushback(new Item("Shield", "Protect you from enemy attacks.", (Room*)worldexternpointer->entities[2], 0, 75, 1000, false, false, true, true, false, ITEM));
+	worldexternpointer->entities.pushback(new Item("Shield", "Protect you from enemy attacks.", (Room*)worldexternpointer->entities[2], 0, 75, 1000, false, false, true, true, false, false, ITEM));
 	// Explosive
-	worldexternpointer->entities.pushback(new Item("Explosive", "You can blow the treasure wall with that.", (Room*)worldexternpointer->entities[3], 1000, 0, 1000, false, false, false, true, false, ITEM));
+	worldexternpointer->entities.pushback(new Item("Explosive", "You can blow the treasure wall with that.", (Room*)worldexternpointer->entities[3], 1000, 0, 1000, false, false, false, true, false, false, ITEM));
 	// Key
-	worldexternpointer->entities.pushback(new Item("Key", "Key of tower 4.", (Room*)worldexternpointer->entities[4], 1, 0, 1, false, false, false, false, false, ITEM));
+	worldexternpointer->entities.pushback(new Item("Key", "Key of tower 4.", nullptr, 1, 0, 1, false, false, false, false, false, true, ITEM));//seller have it
 	// Backpack
-	worldexternpointer->entities.pushback(new Item("Backpack", "Box to keep items inside.", (Room*)worldexternpointer->entities[1], 5, 0, 1000, false, false, false, false, false, ITEM));
+	worldexternpointer->entities.pushback(new Item("Backpack", "Box to keep items inside.", (Room*)worldexternpointer->entities[1], 5, 0, 1000, false, false, false, false, false, false, ITEM));
 
 	// ---------------------------------------------------------------------------------------------------------------
 	// Exits

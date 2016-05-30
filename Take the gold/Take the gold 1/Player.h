@@ -19,7 +19,6 @@ public:
 	void enemieslook()const;
 	void executecommand1word(int&, int&)const;
 	void executecommand2words(int&, int, int&)const;
-	void executecommand3words(int, int, int, int&)const;
 	void executecommand4words(int, int, int, int, int&)const;
 public:
 	bool god = false;

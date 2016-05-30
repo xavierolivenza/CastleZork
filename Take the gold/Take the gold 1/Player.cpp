@@ -1035,13 +1035,6 @@ void Player::executecommand2words(int& command1, int command2, int& actual_posit
 	}
 }
 
-void Player::executecommand3words(int command1, int command2, int command3, int& actual_position)const{
-	//this method executes commands with three words
-
-
-
-}
-
 void Player::executecommand4words(int command1, int command2, int command3, int command4, int& actual_position)const{
 	//this method executes commands with four words
 
@@ -1168,5 +1161,41 @@ void Player::executecommand4words(int command1, int command2, int command3, int 
 		else{
 			printf("That's not a valid command.\n");
 		}
+	}
+
+	//buy command
+	else if (command1 == BUY){
+		if (((command2 == KATANA) || (command2 == GASMASK) || (command2 == TREASURE) || (command2 == GRENADE) || (command2 == SWORD) || (command2 == SHIELD) || (command2 == EXPLOSIVE) || (command2 == KEY) || (command2 == BACKPACK)) && (command3 == FROM)){
+			if ((command4 == SELLER)){
+
+
+			}
+			else{
+				printf("You can't trade with that.\n");
+			}
+		}
+		else{
+			printf("You can't trade with that.\n");
+		}
+	}
+
+	//sell command
+	else if (command1 == SELL){
+		if (((command2 == KATANA) || (command2 == GASMASK) || (command2 == TREASURE) || (command2 == GRENADE) || (command2 == SWORD) || (command2 == SHIELD) || (command2 == EXPLOSIVE) || (command2 == KEY) || (command2 == BACKPACK)) && (command3 == INTO)){
+			if ((command4 == SELLER)){
+
+
+			}
+			else{
+				printf("You can't trade with that.\n");
+			}
+		}
+		else{
+			printf("You can't trade with that.\n");
+		}
+	}
+
+	else{
+		printf("That's not a valid command.\n");
 	}
 }
