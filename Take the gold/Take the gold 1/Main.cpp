@@ -104,7 +104,13 @@ int main(){
 			initialtime = currenttime;
 		}
 		worldexternpointer->Update();
-	} while ((command1 != QUIT) || (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->dead == true));
+		if (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->god == true){
+			((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->hp = 100;
+		}
+		if (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->dead == true){
+			command1 = QUIT;
+		}
+	} while (command1 != QUIT);
 	system("pause");
 	delete worldexternpointer;
 	return 0;

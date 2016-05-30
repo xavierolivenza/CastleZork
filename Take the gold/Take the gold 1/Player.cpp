@@ -296,8 +296,23 @@ void Player::dropeditemslook()const{
 void Player::enemieslook()const{
 	unsigned int j = 0;
 	for (unsigned int i = 0; i < (worldexternpointer->entities.size()); i++){
-		if ((worldexternpointer->entities[i]->type == ENEMIE) || (worldexternpointer->entities[i]->type == BIGENEMIE) || (worldexternpointer->entities[i]->type == SELLERENEMIE) || (worldexternpointer->entities[i]->type == SELLERENEMIE)){
-			if ((((NPC*)worldexternpointer->entities[i])->current_room == ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room) && (((NPC*)worldexternpointer->entities[i])->hp > 0)){
+		if ((worldexternpointer->entities[i]->type == ENEMIE)){
+			if ((((NPC*)worldexternpointer->entities[i])->current_room == ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room) && (((Enemie_normal_soldier*)worldexternpointer->entities[i])->hp > 0)){
+				j++;
+			}
+		}
+		else if ((worldexternpointer->entities[i]->type == BIGENEMIE)){
+			if ((((NPC*)worldexternpointer->entities[i])->current_room == ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room) && (((Enemie_big_soldier*)worldexternpointer->entities[i])->hp > 0)){
+				j++;
+			}
+		}
+		else if ((worldexternpointer->entities[i]->type == MOVINGENEMIE)){
+			if ((((NPC*)worldexternpointer->entities[i])->current_room == ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room) && (((Enemie_moving_soldier*)worldexternpointer->entities[i])->hp > 0)){
+				j++;
+			}
+		}
+		else if ((worldexternpointer->entities[i]->type == SELLERENEMIE)){
+			if ((((NPC*)worldexternpointer->entities[i])->current_room == ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room) && (((Enemie_seller*)worldexternpointer->entities[i])->hp > 0)){
 				j++;
 			}
 		}
@@ -307,22 +322,22 @@ void Player::enemieslook()const{
 		printf("NPC in the room list:\n");
 		for (unsigned int i = 0; i < (worldexternpointer->entities.size()); i++){
 			if ((worldexternpointer->entities[i]->type == ENEMIE)){
-				if ((((NPC*)worldexternpointer->entities[i])->current_room == ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room) && (((NPC*)worldexternpointer->entities[i])->hp > 0)){
+				if ((((NPC*)worldexternpointer->entities[i])->current_room == ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room) && (((Enemie_normal_soldier*)worldexternpointer->entities[i])->hp > 0)){
 					printf("%s\n", ((Enemie_normal_soldier*)worldexternpointer->entities[i])->name.c_str());
 				}
 			}
 			else if ((worldexternpointer->entities[i]->type == BIGENEMIE)){
-				if ((((NPC*)worldexternpointer->entities[i])->current_room == ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room) && (((NPC*)worldexternpointer->entities[i])->hp > 0)){
+				if ((((NPC*)worldexternpointer->entities[i])->current_room == ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room) && (((Enemie_big_soldier*)worldexternpointer->entities[i])->hp > 0)){
 					printf("%s\n", ((Enemie_big_soldier*)worldexternpointer->entities[i])->name.c_str());
 				}
 			}
 			else if ((worldexternpointer->entities[i]->type == MOVINGENEMIE)){
-				if ((((NPC*)worldexternpointer->entities[i])->current_room == ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room) && (((NPC*)worldexternpointer->entities[i])->hp > 0)){
+				if ((((NPC*)worldexternpointer->entities[i])->current_room == ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room) && (((Enemie_moving_soldier*)worldexternpointer->entities[i])->hp > 0)){
 					printf("%s\n", ((Enemie_moving_soldier*)worldexternpointer->entities[i])->name.c_str());
 				}
 			}
 			else if ((worldexternpointer->entities[i]->type == SELLERENEMIE)){
-				if ((((NPC*)worldexternpointer->entities[i])->current_room == ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room) && (((NPC*)worldexternpointer->entities[i])->hp > 0)){
+				if ((((NPC*)worldexternpointer->entities[i])->current_room == ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room) && (((Enemie_seller*)worldexternpointer->entities[i])->hp > 0)){
 					printf("%s\n", ((Enemie_seller*)worldexternpointer->entities[i])->name.c_str());
 				}
 			}
@@ -535,10 +550,8 @@ void Player::executecommand1word(int& command1, int& actual_position)const{
 	}
 
 	else if (command1 == GOD){
-		((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->hp = 1000;
-		((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->attack = 1000;
-		//((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->defense = 1000;
-		printf("God mode activated, you should been testing something...\n");
+		((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->god = !((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->god;
+		printf("God mode, you should been testing something...\n");
 	}
 
 	//error print
@@ -548,7 +561,7 @@ void Player::executecommand1word(int& command1, int& actual_position)const{
 }
 
 
-void Player::executecommand2words(int command1, int command2, int& actual_position)const{
+void Player::executecommand2words(int& command1, int command2, int& actual_position)const{
 	//this method executes commands with 2 words
 
 	int exitnum = 0, roomnum = 0;
@@ -857,6 +870,51 @@ void Player::executecommand2words(int command1, int command2, int& actual_positi
 		}
 		else{
 			printf("That's not valid.\n");
+		}
+	}
+
+	else if (command1 == SPECIAL){
+		if (command2 == HIDDENBLADE){
+			if (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->attackactive == true){
+				((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->currenttimecolddown = GetTickCount();
+				if (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->currenttimecolddown >= (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->initialtimecolddown + 10000)){
+					switch (((NPC*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->type){
+					case ENEMIE:
+						((Enemie_normal_soldier*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->hp = 0;
+						printf("You had killed %s\n", ((Enemie_normal_soldier*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->name.c_str());
+						((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->attackactive = false;
+						break;
+					case BIGENEMIE:
+						((Enemie_big_soldier*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->hp = 0;
+						printf("You had killed %s\n", ((Enemie_big_soldier*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->name.c_str());
+						((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->attackactive = false;
+						break;
+					case MOVINGENEMIE:
+						((Enemie_moving_soldier*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->hp = 0;
+						printf("You had killed %s\n", ((Enemie_moving_soldier*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->name.c_str());
+						((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->attackactive = false;
+						break;
+					case SELLERENEMIE:
+						((Enemie_seller*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->hp = 0;
+						printf("You had killed %s\n", ((Enemie_seller*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->name.c_str());
+						((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->attackactive = false;
+						break;
+					}
+					((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->initialtimecolddown = ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->currenttimecolddown;
+				}
+				else{
+					printf("You must wait 10 seconds since the last activation to use it again.\n");
+					command1 = COMMANDERROR;
+				}
+			}
+			else{
+				printf("You must be in combat to use it.\n");
+				command1 = COMMANDERROR;
+			}
+		}
+		else{
+			printf("That's not your special attack, try the hidden blade instead.\n");
+			command1 = COMMANDERROR;
 		}
 	}
 
