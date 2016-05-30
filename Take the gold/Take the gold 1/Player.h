@@ -19,6 +19,7 @@ public:
 	void enemieslook()const;
 	void executecommand1word(int&, int&)const;
 	void executecommand2words(int&, int, int&)const;
+	void executecommand3words(int, int, int, int&)const;
 	void executecommand4words(int, int, int, int, int&)const;
 public:
 	bool god = false;
@@ -33,6 +34,7 @@ public:
 	int hp = 100;//health points
 	unsigned int attack = 10;//attack, modified by equipped items in player
 	unsigned int defense = 0;//defense, modified by equipped items in player
+	int coins = 0;
 	void move(int&, int&);
 };
 

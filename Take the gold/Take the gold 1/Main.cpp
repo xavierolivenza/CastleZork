@@ -67,6 +67,12 @@ int main(){
 							command2 = worldexternpointer->player->check_secondcommand(commands);
 							worldexternpointer->player->executecommand2words(command1, command2, actual_position);
 							break;
+						case 3:
+							command1 = worldexternpointer->player->check_firstcommand(commands);
+							command2 = worldexternpointer->player->check_secondcommand(commands);
+							command3 = worldexternpointer->player->check_thirdcommand(commands);
+							worldexternpointer->player->executecommand3words(command1, command2, command3, actual_position);
+							break;
 						case 4:
 							command1 = worldexternpointer->player->check_firstcommand(commands);
 							command2 = worldexternpointer->player->check_secondcommand(commands);

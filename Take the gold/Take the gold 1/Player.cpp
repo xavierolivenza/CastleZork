@@ -873,6 +873,7 @@ void Player::executecommand2words(int& command1, int command2, int& actual_posit
 		}
 	}
 
+	// if in combat you can use a special attack
 	else if (command1 == SPECIAL){
 		if (command2 == HIDDENBLADE){
 			if (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->attackactive == true){
@@ -986,6 +987,8 @@ void Player::executecommand2words(int& command1, int command2, int& actual_posit
 						if (((Enemie_normal_soldier*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->hp <= 0){
 							printf("You had killed %s\n", ((Enemie_normal_soldier*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->name.c_str());
 							((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->attackactive = false;
+							printf("You had earned 100 coins.\n");
+							((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->coins += 100;
 						}
 						break;
 					case BIGENEMIE:
@@ -994,6 +997,8 @@ void Player::executecommand2words(int& command1, int command2, int& actual_posit
 						if (((Enemie_big_soldier*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->hp <= 0){
 							printf("You had killed %s\n", ((Enemie_big_soldier*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->name.c_str());
 							((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->attackactive = false;
+							printf("You had earned 200 coins.\n");
+							((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->coins += 200;
 						}
 						break;
 					case MOVINGENEMIE:
@@ -1002,6 +1007,8 @@ void Player::executecommand2words(int& command1, int command2, int& actual_posit
 						if (((Enemie_moving_soldier*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->hp <= 0){
 							printf("You had killed %s\n", ((Enemie_moving_soldier*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->name.c_str());
 							((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->attackactive = false;
+							printf("You had earned 100 coins.\n");
+							((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->coins += 100;
 						}
 						break;
 					case SELLERENEMIE:
@@ -1026,6 +1033,13 @@ void Player::executecommand2words(int& command1, int command2, int& actual_posit
 			((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->attackactive = false;
 		}
 	}
+}
+
+void Player::executecommand3words(int command1, int command2, int command3, int& actual_position)const{
+	//this method executes commands with three words
+
+
+
 }
 
 void Player::executecommand4words(int command1, int command2, int command3, int command4, int& actual_position)const{
