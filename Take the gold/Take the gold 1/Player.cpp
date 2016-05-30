@@ -976,6 +976,37 @@ void Player::executecommand2words(int& command1, int command2, int& actual_posit
 			printf("You can't use that.\n");
 		}
 	}
+
+	else if (command1 == BUY){
+		if (command2 == SELLER){
+			int i = 0;
+			int j = 0;
+			int k = 0;
+			printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", 201, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 187);
+			printf("%c Seller Inventory:          %c\n", 186, 186);
+			printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", 204, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 185);
+			for (i = 0; i < worldexternpointer->entities.size(); i++){
+				if (worldexternpointer->entities[i]->type == ITEM){
+					if (((Item*)worldexternpointer->entities[i])->sellerinventory == true){
+						printf("%c %s", 186, worldexternpointer->entities[i]->name.c_str());
+						j++;
+						for (k = worldexternpointer->entities[i]->name.length(); k <= 26; k++){
+							printf(" ");
+						}
+						printf("%c\n", 186);
+					}
+				}
+			}
+			if (j == 0){
+				printf("%c Nothing in the inventory.  %c\n", 186, 186);
+			}
+			printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", 200, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 188);
+		}
+		else{
+			printf("That's not possible.\n");
+		}
+	}
+
 	if (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->attackactive == true){
 		if (((NPC*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->hp > 0){
 			if (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->currenttime >= (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->initialtime + 1500)){
@@ -988,7 +1019,7 @@ void Player::executecommand2words(int& command1, int command2, int& actual_posit
 							printf("You had killed %s\n", ((Enemie_normal_soldier*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->name.c_str());
 							((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->attackactive = false;
 							printf("You had earned 100 coins.\n");
-							((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->coins += 100;
+							((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->coins += 200;
 						}
 						break;
 					case BIGENEMIE:
@@ -998,7 +1029,7 @@ void Player::executecommand2words(int& command1, int command2, int& actual_posit
 							printf("You had killed %s\n", ((Enemie_big_soldier*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->name.c_str());
 							((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->attackactive = false;
 							printf("You had earned 200 coins.\n");
-							((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->coins += 200;
+							((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->coins += 500;
 						}
 						break;
 					case MOVINGENEMIE:
@@ -1169,10 +1200,10 @@ void Player::executecommand4words(int command1, int command2, int command3, int 
 			if ((command4 == SELLER)){
 				if (((NPC*)worldexternpointer->entities[61])->current_room == ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room){
 					if (((Item*)worldexternpointer->entities[command2 - 13])->sellerinventory == true){
-						if (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->coins>=500){
+						if (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->coins >= ((Item*)worldexternpointer->entities[command2 - 13])->price){
 							((Item*)worldexternpointer->entities[command2 - 13])->sellerinventory = false;
 							((Item*)worldexternpointer->entities[command2 - 13])->inventory = true;
-							((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->coins -= 500;
+							((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->coins -= ((Item*)worldexternpointer->entities[command2 - 13])->price;
 							printf("You has bought: %s\n", ((Item*)worldexternpointer->entities[command2 - 13])->name.c_str());
 						}
 						else{
@@ -1200,8 +1231,20 @@ void Player::executecommand4words(int command1, int command2, int command3, int 
 	else if (command1 == SELL){
 		if (((command2 == KATANA) || (command2 == GASMASK) || (command2 == TREASURE) || (command2 == GRENADE) || (command2 == SWORD) || (command2 == SHIELD) || (command2 == EXPLOSIVE) || (command2 == KEY) || (command2 == BACKPACK)) && (command3 == INTO)){
 			if ((command4 == SELLER)){
-
-
+				if (((NPC*)worldexternpointer->entities[61])->current_room == ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room){
+					if ((((Item*)worldexternpointer->entities[command2 - 13])->sellerinventory == false) && (((Item*)worldexternpointer->entities[command2 - 13])->inventory == true)){
+						((Item*)worldexternpointer->entities[command2 - 13])->sellerinventory = true;
+						((Item*)worldexternpointer->entities[command2 - 13])->inventory = false;
+						((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->coins += ((Item*)worldexternpointer->entities[command2 - 13])->price;
+						printf("You had sold: %s\n", ((Item*)worldexternpointer->entities[command2 - 13])->name.c_str());
+					}
+					else{
+						printf("The seller doesn't have this item.\n");
+					}
+				}
+				else{
+					printf("You are not in the room where the seller is.\n");
+				}
 			}
 			else{
 				printf("You can't trade with that.\n");
