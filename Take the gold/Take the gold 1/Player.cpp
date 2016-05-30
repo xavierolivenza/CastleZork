@@ -311,9 +311,19 @@ void Player::enemieslook()const{
 					printf("%s\n", ((Enemie_normal_soldier*)worldexternpointer->entities[i])->name.c_str());
 				}
 			}
-			else if ((worldexternpointer->entities[i]->type == BIGENEMIE) || (worldexternpointer->entities[i]->type == SELLERENEMIE) || (worldexternpointer->entities[i]->type == SELLERENEMIE)){
+			else if ((worldexternpointer->entities[i]->type == BIGENEMIE)){
 				if ((((NPC*)worldexternpointer->entities[i])->current_room == ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room) && (((NPC*)worldexternpointer->entities[i])->hp > 0)){
-					printf("%s\n", ((NPC*)worldexternpointer->entities[i])->name.c_str());
+					printf("%s\n", ((Enemie_big_soldier*)worldexternpointer->entities[i])->name.c_str());
+				}
+			}
+			else if ((worldexternpointer->entities[i]->type == MOVINGENEMIE)){
+				if ((((NPC*)worldexternpointer->entities[i])->current_room == ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room) && (((NPC*)worldexternpointer->entities[i])->hp > 0)){
+					printf("%s\n", ((Enemie_moving_soldier*)worldexternpointer->entities[i])->name.c_str());
+				}
+			}
+			else if ((worldexternpointer->entities[i]->type == SELLERENEMIE)){
+				if ((((NPC*)worldexternpointer->entities[i])->current_room == ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room) && (((NPC*)worldexternpointer->entities[i])->hp > 0)){
+					printf("%s\n", ((Enemie_seller*)worldexternpointer->entities[i])->name.c_str());
 				}
 			}
 		}
@@ -527,7 +537,7 @@ void Player::executecommand1word(int& command1, int& actual_position)const{
 	else if (command1 == GOD){
 		((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->hp = 1000;
 		((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->attack = 1000;
-		((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->defense = 1000;
+		//((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->defense = 1000;
 		printf("God mode activated, you should been testing something...\n");
 	}
 
@@ -915,18 +925,34 @@ void Player::executecommand2words(int command1, int command2, int& actual_positi
 					case ENEMIE:
 						((Enemie_normal_soldier*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->hp -= (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->attack - ((Enemie_normal_soldier*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->defense);
 						printf("You had damaged %s\nWith %i points of damage.\n", ((Enemie_normal_soldier*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->name.c_str(), (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->attack - ((Enemie_normal_soldier*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->defense));
+						if (((Enemie_normal_soldier*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->hp <= 0){
+							printf("You had killed %s\n", ((Enemie_normal_soldier*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->name.c_str());
+							((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->attackactive = false;
+						}
 						break;
 					case BIGENEMIE:
 						((Enemie_big_soldier*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->hp -= (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->attack - ((Enemie_big_soldier*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->defense);
 						printf("You had damaged %s\nWith %i points of damage.\n", ((Enemie_big_soldier*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->name.c_str(), (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->attack - ((Enemie_big_soldier*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->defense));
+						if (((Enemie_big_soldier*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->hp <= 0){
+							printf("You had killed %s\n", ((Enemie_big_soldier*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->name.c_str());
+							((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->attackactive = false;
+						}
 						break;
 					case MOVINGENEMIE:
 						((Enemie_moving_soldier*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->hp -= (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->attack - ((Enemie_moving_soldier*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->defense);
 						printf("You had damaged %s\nWith %i points of damage.\n", ((Enemie_moving_soldier*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->name.c_str(), (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->attack - ((Enemie_moving_soldier*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->defense));
+						if (((Enemie_moving_soldier*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->hp <= 0){
+							printf("You had killed %s\n", ((Enemie_moving_soldier*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->name.c_str());
+							((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->attackactive = false;
+						}
 						break;
 					case SELLERENEMIE:
-						((NPC*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->hp -= (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->attack - ((NPC*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->defense);
-						printf("You had damaged %s\nWith %i points of damage.\n", ((NPC*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->name.c_str(), (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->attack - ((NPC*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->defense));
+						((Enemie_seller*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->hp -= (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->attack - ((Enemie_seller*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->defense);
+						printf("You had damaged %s\nWith %i points of damage.\n", ((Enemie_seller*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->name.c_str(), (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->attack - ((Enemie_seller*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->defense));
+						if (((Enemie_seller*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->hp <= 0){
+							printf("You had killed %s\n", ((Enemie_seller*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->name.c_str());
+							((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->attackactive = false;
+						}
 						break;
 					}
 				}

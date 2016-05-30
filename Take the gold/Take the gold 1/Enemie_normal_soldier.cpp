@@ -26,8 +26,10 @@ void Enemie_normal_soldier::NPCattack(){
 	currenttime = GetTickCount();
 	if (currenttime >= (initialtime + 5000)){
 		if (((NPC*)this)->current_room == ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room){
-			((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->hp -= ((Enemie_normal_soldier*)this)->attack - (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->defense / 4);
-			printf("%s Had attacked you with %i of damage.\n", ((Enemie_normal_soldier*)this)->name.c_str(), ((Enemie_normal_soldier*)this)->attack - (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->defense / 4));
+			if (((Enemie_moving_soldier*)this)->hp > 0){
+				((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->hp -= ((Enemie_normal_soldier*)this)->attack - (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->defense / 4);
+				printf("%s Had attacked you with %i of damage.\n", ((Enemie_normal_soldier*)this)->name.c_str(), ((Enemie_normal_soldier*)this)->attack - (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->defense / 4));
+			}
 		}
 		initialtime = currenttime;
 	}

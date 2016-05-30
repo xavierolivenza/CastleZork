@@ -18,6 +18,8 @@ public:
 public:
 	unsigned int currenttime = 0;
 	unsigned int initialtime = 0;
+	unsigned int currenttime2 = 0;
+	unsigned int initialtime2 = 0;
 public:
 	void NPCmove();
 	void NPCattack();

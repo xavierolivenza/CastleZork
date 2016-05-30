@@ -13,7 +13,7 @@ World::~World(){
 
 void World::Update(){
 	for (int i = 0; i < (worldexternpointer->entities.size()); i++){
-		if ((worldexternpointer->entities[i]->type == ENEMIE) || (worldexternpointer->entities[i]->type == MOVINGENEMIE)){
+		if ((worldexternpointer->entities[i]->type == ENEMIE) || (worldexternpointer->entities[i]->type == MOVINGENEMIE) || (worldexternpointer->entities[i]->type == BIGENEMIE) || (worldexternpointer->entities[i]->type == SELLERENEMIE)){
 			((NPC*)(worldexternpointer->entities[i]))->NPCUpdate();
 		}
 	}
@@ -171,7 +171,7 @@ void World::CreateWorld(){
 	worldexternpointer->entities.pushback(new Enemie_normal_soldier("Soldier5.", "Soldier5.", (Room*)worldexternpointer->entities[3], EntityType::ENEMIE));
 	worldexternpointer->entities.pushback(new Enemie_moving_soldier("Soldier6.", "Soldier6.", (Room*)worldexternpointer->entities[2], EntityType::MOVINGENEMIE));
 	worldexternpointer->entities.pushback(new Enemie_big_soldier("BigSoldier.", "BigSoldier.", (Room*)worldexternpointer->entities[4], EntityType::BIGENEMIE));
-	worldexternpointer->entities.pushback(new Enemie_normal_soldier("Seller.", "Seller.", (Room*)worldexternpointer->entities[1], EntityType::SELLERENEMIE));
+	worldexternpointer->entities.pushback(new Enemie_seller("Seller.", "Seller.", (Room*)worldexternpointer->entities[1], EntityType::SELLERENEMIE));
 
 	//The player
 	worldexternpointer->entities.pushback(new Player("The mighty hero.", "It's you, the mighty hero.", (Room*)worldexternpointer->entities[0], EntityType::PLAYER));

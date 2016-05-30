@@ -47,5 +47,14 @@ void Enemie_moving_soldier::NPCmove(){
 
 void Enemie_moving_soldier::NPCattack(){
 	//if player is in the room auto attack
-
+	currenttime2 = GetTickCount();
+	if (currenttime2 >= (initialtime2 + 5000)){
+		if (((NPC*)this)->current_room == ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room){
+			if (((Enemie_moving_soldier*)this)->hp > 0){
+				((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->hp -= ((Enemie_moving_soldier*)this)->attack - (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->defense / 4);
+				printf("%s Had attacked you with %i of damage.\n", ((Enemie_moving_soldier*)this)->name.c_str(), ((Enemie_moving_soldier*)this)->attack - (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->defense / 4));
+			}
+		}
+		initialtime2 = currenttime2;
+	}
 }

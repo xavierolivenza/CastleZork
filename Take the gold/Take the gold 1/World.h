@@ -13,6 +13,7 @@
 #include "Enemie_normal_soldier.h"
 #include "Enemie_big_soldier.h"
 #include "Enemie_moving_soldier.h"
+#include "Enemie_Seller.h"
 #include "String.h"
 #include "Vector.h"
 

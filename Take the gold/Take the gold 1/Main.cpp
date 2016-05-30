@@ -96,7 +96,7 @@ int main(){
 		}
 		//regeneration
 		currenttime = GetTickCount();
-		if (currenttime >= (initialtime + 1000)){
+		if (currenttime >= (initialtime + 5000)){
 			((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->hp += 1;
 			if (((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->hp > 100){
 				((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->hp = 100;
