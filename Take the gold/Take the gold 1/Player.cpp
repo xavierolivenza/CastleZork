@@ -931,7 +931,43 @@ void Player::executecommand2words(int& command1, int command2, int& actual_posit
 	else if (command1 == USE){
 		if (command2 == GRENADE){
 			if (((Item*)worldexternpointer->entities[12])->inventory == true){
-				printf("By now this don't work, wait until battle update comes.\n");
+				if (((Item*)worldexternpointer->entities[10])->inventory == true){
+					if (((Item*)worldexternpointer->entities[10])->equipped == true){
+						for (unsigned int i = 0; i < (worldexternpointer->entities.size()); i++){
+							if ((worldexternpointer->entities[i]->type == ENEMIE)){
+								if ((((NPC*)worldexternpointer->entities[i])->current_room == ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room) && (((Enemie_normal_soldier*)worldexternpointer->entities[i])->hp > 0)){
+									((Enemie_normal_soldier*)worldexternpointer->entities[i])->hp = 0;
+									printf("You had killed: %s\n", ((Enemie_normal_soldier*)worldexternpointer->entities[i])->name.c_str());
+								}
+							}
+							else if ((worldexternpointer->entities[i]->type == BIGENEMIE)){
+								if ((((NPC*)worldexternpointer->entities[i])->current_room == ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room) && (((Enemie_big_soldier*)worldexternpointer->entities[i])->hp > 0)){
+									((Enemie_big_soldier*)worldexternpointer->entities[i])->hp = 0;
+									printf("You had killed: %s\n", ((Enemie_big_soldier*)worldexternpointer->entities[i])->name.c_str());
+								}
+							}
+							else if ((worldexternpointer->entities[i]->type == MOVINGENEMIE)){
+								if ((((NPC*)worldexternpointer->entities[i])->current_room == ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room) && (((Enemie_moving_soldier*)worldexternpointer->entities[i])->hp > 0)){
+									((Enemie_moving_soldier*)worldexternpointer->entities[i])->hp = 0;
+									printf("You had killed: %s\n", ((Enemie_moving_soldier*)worldexternpointer->entities[i])->name.c_str());
+								}
+							}
+							else if ((worldexternpointer->entities[i]->type == SELLERENEMIE)){
+								if ((((NPC*)worldexternpointer->entities[i])->current_room == ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room) && (((Enemie_seller*)worldexternpointer->entities[i])->hp > 0)){
+									((Enemie_seller*)worldexternpointer->entities[i])->hp = 0;
+									printf("You had killed: %s\n", ((Enemie_seller*)worldexternpointer->entities[i])->name.c_str());
+								}
+							}
+						}
+					}
+					else{
+						printf("The gas mask must be equipped to use the grenade.\n");
+					}
+
+				}
+				else{
+					printf("You need a gas mask to use it.\n");
+				}
 			}
 			else{
 				printf("You don't have this item.\n");
@@ -1215,7 +1251,7 @@ void Player::executecommand4words(int command1, int command2, int command3, int 
 							printf("You has bought: %s\n", ((Item*)worldexternpointer->entities[command2 - 13])->name.c_str());
 						}
 						else{
-							printf("You doesn't have enough coins.\n");
+							printf("You don't have enough coins.\n");
 						}
 					}
 					else{
