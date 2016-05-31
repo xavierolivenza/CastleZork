@@ -142,6 +142,8 @@ Special feature, to get the treasure you must blow up the wall, use the explosiv
 
 To use the venom gas grenade, you must have equipped the gas mask.
 
+There's one moving enemie, he moves: ->Tower3->North corridor->Throne room->West corridor->
+
 ## Credits
 
 Xavier Olivenza Busquets, first year student in the degree in video game design and development of CITM Terrassa, Catalonia, Spain.
