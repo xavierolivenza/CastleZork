@@ -12,7 +12,7 @@ You are a thief who must steal the treasure of the king in his castle.
 
 ## Instructions, how to play
 
-You can move using:
+###You can move using:
 
 n/s/e/w
 
@@ -21,7 +21,7 @@ north/east/south/west
 go north/east/south/west/n/s/e/w
 
 
-Also you can use the commands:
+###Also you can use the commands:
 
 look/l -> to see the description of the room where you are
 
@@ -64,7 +64,7 @@ help/h -> to open the help menu
 quit/q -> to quit the game
 
 
-Commands for combat and trade:
+###Commands for combat and trade:
 
 Wallet -> to see how many coins you have
 
