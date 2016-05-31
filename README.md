@@ -18,9 +18,8 @@ n/s/e/w
 
 north/east/south/west
 
-go north/east/south/west
+go north/east/south/west/n/s/e/w
 
-/s/e/w
 
 Also you can use the commands:
 
@@ -29,6 +28,8 @@ look/l -> to see the description of the room where you are
 look/l + north/east/south/west/n/s/e/w -> to see the description of the path
 
 look/l + item name -> if you have it in the inventory you can see its lore
+
+look + items -> to see items in the room
 
 open/close + north/east/south/west/n/s/e/w -> to open/close door
 
@@ -44,7 +45,7 @@ put + item name + into + cupboard -> put item in the cupboard
 
 get + item name + from + cupboard -> get the item from the cupboard
 
-use + item name -> to use it
+use + explosive -> use it against the thorne room wall
 
 equipped -> to see the objects that the player has equipped
 
@@ -54,13 +55,32 @@ backpacked -> to see what you had put inside the backpack if you had taken it
 
 stats -> to see player stats
 
-flee -> when you have the treasure you can go to Tower 1 and flee to finish the game
+flee -> when you have the treasure you can go to Tower 1 and flee tofinish the game
 
 clear/c -> to clean the screen
 
 help/h -> to open the help menu
 
 quit/q -> to quit the game
+
+
+Commands for combat and trade:
+
+Wallet -> to see how many coins you have
+
+Attack + enemy name -> attack the enemy until he dies
+
+Special + hidden blade -> use an intant kill special attack
+
+use + venom gas grenade -> with gs mask equipped you can use it to instant kill all enemies in the room
+
+Buy + seller -> to see what the seller has
+
+Buy + item name + from + seller -> to buy something that seller has
+
+Sell + item name + into + seller -> to sell things to seller
+
+Command for testing: god
 
 ##Item names list
 
@@ -81,12 +101,32 @@ quit/q -> to quit the game
  - Key
  
  - Backpack
+ 
+##Enemies names list
+
+ - Soldier1
+ 
+ - Soldier2
+ 
+ - Soldier3
+ 
+ - Soldier4
+ 
+ - Soldier5
+
+ - Soldier6
+ 
+ - Big soldier
+ 
+ - Seller
 
 ## Changelog
 
 16-03-2016 -> Take the gold first release with all rooms and movement, look, open, close, help and quit commands.
 
 18-04-2016 -> Take the gold second release with all items and more commands(items look, pick, drop, equip, unequip, put, get, use, equipped, inventory, backpacked, stats, flee, clear).
+
+31-05-2016 -> Take the gold last release with all enemies and all commands to attack and trade.
 
 ##Comments
 
@@ -96,7 +136,9 @@ Notice that there are two blade weapons, you can only equip ne, if you equip the
 
 Now you can take the explosive, go to throne room, use it, get treasure, go to tower 1 and flee to finish the game.
 
-Special feature, to get the treasure you must blow up the wall, use the explosive and a countdown will apear.
+Special feature, to get the treasure you must blow up the wall, use the explosive and a countdown will appear.
+
+To use the venom gas grenade, you must have equipped the gas mask.
 
 ## Credits
 
