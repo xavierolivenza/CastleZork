@@ -19,6 +19,7 @@ public:
 	void enemieslook()const;
 	void executecommand1word(int&, int&)const;
 	void executecommand2words(int&, int, int&)const;
+	void executecommand3words(int, int, int, int&)const;
 	void executecommand4words(int, int, int, int, int&)const;
 public:
 	bool god = false;
@@ -49,7 +50,7 @@ enum commandset {
 	ITEMS,
 	ATTACK, SPECIAL, BUY, SELL, HIDDENBLADE,
 	SOLDIER1, SOLDIER2, SOLDIER3, SOLDIER4, SOLDIER5, SOLDIER6, BIGSOLDIER, SELLER,
-	WALLET,
+	WALLET, TALK,
 	COMMANDERROR
 };
 #endif //__Player__

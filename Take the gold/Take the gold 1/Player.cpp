@@ -147,6 +147,9 @@ int Player::check_firstcommand(Vector <String> & commands)const{
 	else if (commands[0] == "wallet"){
 		return WALLET;
 	}
+	else if (commands[0] == "talk"){
+		return TALK;
+	}
 	else{
 		return COMMANDERROR;
 	}
@@ -235,6 +238,9 @@ int Player::check_thirdcommand(Vector <String> & commands)const{
 	}
 	else if (commands[2] == "from"){
 		return FROM;
+	}
+	else if (commands[2] == "buy"){
+		return BUY;
 	}
 	else{
 		return COMMANDERROR;
@@ -554,7 +560,7 @@ void Player::executecommand1word(int& command1, int& actual_position)const{
 
 	//help command
 	else if (command1 == HELP){
-		printf("\nHELP MENU\nYou can move using:\n\tn/s/e/w\n\tnorth/east/south/west\n\tgo north/east/south/west/n/s/e/w\nAlso you can use the commands:\n\tlook/l -> to see the description of the room where you are\n\tlook/l + north/east/south/west/n/s/e/w -> to see the description of the\n\tpath\n\tlook/l + item name -> if you have it in the inventory you can see its\n\tlore\n\tlook + items -> to see items in the room\n\topen/close + north/east/south/west/n/s/e/w -> to open/close door\n\tpick + item name -> you can pick items from the ground\n\tdrop + item name -> you can drop items to the ground\n\tequip + item name -> you can equip items\n\tunequip + item name -> you can unequip items\n\tput + item name + into + cupboard -> put item in the cupboard\n\tget + item name + from + cupboard -> get the item from the cupboard\n\tuse + explosive -> use it against the thorne room wall\n\tequipped -> to see the objects that the player has equipped\n\tinventory/inv/i -> to see player inventory\n\tbackpacked -> to see what you had put inside the backpack if you had\n\ttaken it\n\tstats -> to see player stats\n\tflee -> when you have the treasure you can go to Tower 1 and flee to\n\tfinish the game\n\tclear/c -> to clean the screen\n\thelp/h -> to open the help menu\n\tquit/q -> to quit the game\n\nCommands for combat and trade:\n\tWallet -> to see how many coins you have\n\tAttack + enemy name -> attack the enemy until he dies\n\tSpecial + hidden blade -> use an intant kill special attack\n\tuse + venom gas grenade -> with gs mask equipped you can use it\n\tto instant kill all enemies in the room\n\tBuy + seller -> to see what the seller has\n\tBuy + item name + from + seller -> to buy something that seller has\n\tSell + item name + into + seller -> to sell things to seller\nCommand for testing: god\nYou have regeneration\nLet's start!\n\n");
+		printf("\nHELP MENU\nYou can move using:\n\tn/s/e/w\n\tnorth/east/south/west\n\tgo north/east/south/west/n/s/e/w\nAlso you can use the commands:\n\tlook/l -> to see the description of the room where you are\n\tlook/l + north/east/south/west/n/s/e/w -> to see the description of the\n\tpath\n\tlook/l + item name -> if you have it in the inventory you can see its\n\tlore\n\tlook + items -> to see items in the room\n\topen/close + north/east/south/west/n/s/e/w -> to open/close door\n\tpick + item name -> you can pick items from the ground\n\tdrop + item name -> you can drop items to the ground\n\tequip + item name -> you can equip items\n\tunequip + item name -> you can unequip items\n\tput + item name + into + cupboard -> put item in the cupboard\n\tget + item name + from + cupboard -> get the item from the cupboard\n\tuse + explosive -> use it against the thorne room wall\n\tequipped -> to see the objects that the player has equipped\n\tinventory/inv/i -> to see player inventory\n\tbackpacked -> to see what you had put inside the backpack if you had\n\ttaken it\n\tstats -> to see player stats\n\tflee -> when you have the treasure you can go to Tower 1 and flee to\n\tfinish the game\n\tclear/c -> to clean the screen\n\thelp/h -> to open the help menu\n\tquit/q -> to quit the game\n\nCommands for combat and trade:\n\tWallet -> to see how many coins you have\n\tAttack + enemy name -> attack the enemy until he dies\n\tSpecial + hidden blade -> use an intant kill special attack\n\tuse + venom gas grenade -> with gs mask equipped you can use it\n\tto instant kill all enemies in the room\n\tBuy + seller -> to see what the seller has\n\tBuy + item name + from + seller -> to buy something that seller has\n\tSell + item name + into + seller -> to sell things to seller\n\tTalk + seller + buy -> show seller inventory\nCommand for testing: god\nYou have regeneration\nLet's start!\n\n");
 	}
 
 	else if (command1 == GOD){
@@ -1026,25 +1032,30 @@ void Player::executecommand2words(int& command1, int command2, int& actual_posit
 			int i = 0;
 			int j = 0;
 			int k = 0;
-			printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", 201, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 187);
-			printf("%c Seller Inventory:          %c\n", 186, 186);
-			printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", 204, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 185);
-			for (i = 0; i < worldexternpointer->entities.size(); i++){
-				if (worldexternpointer->entities[i]->type == ITEM){
-					if (((Item*)worldexternpointer->entities[i])->sellerinventory == true){
-						printf("%c %s", 186, worldexternpointer->entities[i]->name.c_str());
-						j++;
-						for (k = worldexternpointer->entities[i]->name.length(); k <= 26; k++){
-							printf(" ");
+			if (((NPC*)worldexternpointer->entities[61])->current_room == ((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->current_room){
+				printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", 201, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 187);
+				printf("%c Seller Inventory:          %c\n", 186, 186);
+				printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", 204, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 185);
+				for (i = 0; i < worldexternpointer->entities.size(); i++){
+					if (worldexternpointer->entities[i]->type == ITEM){
+						if (((Item*)worldexternpointer->entities[i])->sellerinventory == true){
+							printf("%c %s", 186, worldexternpointer->entities[i]->name.c_str());
+							j++;
+							for (k = worldexternpointer->entities[i]->name.length(); k <= 26; k++){
+								printf(" ");
+							}
+							printf("%c\n", 186);
 						}
-						printf("%c\n", 186);
 					}
 				}
+				if (j == 0){
+					printf("%c Nothing in the inventory.  %c\n", 186, 186);
+				}
+				printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", 200, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 188);
 			}
-			if (j == 0){
-				printf("%c Nothing in the inventory.  %c\n", 186, 186);
+			else{
+				printf("You are not in the room of the seller.\n");
 			}
-			printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", 200, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 188);
 		}
 		else{
 			printf("That's not possible.\n");
@@ -1107,6 +1118,26 @@ void Player::executecommand2words(int& command1, int command2, int& actual_posit
 			printf("You had killed %s\n", ((NPC*)worldexternpointer->entities[((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->actualtarget + 12])->name.c_str());
 			((Player*)worldexternpointer->entities[worldexternpointer->entities.size() - 1])->attackactive = false;
 		}
+	}
+}
+
+void Player::executecommand3words(int command1, int command2, int command3, int& actual_position)const{
+	if (command1 == TALK){
+		if (command2 == SELLER){
+			if (command3 == BUY){
+				printf("Hello i'm the seller of the castle, we can trade, but be carefull with\nthe soldiers.\n");
+				executecommand2words( command3, command2, actual_position);
+			}
+			else{
+				printf("Invalid command.\n");
+			}
+		}
+		else{
+			printf("Invalid command.\n");
+		}
+	}
+	else{
+		printf("Invalid command.\n");
 	}
 }
 

@@ -80,6 +80,8 @@ Buy + item name + from + seller -> to buy something that seller has
 
 Sell + item name + into + seller -> to sell things to seller
 
+Talk + seller + buy -> show seller inventory
+
 Command for testing: god
 
 ##Item names list
